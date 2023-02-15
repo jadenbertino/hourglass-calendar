@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
+import {useLogOut} from '../hooks/useLogOut'
+
+import { SignInModal, SignUpModal } from './components'
 
 import './Nav.css'
 
 export default function Nav() {
   const [monthAndYear, setMonthAndYear] = useState('')
+  const [modalActive, setModalActive] = useState('signup')
   const user = false;
 
   useEffect(() => {
@@ -20,16 +24,18 @@ export default function Nav() {
       <div className="auth">
         {!user ? (
           <>
-            <button className="btn">Sign In</button>
-            <button className="btn">Sign Up</button>
+            <button className="btn" onClick={() => setModalActive('signin')}>Sign In</button>
+            <button className="btn" onClick={() => setModalActive('signup')}>Sign Up</button>
           </>
         ) : (
           <>
             <span>Welcome, {user.name}</span>
-            <button className="btn">Log Out</button>
+            <button className="btn" onClick={useLogOut}>Log Out</button>
           </>
         )}
       </div>
+      {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
+      {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
     </nav>
   )
 }

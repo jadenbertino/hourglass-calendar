@@ -7,25 +7,8 @@
 .new-event-form {
   display: flex;
   flex-wrap: wrap;
-}
-
-.new-event-form input,
-.new-event-form textarea {
-  padding: 8px;
-  min-height: 40px;
-  border: solid 1px #292929;
-  border-radius: 4px;
-  font-family: sans-serif;
-}
-
-.new-event-form input:focus,
-.new-event-form textarea:focus {
-  outline: solid 2px #2e8cff;
-  border: solid 1px transparent;
-}
-
-.new-event-form * {
-  font-size: 16px;
+  max-width: 576px;
+  width: 100%;
 }
 
 /*

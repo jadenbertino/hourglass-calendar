@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 // pages & components
-import { Home } from './pages/pages'
+import { Home, SignUp, SignIn } from './pages/pages'
 import { Nav } from './components/components'
 
 // styles
@@ -13,6 +13,8 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* <Route path="/signup" element={<SignUp />} /> */}
+        {/* <Route path="/signin" element={<SignIn />} /> */}
       </Routes>
     </Router>
   );
