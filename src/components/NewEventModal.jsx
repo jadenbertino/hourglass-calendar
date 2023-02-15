@@ -4,41 +4,41 @@ import { useState } from 'react'
 import { Modal } from './components'
 
 // styles
-import styles from './NewEventModal.module.css'
+import './NewEventModal.css'
 
 export default function () {
   // form controls
   return (
     <Modal>
-      <form className={styles['new-event-form']}>
+      <form className='new-event-form'>
         <input
-          className={styles.name}
+          className='name'
           type="text"
           placeholder='Event Name' 
         />
         <input
-          className={styles.date}
+          className='date'
           type="date"
           placeholder = 'Date'
         />
-        <div className={styles['time-wrapper']}>
+        <div className='time-wrapper'>
           <input
-            className={styles['start-time']}
+            className='start-time'
             type="text"
             placeholder='Start Time'
           />
           <input
-            className={styles['end-time']}
+            className='end-time'
             type="text"
             placeholder='End Time'
           />
         </div>
         <textarea
-          className={styles.notes}
+          className='notes'
           placeholder='Event Notes'
         />
-        <button className={`btn ${styles['cancel-btn']}`}>Cancel</button>
-        <button className={`btn ${styles['save-btn']}`}>Save</button>
+        <button className='btn cancel-btn'>Cancel</button>
+        <button className='btn save-btn'>Save</button>
       </form>
     </Modal>
   )
