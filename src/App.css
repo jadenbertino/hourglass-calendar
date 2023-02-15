@@ -1,2 +1,23 @@
 /* 2e8cff */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.container {
+  padding: 0 24px;
+}
+
+.row {
+  margin: 24px 0;
+}
+
+.btn {
+  padding: 8px 12px;
+}
