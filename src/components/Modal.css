@@ -1,0 +1,11 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  backdrop-filter: blur(5px) brightness(60%);
+}
+
+.modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}

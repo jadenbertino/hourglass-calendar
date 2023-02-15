@@ -1,3 +1,5 @@
 import Nav from "./Nav";
+import Modal from './Modal'
+import NewEventModal from "./NewEventModal";
 
-export { Nav } 
+export { Nav, Modal, NewEventModal } 
