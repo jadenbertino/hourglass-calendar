@@ -46,7 +46,7 @@
 
 .new-event-form .times-wrapper {
   width: 60%;
-  padding-left: 24px;
+  padding-left: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,22 +56,6 @@
   width: 40%;
   text-align: center;
 }
-
-
-/* 
-.new-event-form .date {
-  width: 35%;
-  text-align: center;
-}
-.new-event-form .start-time,
-.new-event-form .end-time {
-  text-align: center;
-}
-
-.new-event-form .start-time,
-.new-event-form .end-time {
-  width: 25%;
-} */
 
 .new-event-form .notes {
   width: 100%;
