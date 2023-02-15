@@ -21,18 +21,20 @@ export default function () {
           type="date"
           placeholder = 'Date'
         />
-        <div className='time-wrapper'>
+        <div className="times-wrapper">
           <input
-            className='start-time'
+            className='time'
             type="text"
             placeholder='Start Time'
           />
+          <i class="fa-solid fa-arrow-right"></i>
           <input
-            className='end-time'
+            className='time'
             type="text"
             placeholder='End Time'
           />
         </div>
+
         <textarea
           className='notes'
           placeholder='Event Notes'
