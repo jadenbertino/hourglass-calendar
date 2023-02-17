@@ -7,10 +7,10 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import './auth.css'
 
 export default function SignInModal({ setModalActive }) {
-  // form controls
+  // form controls & validation
   const [email, setEmail] = useState('')
-  const [emailisValid, setEmailIsValid] = useState(true)
   const [password, setPassword] = useState('')
+  const [emailisValid, setEmailIsValid] = useState(true)
   const [passwordIsValid, setPasswordIsValid] = useState(true)
 
   const { user } = useAuthContext()

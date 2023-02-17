@@ -36,7 +36,7 @@ export function useSignUp() {
       
     } catch (err) {
       if (isMounted) {
-        console.log(err)
+        console.log(err.message)
         setError(err.message)
         setPending(false)
       }

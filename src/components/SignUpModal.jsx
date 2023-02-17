@@ -7,23 +7,36 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import './auth.css'
 
 export default function SignUpModal({setModalActive}) {
-  // form controls
+  // form controls & alidation
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [validDisplayName, setValidDisplayName] = useState(true)
+  const [validEmail, setValidEmail] = useState(true)
+  const [validPassword, setValidPassword] = useState(true)
 
   const { user } = useAuthContext()
   const { signup, error } = useSignUp()
 
   function handleSubmit(e) {
     e.preventDefault()
-    signup(displayName, email, password)
+    setValidDisplayName(true)
+
+    if (displayName.length > 0) {
+      signup(displayName, email, password)
+    } else {
+      setValidDisplayName(false)
+    }
   }
 
   useEffect(() => {
-    if (user) setModalActive('')
+    if (user) setModalActive('') // close sign in modal on signup
     
-    if (error) console.log(error)
+    if (error) {
+      setValidEmail(!error.includes("email"))
+      setValidPassword(!error.includes("password"))
+      setValidDisplayName(displayName.length > 0)
+    }
   }, [user, error])
   
   return (
@@ -36,18 +49,21 @@ export default function SignUpModal({setModalActive}) {
             placeholder="first name"
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
+            className={validDisplayName ? "" : "invalid"}
           />
           <input
             type="email"
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            className={validEmail ? "" : "invalid"}
           />
           <input
             type="password"
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            className={validPassword ? "" : "invalid"}
           />
           <button className="btn">Sign Up</button>
         </form>
