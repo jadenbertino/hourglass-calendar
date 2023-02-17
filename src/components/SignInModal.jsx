@@ -1,6 +1,7 @@
 import { Modal } from './components'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSignIn } from '../hooks/useSignIn'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 // styles
 import './auth.css'
@@ -8,15 +9,28 @@ import './auth.css'
 export default function SignInModal({ setModalActive }) {
   // form controls
   const [email, setEmail] = useState('')
+  const [emailisValid, setEmailIsValid] = useState(true)
   const [password, setPassword] = useState('')
-  
-  const { signin } = useSignIn()
+  const [passwordIsValid, setPasswordIsValid] = useState(true)
 
-  function handleSubmit(e) {
+  const { user } = useAuthContext()
+  const { signin, error } = useSignIn()
+
+  async function handleSubmit(e) {
     e.preventDefault()
-    signin(email, password)
-    setModalActive('')
+    await signin(email, password)
   }
+
+  useEffect(() => {
+    if (user) {
+      setModalActive('')
+      setEmailIsValid(true)
+      setPasswordIsValid(true)
+    }
+
+    if (error && error.includes("user-not-found")) setEmailIsValid(false)
+    if (error && error.includes("wrong-password")) setPasswordIsValid(false)
+  }, [user, error])
 
   return (
     <Modal>
@@ -28,12 +42,14 @@ export default function SignInModal({ setModalActive }) {
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            className={emailisValid ? "" : "invalid"}
           />
           <input
             type="password"
             placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            className={passwordIsValid ? "" : "invalid"}
           />
           <button className="btn">Sign In</button>
         </form>

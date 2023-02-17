@@ -19,6 +19,11 @@ export default function Nav() {
     setMonthAndYear(`${month} ${year}`)
   }, [])
 
+  function handleSignOut() {
+    signout()
+    setModalActive('')
+  }
+
   return (
     <nav className="container row">
       <span>{monthAndYear}</span>
@@ -33,7 +38,7 @@ export default function Nav() {
         ) : (
           <>
             <span>Welcome, {user.displayName}</span>
-            <button className="btn" onClick={signout}>Log Out</button>
+            <button className="btn" onClick={handleSignOut}>Log Out</button>
           </>
         )}
       </div>

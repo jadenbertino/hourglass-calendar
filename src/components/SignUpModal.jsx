@@ -1,6 +1,7 @@
 import { Modal } from './components'
 import { useSignUp } from '../hooks/useSignUp'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 // styles
 import './auth.css'
@@ -10,14 +11,20 @@ export default function SignUpModal({setModalActive}) {
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  
-  const { signup } = useSignUp()
+
+  const { user } = useAuthContext()
+  const { signup, error } = useSignUp()
 
   function handleSubmit(e) {
     e.preventDefault()
     signup(displayName, email, password)
-    setModalActive(false)
   }
+
+  useEffect(() => {
+    if (user) setModalActive('')
+    
+    if (error) console.log(error)
+  }, [user, error])
   
   return (
     <Modal>
