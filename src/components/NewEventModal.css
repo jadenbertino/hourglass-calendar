@@ -53,3 +53,7 @@
 .new-event-form .save-btn {
   margin-left: 12px;
 }
+
+.fa-arrow-right {
+  transform: translateY(8px);
+}
