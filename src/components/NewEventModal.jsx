@@ -10,20 +10,18 @@ import { Modal } from './components'
 import './NewEventModal.css'
 
 export default function NewEventModal({setModalActive}) {
-  // form controls
+  // form controls & validation
   const [eventName, setEventName] = useState('')
   const [eventDate, setEventDate] = useState('')
   const [eventStartTime, setEventStartTime] = useState('')
   const [eventEndTime, setEventEndTime] = useState('')
   const [eventNotes, setEventNotes] = useState('')
-  console.log(eventDate)
-
-  // form validation
   const [validName, setValidName] = useState(true)
   const [validNotes, setValidNotes] = useState(true)
   const [validDate, setValidDate] = useState(true)
   const [validStartTime, setValidStartTime] = useState(true)
   const [validEndTime, setValidEndTime] = useState(true)
+
   const { user } = useAuthContext()
 
   /*
@@ -130,7 +128,6 @@ export default function NewEventModal({setModalActive}) {
     setEventStartTime('')
     setEventEndTime('')
   }
-
 
   async function createEvent() {
     /*
