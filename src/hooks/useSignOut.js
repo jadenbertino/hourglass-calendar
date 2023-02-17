@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { auth } from "../firebase/init";
 import { useAuthContext } from "./useAuthContext";
 
-export function useLogOut() {
+export function useSignOut() {
   const [error, setError] = useState(null)
   const [pending, setPending] = useState(false)
   const [mounted, setMounted] = useState(true)
   const { setAuthContext } = useAuthContext()
 
-  async function logout() {
+  async function signout() {
     setError(null)
     setPending(true)
 
@@ -38,5 +38,5 @@ export function useLogOut() {
     return () => setMounted(false)
   }, [])
 
-  return { logout, error, pending }
+  return { signout, error, pending }
 }

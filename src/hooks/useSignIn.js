@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { auth } from "../firebase/init";
 import { useAuthContext } from "./useAuthContext";
 
-export function useLogIn() {
+export function useSignIn() {
   const [error, setError] = useState(null)
   const [pending, setPending] = useState(false)
   const [mounted, setMounted] = useState(true)
   const { setAuthContext } = useAuthContext()
 
-  async function login(email, password) {
+  async function signin(email, password) {
     setError(null)
     setPending(true)
 
@@ -39,5 +39,5 @@ export function useLogIn() {
     return () => setMounted(false)
   }, [])
 
-  return { login, error, pending }
+  return { signin, error, pending }
 }

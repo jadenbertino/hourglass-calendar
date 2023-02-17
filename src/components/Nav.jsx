@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
-import {useLogOut} from '../hooks/useLogOut'
-
+import {useSignOut} from '../hooks/useSignOut'
 import { SignInModal, SignUpModal } from './components'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 import './Nav.css'
 
 export default function Nav() {
   const [monthAndYear, setMonthAndYear] = useState('')
-  const [modalActive, setModalActive] = useState('signup')
-  const user = false;
+  const [modalActive, setModalActive] = useState('')
+  const { user } = useAuthContext()
+  const { signout } = useSignOut()
 
   useEffect(() => {
     const today = new Date()
@@ -29,8 +30,8 @@ export default function Nav() {
           </>
         ) : (
           <>
-            <span>Welcome, {user.name}</span>
-            <button className="btn" onClick={useLogOut}>Log Out</button>
+            <span>Welcome, {user.displayName}</span>
+            <button className="btn" onClick={signout}>Log Out</button>
           </>
         )}
       </div>
