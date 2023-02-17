@@ -54,10 +54,6 @@ form * {
   justify-content: center;
 }
 
-.fc {
-  flex-direction: column;
-}
-
 /*
 
     REUSABLES
@@ -72,7 +68,7 @@ form * {
   color: #fff;
 }
 
-input.invalid {
+form .invalid {
   outline: solid red 2px;
   border: 1px solid transparent;
 }
