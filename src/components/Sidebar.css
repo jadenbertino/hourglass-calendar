@@ -1,0 +1,10 @@
+.sidebar {
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.new-event-btn {
+  margin-top: 16px;
+}

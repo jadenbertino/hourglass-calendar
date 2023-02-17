@@ -54,6 +54,10 @@ form * {
   justify-content: center;
 }
 
+.fc {
+  flex-direction: column;
+}
+
 /*
 
     REUSABLES
