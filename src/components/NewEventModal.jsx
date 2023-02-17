@@ -16,6 +16,8 @@ export default function NewEventModal({setModalActive}) {
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
   const [notes, setNotes] = useState('')
+
+  // form validation
   
   const { user } = useAuthContext()
 

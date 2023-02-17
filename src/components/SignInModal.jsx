@@ -27,9 +27,10 @@ export default function SignInModal({ setModalActive }) {
       setEmailIsValid(true)
       setPasswordIsValid(true)
     }
-
-    if (error && error.includes("user-not-found")) setEmailIsValid(false)
-    if (error && error.includes("wrong-password")) setPasswordIsValid(false)
+    if (error) {
+      setEmailIsValid(!error.includes("user-not-found"))
+      setPasswordIsValid(!error.includes("wrong-password"))
+    }
   }, [user, error])
 
   return (

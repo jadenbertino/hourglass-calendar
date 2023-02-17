@@ -71,3 +71,8 @@ form * {
   background-color: #2e8cff;
   color: #fff;
 }
+
+input.invalid {
+  outline: solid red 2px;
+  border: 1px solid transparent;
+}
