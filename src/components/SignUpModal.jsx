@@ -10,6 +10,7 @@ export default function SignUpModal({setModalActive}) {
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  
   const { signup } = useSignUp()
 
   function handleSubmit(e) {

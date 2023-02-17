@@ -26,7 +26,9 @@ export default function Nav() {
         {!user ? (
           <>
             <button className="btn" onClick={() => setModalActive('signin')}>Sign In</button>
+            {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
             <button className="btn" onClick={() => setModalActive('signup')}>Sign Up</button>
+            {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
           </>
         ) : (
           <>
@@ -35,8 +37,6 @@ export default function Nav() {
           </>
         )}
       </div>
-      {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
-      {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
     </nav>
   )
 }

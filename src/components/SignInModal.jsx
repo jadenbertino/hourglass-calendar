@@ -1,16 +1,21 @@
 import { Modal } from './components'
 import { useState } from 'react'
+import { useSignIn } from '../hooks/useSignIn'
 
 // styles
 import './auth.css'
 
-export default function SignInModal() {
+export default function SignInModal({ setModalActive }) {
+  // form controls
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [displayName, setDisplayName] = useState('')
   
+  const { signin } = useSignIn()
+
   function handleSubmit(e) {
     e.preventDefault()
+    signin(email, password)
+    setModalActive('')
   }
 
   return (
@@ -32,7 +37,7 @@ export default function SignInModal() {
           />
           <button className="btn">Sign In</button>
         </form>
-        <button type="button" className="close-modal-btn">
+        <button type="button" className="close-modal-btn" onClick={() => setModalActive('')}>
           <i className="fa-solid fa-x"></i>
         </button>
       </div>
