@@ -113,8 +113,6 @@ export default function NewEventModal({setModalActive}) {
     // start time must be before end time
     const startTime = parseTime(eventStartTime)
     const endTime = parseTime(eventEndTime)
-    console.log(startTime)
-    console.log(endTime)
     if (startTime && endTime && startTime.getTime() > endTime.getTime()) {
       setValidStartTime(false)
       setValidEndTime(false)
