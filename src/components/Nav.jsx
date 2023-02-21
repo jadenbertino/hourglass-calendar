@@ -25,22 +25,24 @@ export default function Nav() {
   }
 
   return (
-    <nav className="container row">
-      <span>{monthAndYear}</span>
-      <div className="auth">
-        {!user ? (
-          <>
-            <button className="btn" onClick={() => setModalActive('signin')}>Sign In</button>
-            {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
-            <button className="btn" onClick={() => setModalActive('signup')}>Sign Up</button>
-            {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
-          </>
-        ) : (
-          <>
-            <span>Welcome, {user.displayName}</span>
-            <button className="btn" onClick={handleSignOut}>Log Out</button>
-          </>
-        )}
+    <nav className="container">
+      <div className="row">
+        <h3>{monthAndYear}</h3>
+        <div className="auth">
+          {!user ? (
+            <>
+              <button className="btn" onClick={() => setModalActive('signin')}>Sign In</button>
+              {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
+              <button className="btn" onClick={() => setModalActive('signup')}>Sign Up</button>
+              {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
+            </>
+          ) : (
+            <>
+              <span>Welcome, {user.displayName}</span>
+              <button className="btn" onClick={handleSignOut}>Log Out</button>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   )

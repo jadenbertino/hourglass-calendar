@@ -12,13 +12,15 @@
 
 body {
   font-family: sans-serif;
+  background-color: #404552;
+  color: #fff;
 }
 
 input,
 textarea {
   padding: 8px;
   min-height: 40px;
-  border: solid 1px #292929;
+  border: solid 1px #31343f;
   border-radius: 4px;
   font-family: sans-serif;
   margin-top: 16px;
@@ -26,7 +28,7 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: solid 2px #2e8cff;
+  outline: solid 2px #3f8efc;
   border: solid 1px transparent;
 }
 
@@ -45,7 +47,7 @@ form * {
 }
 
 .row {
-  margin: 24px 0;
+  padding: 24px 0;
 }
 
 .dfa {
@@ -64,7 +66,7 @@ form * {
   padding: 8px 16px;
   border-radius: 4px;
   border: none;
-  background-color: #2e8cff;
+  background-color: #3f8efc;
   color: #fff;
 }
 

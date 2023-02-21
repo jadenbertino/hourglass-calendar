@@ -1,9 +1,13 @@
 nav {
+  background-color: #31343f;
+}
+
+nav .row {
   display: flex; 
   justify-content: space-between;
   align-items: center;
 }
 
 .auth .btn {
-  margin-left: 12px;
+  margin-left: 24px;
 }
