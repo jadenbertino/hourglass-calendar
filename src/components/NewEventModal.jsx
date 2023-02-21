@@ -16,8 +16,6 @@ export default function NewEventModal({setModalActive}) {
   const [eventStartTime, setEventStartTime] = useState('')
   const [eventEndTime, setEventEndTime] = useState('')
   const [eventNotes, setEventNotes] = useState('')
-  const [validName, setValidName] = useState(true)
-  const [validNotes, setValidNotes] = useState(true)
   const [validDate, setValidDate] = useState(true)
   const [validStartTime, setValidStartTime] = useState(true)
   const [validEndTime, setValidEndTime] = useState(true)
@@ -31,8 +29,6 @@ export default function NewEventModal({setModalActive}) {
   */
 
   function resetValidation() {
-    setValidName(true)
-    setValidNotes(true)
     setValidStartTime(true)
     setValidEndTime(true)
     setValidDate(true)
@@ -83,16 +79,6 @@ export default function NewEventModal({setModalActive}) {
     // can't check state within this function because state updates are scheduled
     // could do a useEffect but this is simpler
     let allFieldsAreValid = true
-
-    // name + notes can't be empty
-    if (eventName.length === 0) {
-      setValidName(false)
-      allFieldsAreValid = false
-    }
-    if (eventNotes.length === 0) {
-      setValidNotes(false)
-      allFieldsAreValid = false
-    }
 
     // date must be 10 chars (YYYY-MM-DD)
     if (eventDate.length !== 10) {
@@ -148,10 +134,11 @@ export default function NewEventModal({setModalActive}) {
     <Modal>
       <form className='new-event-form' onSubmit={validateFormControls}>
         <input
-          className={`name ${validName ? "" : "invalid"}`}
+          className='name'
           type="text"
           placeholder='Event Name' 
           onChange={(e) => setEventName(e.target.value)}
+          required
           value={eventName}
         />
         <input
@@ -159,6 +146,7 @@ export default function NewEventModal({setModalActive}) {
           type="date"
           placeholder = 'Date'
           onChange={(e) => setEventDate(e.target.value)}
+          required
           value={eventDate}
         />
         <div className="times-wrapper">
@@ -167,6 +155,7 @@ export default function NewEventModal({setModalActive}) {
             type="text"
             placeholder='Start Time'
             onChange={(e) => setEventStartTime(e.target.value)}
+            required
             value={eventStartTime}
           />
           <i className="fa-solid fa-arrow-right"></i>
@@ -175,13 +164,15 @@ export default function NewEventModal({setModalActive}) {
             type="text"
             placeholder='End Time'
             onChange={(e) => setEventEndTime(e.target.value)}
+            required
             value={eventEndTime}
           />
         </div>
         <textarea
-          className={`notes ${validNotes ? "" : "invalid"}`}
+          className='notes'
           placeholder='Event Notes'
           onChange={(e) => setEventNotes(e.target.value)}
+          required
           value={eventNotes}
         />
         <button className='btn cancel-btn' type="button" onClick={(() => setModalActive(''))}>Cancel</button>
