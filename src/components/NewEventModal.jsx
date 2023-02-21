@@ -21,7 +21,7 @@ export default function NewEventModal({setModalActive}) {
   const [validDate, setValidDate] = useState(true)
   const [validStartTime, setValidStartTime] = useState(true)
   const [validEndTime, setValidEndTime] = useState(true)
-
+  
   const { user } = useAuthContext()
 
   /*
@@ -48,23 +48,27 @@ export default function NewEventModal({setModalActive}) {
       convert into date object
     */
     try {
+      // remove whitespace
       str = str.replace(/\s/g, "");
+      const hoursRegex = /^\d+(?=:|[a-zA-Z])/;
+
       const time = {
-        'hours': Number(str.slice(0,2)),
+        'hours': Number(str.match(hoursRegex)[0]),
+        // grab 2 digits after the colon or set to 0 if no colon
         'minutes': str.includes(":") ? Number(str.match(/:(.{2})/)[1]) : 0
       }
-
+      
       // pm? => add 12 to hours
-      if (time.hours !== 12 && str.match(/[a-z]+/gi).join('').toUpperCase() === 'PM') {
+      if (time.hours !== 12 && str.toLowerCase().includes('pm')) {
         time.hours += 12
       }
+      console.log(time)
 
       // note that the TIME is what you want, date will be inaccurate
       const date = new Date();
       date.setHours(time.hours)
       date.setMinutes(time.minutes)
       return date
-
     } catch {
       console.log('invalid time string')
     }
@@ -72,15 +76,19 @@ export default function NewEventModal({setModalActive}) {
 
   function validateFormControls(e) {
     e.preventDefault()
-
+    
+    // set all validation to true
     resetValidation()
+
+    // can't check state within this function because state updates are scheduled
+    // could do a useEffect but this is simpler
     let allFieldsAreValid = true
 
     // name + notes can't be empty
     if (eventName.length === 0) {
       setValidName(false)
       allFieldsAreValid = false
-    } 
+    }
     if (eventNotes.length === 0) {
       setValidNotes(false)
       allFieldsAreValid = false
@@ -92,26 +100,28 @@ export default function NewEventModal({setModalActive}) {
       allFieldsAreValid = false
     }
 
-    // start time & end time must be in HH:MM:XM format, regex from chatgpt
-    const timeRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
-    if (!timeRegex.test(eventStartTime)) {
+    // start time & end time must be in HH:MM:XM or military (HH:MM) format
+    const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
+    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+    if (!meridianRegex.test(eventStartTime) && !militaryRegex.test(eventStartTime)) {
       setValidStartTime(false)
       allFieldsAreValid = false
     }
-    if (!timeRegex.test(eventEndTime)) {
+    if (!meridianRegex.test(eventEndTime) && !militaryRegex.test(eventEndTime)) {
       setValidEndTime(false)
       allFieldsAreValid = false
     }
 
     // start time must be before end time
-    const startTime = parseTime(eventStartTime)
-    const endTime = parseTime(eventEndTime)
+    const startTime = validStartTime && parseTime(eventStartTime)
+    const endTime = validEndTime && parseTime(eventEndTime)
     if (!startTime || !endTime || startTime.getTime() > endTime.getTime()) {
-      allFieldsAreValid = false;
       setValidStartTime(false)
       setValidEndTime(false)
+      allFieldsAreValid = false
     }
-
+    
     if (allFieldsAreValid) createEvent()
   }
 
@@ -121,18 +131,7 @@ export default function NewEventModal({setModalActive}) {
 
   */
 
-  function resetFields() {
-    setEventName('')
-    setEventNotes('')
-    setEventDate('')
-    setEventStartTime('')
-    setEventEndTime('')
-  }
-
   async function createEvent() {
-    /*
-      Create Event
-    */
     const event = {
       name: eventName,
       notes: eventNotes,
