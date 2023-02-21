@@ -48,10 +48,12 @@
 
 .new-event-form .cancel-btn {
   margin-left: auto;
+  background-color: #93a8ac;
 }
 
 .new-event-form .save-btn {
   margin-left: 12px;
+  /* background-color: #62c370; */
 }
 
 .fa-arrow-right {

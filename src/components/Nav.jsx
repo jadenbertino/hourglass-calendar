@@ -39,7 +39,7 @@ export default function Nav() {
           ) : (
             <>
               <span>Welcome, {user.displayName}</span>
-              <button className="btn" onClick={handleSignOut}>Log Out</button>
+              <button className="btn logout-btn" onClick={handleSignOut}>Log Out</button>
             </>
           )}
         </div>

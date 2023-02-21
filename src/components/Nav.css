@@ -11,3 +11,8 @@ nav .row {
 .auth .btn {
   margin-left: 24px;
 }
+
+.auth .logout-btn {
+  /* background-color: #93a8ac; */
+  background-color: #598392;
+}
