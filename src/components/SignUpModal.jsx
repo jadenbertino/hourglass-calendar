@@ -33,6 +33,11 @@ export default function SignUpModal({setModalActive}) {
     if (user) setModalActive('') // close sign in modal on signup
     
     if (error) {
+      // reset
+      setValidEmail(true)
+      setValidPassword(true)
+      setValidDisplayName(true)
+
       if (error.includes("email")) {
         alert('Email already in use')
         setValidEmail(false)

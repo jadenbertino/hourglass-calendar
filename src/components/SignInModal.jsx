@@ -10,9 +10,10 @@ export default function SignInModal({ setModalActive }) {
   // form controls & validation
   const [email, setEmail] = useState('')
   const [emailPlaceholder, setEmailPlaceholder] = useState('email')
+  const [emailisValid, setEmailIsValid] = useState(true)
+  
   const [password, setPassword] = useState('')
   const [passwordPlaceholder, setPasswordPlaceholder] = useState('password')
-  const [emailisValid, setEmailIsValid] = useState(true)
   const [passwordIsValid, setPasswordIsValid] = useState(true)
 
   const { user } = useAuthContext()
@@ -26,11 +27,16 @@ export default function SignInModal({ setModalActive }) {
   useEffect(() => {
     if (user) setModalActive('')
     if (error) {
+      // reset
+      setEmailIsValid(true)
+      setPasswordIsValid(true)
+
       if (error.includes("user-not-found")) {
         setEmailIsValid(false)
         setEmail('')
         setEmailPlaceholder('email not found')
       }
+      
       if (error.includes("wrong-password")) {
         setPasswordIsValid(false)
         setPassword('')
