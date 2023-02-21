@@ -10,12 +10,14 @@ import { Modal } from './components'
 import './NewEventModal.css'
 
 export default function NewEventModal({setModalActive}) {
-  // form controls & validation
+  // form controls
   const [eventName, setEventName] = useState('')
   const [eventDate, setEventDate] = useState('')
   const [eventStartTime, setEventStartTime] = useState('')
   const [eventEndTime, setEventEndTime] = useState('')
   const [eventNotes, setEventNotes] = useState('')
+
+  // form validation
   const [validDate, setValidDate] = useState(true)
   const [validStartTime, setValidStartTime] = useState(true)
   const [validEndTime, setValidEndTime] = useState(true)
@@ -38,10 +40,6 @@ export default function NewEventModal({setModalActive}) {
     /*
       str is in HH:MM:XM or HH:XM format, 
       with an optional space in between time & meridian
-
-      remove any whitespace
-      extract hours minutes meridian from string
-      convert into date object
     */
     try {
       // remove whitespace
@@ -58,7 +56,11 @@ export default function NewEventModal({setModalActive}) {
       if (time.hours !== 12 && str.toLowerCase().includes('pm')) {
         time.hours += 12
       }
-      console.log(time)
+
+      // hours is 12am? => subtract 12 hours
+      if (time.hours === 12 && str.toLowerCase().includes('am')) {
+        time.hours -= 12
+      }
 
       // note that the TIME is what you want, date will be inaccurate
       const date = new Date();
@@ -70,10 +72,16 @@ export default function NewEventModal({setModalActive}) {
     }
   }
 
+  function isNotValidTimeFormat(time) {
+    // start time & end time must be in HH:MM:XM or military (HH:MM) format
+    const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
+    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+    return !meridianRegex.test(time) && !militaryRegex.test(time)
+  }
+
   function validateFormControls(e) {
     e.preventDefault()
-    
-    // set all validation to true
     resetValidation()
 
     // can't check state within this function because state updates are scheduled
@@ -84,28 +92,34 @@ export default function NewEventModal({setModalActive}) {
     if (eventDate.length !== 10) {
       setValidDate(false)
       allFieldsAreValid = false
+      alert('Please ensure event data is in MM/DD/YYYY format')
     }
 
-    // start time & end time must be in HH:MM:XM or military (HH:MM) format
-    const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
-    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
-
-    if (!meridianRegex.test(eventStartTime) && !militaryRegex.test(eventStartTime)) {
+    if (isNotValidTimeFormat(eventStartTime)) {
       setValidStartTime(false)
       allFieldsAreValid = false
+      alert("Please ensure event times are in HH:MM:XM or HH:MM format")
     }
-    if (!meridianRegex.test(eventEndTime) && !militaryRegex.test(eventEndTime)) {
+
+    if (isNotValidTimeFormat(eventEndTime)) {
       setValidEndTime(false)
       allFieldsAreValid = false
+      // don't duplicate alert
+      if (!isNotValidTimeFormat(eventStartTime)) {
+        alert("Please ensure event times are in HH:MM:XM or HH:MM format")
+      }
     }
 
     // start time must be before end time
-    const startTime = validStartTime && parseTime(eventStartTime)
-    const endTime = validEndTime && parseTime(eventEndTime)
-    if (!startTime || !endTime || startTime.getTime() > endTime.getTime()) {
+    const startTime = parseTime(eventStartTime)
+    const endTime = parseTime(eventEndTime)
+    console.log(startTime)
+    console.log(endTime)
+    if (startTime && endTime && startTime.getTime() > endTime.getTime()) {
       setValidStartTime(false)
       setValidEndTime(false)
       allFieldsAreValid = false
+      alert("Please ensure that event start time is before event end time.\nIf the time doesn't include AM/PM then it is interpreted as military time.")
     }
     
     if (allFieldsAreValid) createEvent()
