@@ -33,7 +33,10 @@ export default function SignUpModal({setModalActive}) {
     if (user) setModalActive('') // close sign in modal on signup
     
     if (error) {
-      setValidEmail(!error.includes("email"))
+      if (error.includes("email")) {
+        alert('Email already in use')
+        setValidEmail(false)
+      } 
       setValidPassword(!error.includes("password"))
       setValidDisplayName(displayName.length > 0)
     }
@@ -60,7 +63,7 @@ export default function SignUpModal({setModalActive}) {
           />
           <input
             type="password"
-            placeholder="password"
+            placeholder="password (6 characters or more)"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             className={validPassword ? "" : "invalid"}
