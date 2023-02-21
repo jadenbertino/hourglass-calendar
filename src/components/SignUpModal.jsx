@@ -53,6 +53,7 @@ export default function SignUpModal({setModalActive}) {
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
             className={validDisplayName ? "" : "invalid"}
+            required
           />
           <input
             type="email"
@@ -60,6 +61,7 @@ export default function SignUpModal({setModalActive}) {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             className={validEmail ? "" : "invalid"}
+            required
           />
           <input
             type="password"
@@ -67,6 +69,7 @@ export default function SignUpModal({setModalActive}) {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             className={validPassword ? "" : "invalid"}
+            required
           />
           <button className="btn">Sign Up</button>
         </form>

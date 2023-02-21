@@ -16,6 +16,10 @@ body {
   color: #fff;
 }
 
+button {
+  cursor: pointer;
+}
+
 input,
 textarea {
   padding: 8px;

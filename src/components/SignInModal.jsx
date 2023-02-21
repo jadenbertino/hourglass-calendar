@@ -9,7 +9,9 @@ import './auth.css'
 export default function SignInModal({ setModalActive }) {
   // form controls & validation
   const [email, setEmail] = useState('')
+  const [emailPlaceholder, setEmailPlaceholder] = useState('email')
   const [password, setPassword] = useState('')
+  const [passwordPlaceholder, setPasswordPlaceholder] = useState('password')
   const [emailisValid, setEmailIsValid] = useState(true)
   const [passwordIsValid, setPasswordIsValid] = useState(true)
 
@@ -22,14 +24,18 @@ export default function SignInModal({ setModalActive }) {
   }
 
   useEffect(() => {
-    if (user) {
-      setModalActive('')
-      setEmailIsValid(true)
-      setPasswordIsValid(true)
-    }
+    if (user) setModalActive('')
     if (error) {
-      setEmailIsValid(!error.includes("user-not-found"))
-      setPasswordIsValid(!error.includes("wrong-password"))
+      if (error.includes("user-not-found")) {
+        setEmailIsValid(false)
+        setEmail('')
+        setEmailPlaceholder('email not found')
+      }
+      if (error.includes("wrong-password")) {
+        setPasswordIsValid(false)
+        setPassword('')
+        setPasswordPlaceholder('wrong password')
+      }
     }
   }, [user, error])
 
@@ -40,17 +46,19 @@ export default function SignInModal({ setModalActive }) {
         <form onSubmit={handleSubmit}>
           <input
             type="email"
-            placeholder="email"
+            placeholder={emailPlaceholder}
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             className={emailisValid ? "" : "invalid"}
+            required
           />
           <input
             type="password"
-            placeholder="password"
+            placeholder={passwordPlaceholder}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             className={passwordIsValid ? "" : "invalid"}
+            required
           />
           <button className="btn">Sign In</button>
         </form>
