@@ -11,7 +11,6 @@ export default function SignUpModal({setModalActive}) {
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [validDisplayName, setValidDisplayName] = useState(true)
   const [validEmail, setValidEmail] = useState(true)
   const [validPassword, setValidPassword] = useState(true)
 
@@ -20,30 +19,21 @@ export default function SignUpModal({setModalActive}) {
 
   function handleSubmit(e) {
     e.preventDefault()
-    setValidDisplayName(true)
-
-    if (displayName.length > 0) {
-      signup(displayName, email, password)
-    } else {
-      setValidDisplayName(false)
-    }
+    signup(displayName, email, password)
   }
 
   useEffect(() => {
     if (user) setModalActive('') // close sign in modal on signup
     
     if (error) {
-      // reset
       setValidEmail(true)
       setValidPassword(true)
-      setValidDisplayName(true)
 
       if (error.includes("email")) {
         alert('Email already in use')
         setValidEmail(false)
       } 
       setValidPassword(!error.includes("password"))
-      setValidDisplayName(displayName.length > 0)
     }
   }, [user, error])
   
@@ -57,7 +47,6 @@ export default function SignUpModal({setModalActive}) {
             placeholder="first name"
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
-            className={validDisplayName ? "" : "invalid"}
             required
           />
           <input

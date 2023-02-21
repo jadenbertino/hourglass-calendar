@@ -35,6 +35,14 @@ export default function NewEventModal({setModalActive}) {
     setValidEndTime(true)
     setValidDate(true)
   }
+  
+  function isNotValidTimeFormat(time) {
+    // start time & end time must be in HH:MM:XM or military (HH:MM) format
+    const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
+    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+    return !meridianRegex.test(time) && !militaryRegex.test(time)
+  }
 
   function parseTime(str) {
     /*
@@ -62,6 +70,11 @@ export default function NewEventModal({setModalActive}) {
         time.hours -= 12
       }
 
+      // military time must be < 24:00
+      if (time.hours >= 24) {
+        throw new Error('Time cannot be past 24hrs')
+      }
+
       // note that the TIME is what you want, date will be inaccurate
       const date = new Date();
       date.setHours(time.hours)
@@ -70,14 +83,6 @@ export default function NewEventModal({setModalActive}) {
     } catch {
       console.log('invalid time string')
     }
-  }
-
-  function isNotValidTimeFormat(time) {
-    // start time & end time must be in HH:MM:XM or military (HH:MM) format
-    const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
-    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
-
-    return !meridianRegex.test(time) && !militaryRegex.test(time)
   }
 
   function validateFormControls(e) {
