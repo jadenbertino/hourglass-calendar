@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
 // components
-import { NewEventModal, Sidebar } from '../../components/components'
+import { NewEventModal, Sidebar, Locked, SignInModal, SignUpModal } from '../../components/components'
 
 // styles
 import './Home.css'
@@ -12,13 +12,23 @@ export default function Home() {
   const { user } = useAuthContext()
 
   return (
-    <div>
-      {user ? (<>
-        <Sidebar setModalActive={setModalActive} />
-        {modalActive === "newEvent" && <NewEventModal setModalActive={setModalActive}/> }
-      </>) : (<>
-        <p className="container sidebar">please sign in</p>
-      </>)}
-    </div>
+    <main>
+      <div className="container">
+        <div className="row">
+          {user ? (
+            <>
+              <Sidebar setModalActive={setModalActive} />
+              {modalActive === "newEvent" && <NewEventModal setModalActive={setModalActive}/> }
+            </>
+          ) : (
+            <>
+              <Locked setModalActive={setModalActive} />
+            </>
+          )}
+          {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
+          {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
+        </div>
+      </div>
+    </main>
   )
 }
