@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
 import {useSignOut} from '../hooks/useSignOut'
 import { SignInModal, SignUpModal } from './components'
+
+// context
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useModalContext } from '../hooks/useModalContext'
+import { useDateContext } from '../hooks/useDateContext'
 
 // styles
 import './Nav.css'
@@ -10,16 +13,16 @@ import './Nav.css'
 export default function Nav({children}) {
   const [monthAndYear, setMonthAndYear] = useState('')
   const { modalContext, setModalContext } = useModalContext()
+  const { dateContext } = useDateContext()
   const { user } = useAuthContext()
   const { signout } = useSignOut()
 
   useEffect(() => {
-    const today = new Date()
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const month = monthNames[today.getMonth()]
-    const year = today.getFullYear()
+    const month = monthNames[dateContext.getMonth()]
+    const year = dateContext.getFullYear()
     setMonthAndYear(`${month} ${year}`)
-  }, [])
+  }, [dateContext])
 
   function handleSignOut() {
     signout()

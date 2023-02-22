@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Nav, Sidebar, NewEventModal } from '../../components/components'
 import { useModalContext } from '../../hooks/useModalContext'
+import { useDateContext } from '../../hooks/useDateContext'
+
+// styles
 import './DailyView.css'
 
 export default function DailyView() {
-  const [dateObj, setDateObj] = useState(new Date())
+  const { dateContext, setDateContext } = useDateContext()
   const [dayName, setDayName] = useState('')
   const [dayOfMonth, setDayOfMonth] = useState('')
   const {modalContext} = useModalContext()
@@ -12,20 +15,20 @@ export default function DailyView() {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   useEffect(() => {
-    setDayName(days[dateObj.getDay()])
-    setDayOfMonth(dateObj.getDate())
-  }, [dateObj])
+    setDayName(days[dateContext.getDay()])
+    setDayOfMonth(dateContext.getDate())
+  }, [dateContext])
 
   function incrementDate() {
-    const newDate = new Date(dateObj)
+    const newDate = new Date(dateContext)
     newDate.setDate(newDate.getDate() + 1);
-    setDateObj(newDate)
+    setDateContext(newDate)
   }
 
   function decrementDate() {
-    const newDate = new Date(dateObj)
+    const newDate = new Date(dateContext)
     newDate.setDate(newDate.getDate() - 1);
-    setDateObj(newDate)
+    setDateContext(newDate)
   }
 
   return (<>
