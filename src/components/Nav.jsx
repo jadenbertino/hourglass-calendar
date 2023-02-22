@@ -7,7 +7,7 @@ import { useModalContext } from '../hooks/useModalContext'
 // styles
 import './Nav.css'
 
-export default function Nav() {
+export default function Nav({children}) {
   const [monthAndYear, setMonthAndYear] = useState('')
   const { modalContext, setModalContext } = useModalContext()
   const { user } = useAuthContext()
@@ -29,7 +29,10 @@ export default function Nav() {
   return (
     <nav className="container">
       <div className="row">
-        <h3>{monthAndYear}</h3>
+        <div className="date">
+          <h3>{monthAndYear}</h3>
+          {children}
+        </div>
         <div className="auth">
           {!user ? (
             <>

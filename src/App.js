@@ -2,8 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext';
 
 // pages & components
-import { Home } from './pages/pages'
-import { Nav } from './components/components'
+import {Locked, DailyView} from './pages/pages'
 
 // styles
 import './App.css';
@@ -13,9 +12,9 @@ function App() {
   return (
     <Router>
       {authIsReady && (<>
-        <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Locked />} />
+          <Route path="/daily" element={<DailyView />} />
         </Routes>
       </>)}
     </Router>

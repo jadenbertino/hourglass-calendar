@@ -1,3 +1,4 @@
-import Home from './Home/Home'
+import Locked from './Locked/Locked'
+import DailyView from './DailyView/DailyView'
 
-export { Home }
+export { Locked, DailyView }

@@ -1,3 +1,7 @@
+main {
+  position: relative;
+}
+
 .content-locked {
   display: flex;
   flex-direction: column;

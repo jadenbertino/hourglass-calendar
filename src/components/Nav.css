@@ -8,6 +8,11 @@ nav .row {
   align-items: center;
 }
 
+nav .date {
+  display: flex;
+  align-items: center;
+}
+
 .auth .btn {
   margin-left: 24px;
 }
