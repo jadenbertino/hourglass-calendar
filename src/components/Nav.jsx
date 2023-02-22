@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react'
 import {useSignOut} from '../hooks/useSignOut'
 import { SignInModal, SignUpModal } from './components'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useModalContext } from '../hooks/useModalContext'
 
+// styles
 import './Nav.css'
 
 export default function Nav() {
   const [monthAndYear, setMonthAndYear] = useState('')
-  const [modalActive, setModalActive] = useState('')
+  const { modalContext, setModalContext } = useModalContext()
   const { user } = useAuthContext()
   const { signout } = useSignOut()
 
@@ -21,7 +23,7 @@ export default function Nav() {
 
   function handleSignOut() {
     signout()
-    setModalActive('')
+    setModalContext('')
   }
 
   return (
@@ -31,10 +33,10 @@ export default function Nav() {
         <div className="auth">
           {!user ? (
             <>
-              <button className="btn" onClick={() => setModalActive('signin')}>Sign In</button>
-              {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
-              <button className="btn" onClick={() => setModalActive('signup')}>Sign Up</button>
-              {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
+              <button className="btn" onClick={() => setModalContext('signin')}>Sign In</button>
+              <button className="btn" onClick={() => setModalContext('signup')}>Sign Up</button>
+              {modalContext === 'signin' && <SignInModal />}
+              {modalContext === 'signup' && <SignUpModal />}
             </>
           ) : (
             <>

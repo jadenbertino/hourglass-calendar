@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import { useModalContext } from '../../hooks/useModalContext'
 
 // components
 import { NewEventModal, Sidebar, Locked, SignInModal, SignUpModal, DailyView } from '../../components/components'
@@ -8,8 +9,8 @@ import { NewEventModal, Sidebar, Locked, SignInModal, SignUpModal, DailyView } f
 import './Home.css'
 
 export default function Home() {
-  const [modalActive, setModalActive] = useState('')
   const { user } = useAuthContext()
+  const { modalContext, setModalContext } = useModalContext()
 
   return (
     <main>
@@ -17,13 +18,13 @@ export default function Home() {
         <div className="row">
           {user ? (
             <>
-              <Sidebar setModalActive={setModalActive} />
+              <Sidebar/>
               <DailyView />
-              {modalActive === "newEvent" && <NewEventModal setModalActive={setModalActive}/> }
+              {modalContext === "newEvent" && <NewEventModal/> }
             </>
-          ) : <Locked setModalActive={setModalActive} /> }
-          {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
-          {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
+          ) : <Locked/> }
+          {modalContext === 'signin' && <SignInModal/>}
+          {modalContext === 'signup' && <SignUpModal/>}
         </div>
       </div>
     </main>

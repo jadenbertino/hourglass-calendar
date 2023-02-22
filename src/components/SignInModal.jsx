@@ -2,11 +2,14 @@ import { Modal } from './components'
 import { useEffect, useState } from 'react'
 import { useSignIn } from '../hooks/useSignIn'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useModalContext } from '../hooks/useModalContext'
 
 // styles
 import './auth.css'
 
-export default function SignInModal({ setModalActive }) {
+export default function SignInModal() {
+  const { setModalContext } = useModalContext()
+
   // form controls & validation
   const [email, setEmail] = useState('')
   const [emailPlaceholder, setEmailPlaceholder] = useState('email')
@@ -25,7 +28,7 @@ export default function SignInModal({ setModalActive }) {
   }
 
   useEffect(() => {
-    if (user) setModalActive('')
+    if (user) setModalContext('')
     if (error) {
       // reset
       setEmailIsValid(true)
@@ -68,7 +71,7 @@ export default function SignInModal({ setModalActive }) {
           />
           <button className="btn">Sign In</button>
         </form>
-        <button type="button" className="close-modal-btn" onClick={() => setModalActive('')}>
+        <button type="button" className="close-modal-btn" onClick={() => setModalContext('')}>
           <i className="fa-solid fa-x"></i>
         </button>
       </div>

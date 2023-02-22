@@ -2,14 +2,15 @@ import { useState } from 'react'
 import { collection , addDoc } from "firebase/firestore"
 import { db } from "../firebase/init"
 import { useAuthContext } from '../hooks/useAuthContext'
-
-// components
+import { useModalContext } from '../hooks/useModalContext'
 import { Modal } from './components'
 
 // styles
 import './NewEventModal.css'
 
-export default function NewEventModal({setModalActive}) {
+export default function NewEventModal() {
+  const { setModalContext } = useModalContext()
+
   // form controls
   const [eventName, setEventName] = useState('')
   const [eventDate, setEventDate] = useState('')
@@ -144,7 +145,7 @@ export default function NewEventModal({setModalActive}) {
       uid: user.uid
     };
     await addDoc(collection(db, "events"), event);
-    setModalActive('')
+    setModalContext('')
   }
 
   return (
@@ -192,7 +193,7 @@ export default function NewEventModal({setModalActive}) {
           required
           value={eventNotes}
         />
-        <button className='btn cancel-btn' type="button" onClick={(() => setModalActive(''))}>Cancel</button>
+        <button className='btn cancel-btn' type="button" onClick={(() => setModalContext(''))}>Cancel</button>
         <button className='btn save-btn'>Save</button>
       </form>
     </Modal>

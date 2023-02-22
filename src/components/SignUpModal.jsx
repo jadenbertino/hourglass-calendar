@@ -2,11 +2,14 @@ import { Modal } from './components'
 import { useSignUp } from '../hooks/useSignUp'
 import { useEffect, useState } from 'react'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useModalContext } from '../hooks/useModalContext'
 
 // styles
 import './auth.css'
 
-export default function SignUpModal({setModalActive}) {
+export default function SignUpModal() {
+  const { setModalContext } = useModalContext()
+
   // form controls & alidation
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
@@ -23,7 +26,7 @@ export default function SignUpModal({setModalActive}) {
   }
 
   useEffect(() => {
-    if (user) setModalActive('') // close sign in modal on signup
+    if (user) setModalContext('') // close sign in modal on signup
     
     if (error) {
       setValidEmail(true)
@@ -67,7 +70,7 @@ export default function SignUpModal({setModalActive}) {
           />
           <button className="btn">Sign Up</button>
         </form>
-        <button type="button" className="close-modal-btn" onClick={() => setModalActive('')}>
+        <button type="button" className="close-modal-btn" onClick={() => setModalContext('')}>
           <i className="fa-solid fa-x"></i>
         </button>
       </div>

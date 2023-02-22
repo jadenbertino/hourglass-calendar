@@ -1,5 +1,7 @@
-import './Modal.css'
 import { createPortal } from 'react-dom'
+
+// styles
+import './Modal.css'
 
 export default function Modal({children}) {
   const root = document.querySelector('#root')
