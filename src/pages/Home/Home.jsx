@@ -21,11 +21,7 @@ export default function Home() {
               <DailyView />
               {modalActive === "newEvent" && <NewEventModal setModalActive={setModalActive}/> }
             </>
-          ) : (
-            <>
-              <Locked setModalActive={setModalActive} />
-            </>
-          )}
+          ) : <Locked setModalActive={setModalActive} /> }
           {modalActive === 'signin' && <SignInModal setModalActive={setModalActive} />}
           {modalActive === 'signup' && <SignUpModal setModalActive={setModalActive} />}
         </div>

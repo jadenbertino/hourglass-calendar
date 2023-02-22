@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './DailyView.css'
 
 export default function DailyView() {
@@ -6,7 +6,7 @@ export default function DailyView() {
   const [dayName, setDayName] = useState('')
   const [dayOfMonth, setDayOfMonth] = useState('')
 
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; // array of day names
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   useEffect(() => {
     setDayName(days[dateObj.getDay()])
