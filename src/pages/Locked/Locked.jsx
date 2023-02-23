@@ -21,25 +21,15 @@ export default function Locked() {
   
   return (<>
     <Nav />
-    <main>
-      <div className="content-locked">
-        <i className="fa-solid fa-lock"></i>
-        <h1>Please sign in to access this content</h1>
-        <div className="btns-wrapper">
-          <button className="btn" onClick={() => setModalContext('signin')}>Sign In</button>
-          <button className="btn" onClick={() => setModalContext('signup')}>Sign Up</button>
-        </div>
+    <main className="content-locked">
+      <i className="fa-solid fa-lock"></i>
+      <h1>Please sign in to access this content</h1>
+      <div className="btns-wrapper">
+        <button className="btn" onClick={() => setModalContext('signin')}>Sign In</button>
+        <button className="btn" onClick={() => setModalContext('signup')}>Sign Up</button>
       </div>
     </main>
     {modalContext === 'signin' && <SignInModal/>}
     {modalContext === 'signup' && <SignUpModal/>}
   </>)
 }
-
-/*
-home = locked
-  if signed in then redirect to /daily
-daily = day view
-  if not signed in then redirect to home
-
-*/
