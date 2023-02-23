@@ -44,6 +44,9 @@ export default function DailyView() {
             <h3>{dayName}</h3>
             <h2>{dayOfMonth}</h2>
           </div>
+          <div className="events">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi expedita quae ratione repellendus. Consectetur minima a quos libero, fugit nihil dignissimos hic possimus nemo! Praesentium ipsum enim ea pariatur impedit!</p>
+          </div>
         </div>
       </div>
       {modalContext === "newEvent" && <NewEventModal/> }

@@ -1,8 +1,12 @@
 main {
   display: flex;
-  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
 }
 
 .daily-view {
   width: 100%;
+}
+
+.events {
+  height: 1440px;
 }
