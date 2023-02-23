@@ -2,17 +2,19 @@ import { useEffect, useState, useRef } from "react";
 import { db } from "../firebase/init";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 
-export function useCollection(collectionName, _userQuery) {
+export function useCollection(collectionName, _userQueries) {
   const [entries, setEntries] = useState(null)
   const [pending, setPending] = useState(true)
-  const userQuery = useRef(_userQuery).current
+  const userQueries = useRef(_userQueries).current
 
   useEffect(() => {
     setPending(true)
     // add listener on mount + anytime collection or query changes
     let ref = collection(db, collectionName)
-    let q = userQuery ? query(ref, where(...userQuery)) : ref
-    const unsub = onSnapshot(q, (snapshot) => {
+    for (let q of userQueries) {
+      ref = query(ref, where(...q))
+    }
+    const unsub = onSnapshot(ref, (snapshot) => {
       const docs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id}))
       setEntries(docs)
       setPending(false)
@@ -20,7 +22,7 @@ export function useCollection(collectionName, _userQuery) {
 
     return unsub
 
-  }, [collectionName, userQuery])
+  }, [collectionName, userQueries])
 
   return { entries, pending }
 }

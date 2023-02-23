@@ -4,17 +4,13 @@ import { useModalContext } from '../../hooks/useModalContext'
 import { useDateContext } from '../../hooks/useDateContext'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../hooks/useAuthContext'
+import { useCollection } from '../../hooks/useCollection'
 
 // styles
 import './DailyView.css'
 
 export default function DailyView() {
   const { user } = useAuthContext()
-  const { dateContext, formatDate, incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate } = useDateContext()
-  const {modalContext} = useModalContext()
-
-  const [events, setEvents] = useState([])
-
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate()
   useEffect(() => {
@@ -22,6 +18,13 @@ export default function DailyView() {
       nav('/')
     }
   }, [user])
+
+  const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate } = useDateContext()
+  const {modalContext} = useModalContext()
+  const { entries: events } = useCollection("events", [
+    ["date", "==", formattedDate], 
+    ["uid", "==", user && user.uid]
+  ])
 
   return (<>
     <Nav>

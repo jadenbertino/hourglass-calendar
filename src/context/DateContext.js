@@ -11,7 +11,7 @@ export function DateContextProvider({ children }) {
   const [formattedDate, setFormattedDate] = useState('')
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-  // Update anytime date changes
+  // Re-format anytime date changes
   useEffect(() => {
     setDayName(days[dateContext.getDay()])
     setDayOfMonth(dateContext.getDate())
