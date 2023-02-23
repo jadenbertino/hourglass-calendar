@@ -13,8 +13,20 @@ export function DateContextProvider({ children }) {
     return formattedDate
   }
 
+  function incrementDateBy(num) {
+    const newDate = new Date(dateContext)
+    newDate.setDate(newDate.getDate() + num);
+    setDateContext(newDate)
+  }
+
+  function decrementDateBy(num) {
+    const newDate = new Date(dateContext)
+    newDate.setDate(newDate.getDate() - num);
+    setDateContext(newDate)
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, setDateContext, formatDate }}>
+    <DateContext.Provider value={{ dateContext, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

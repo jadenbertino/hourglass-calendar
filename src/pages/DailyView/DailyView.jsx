@@ -10,7 +10,7 @@ import './DailyView.css'
 
 export default function DailyView() {
   const { user } = useAuthContext()
-  const { dateContext, setDateContext, formatDate } = useDateContext()
+  const { dateContext, formatDate, incrementDateBy, decrementDateBy } = useDateContext()
   const {modalContext} = useModalContext()
 
   const [dayName, setDayName] = useState('')
@@ -32,24 +32,12 @@ export default function DailyView() {
     setFormattedDate(formatDate(dateContext))
   }, [dateContext])
 
-  function incrementDate() {
-    const newDate = new Date(dateContext)
-    newDate.setDate(newDate.getDate() + 1);
-    setDateContext(newDate)
-  }
-
-  function decrementDate() {
-    const newDate = new Date(dateContext)
-    newDate.setDate(newDate.getDate() - 1);
-    setDateContext(newDate)
-  }
-
   return (<>
     <Nav>
-      <button onClick={decrementDate} className="btn nav-date-btn">
+      <button onClick={() => decrementDateBy(1)} className="btn nav-date-btn">
         <i className="fa-solid fa-angle-left"></i>
       </button>
-      <button onClick={incrementDate} className="btn nav-date-btn">
+      <button onClick={() => incrementDateBy(1)} className="btn nav-date-btn">
         <i className="fa-solid fa-angle-right"></i>
       </button>
     </Nav>
