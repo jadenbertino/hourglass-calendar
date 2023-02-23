@@ -7,7 +7,7 @@ nav {
   border-bottom: 1px solid #93A8AC;
   position: sticky;
   top: 0;
-  z-index: 9;
+  z-index: 2;
 }
 
 nav .date {
