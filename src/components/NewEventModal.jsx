@@ -157,6 +157,7 @@ export default function NewEventModal() {
           placeholder='Event Name' 
           onChange={(e) => setEventName(e.target.value)}
           required
+          autoFocus
           value={eventName}
         />
         <input
