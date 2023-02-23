@@ -10,12 +10,10 @@ import './DailyView.css'
 
 export default function DailyView() {
   const { user } = useAuthContext()
-  const { dateContext, formatDate, incrementDateBy, decrementDateBy } = useDateContext()
+  const { dateContext, formatDate, incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate } = useDateContext()
   const {modalContext} = useModalContext()
 
-  const [dayName, setDayName] = useState('')
-  const [dayOfMonth, setDayOfMonth] = useState('')
-  const [formattedDate, setFormattedDate] = useState('')
+  const [events, setEvents] = useState([])
 
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate()
@@ -24,13 +22,6 @@ export default function DailyView() {
       nav('/')
     }
   }, [user])
-
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-  useEffect(() => {
-    setDayName(days[dateContext.getDay()])
-    setDayOfMonth(dateContext.getDate())
-    setFormattedDate(formatDate(dateContext))
-  }, [dateContext])
 
   return (<>
     <Nav>
