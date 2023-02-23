@@ -5,8 +5,9 @@ nav {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #93A8AC;
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
   z-index: 2;
 }
 

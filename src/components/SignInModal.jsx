@@ -60,6 +60,7 @@ export default function SignInModal() {
             value={email}
             className={emailisValid ? "" : "invalid"}
             required
+            autoFocus
           />
           <input
             type="password"

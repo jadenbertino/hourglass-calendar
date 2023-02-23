@@ -51,6 +51,7 @@ export default function SignUpModal() {
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
             required
+            autoFocus
           />
           <input
             type="email"

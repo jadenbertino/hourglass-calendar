@@ -1,6 +1,7 @@
 main {
   display: flex;
   min-height: calc(100vh - 80px);
+  transform: translateY(80px);
 }
 
 .daily-view {

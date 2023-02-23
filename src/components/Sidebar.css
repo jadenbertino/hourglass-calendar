@@ -1,4 +1,7 @@
 .sidebar {
+  position: sticky;
+  top: 0px;
+  height: calc(100vh - 80px);
   width: 250px;
   display: flex;
   flex-direction: column;
