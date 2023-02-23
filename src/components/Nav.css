@@ -1,11 +1,10 @@
 nav {
   background-color: #31343f;
-}
-
-nav .row {
-  display: flex; 
+  height: 80px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #93A8AC;
 }
 
 nav .date {
@@ -18,6 +17,22 @@ nav .date {
 }
 
 .auth .logout-btn {
-  /* background-color: #93a8ac; */
   background-color: #598392;
+}
+
+.nav-date-btns {
+  display: flex;
+  margin-left: 8px;
+}
+
+.nav-date-btns > * {
+  margin-left: 12px;
+  background-color: #404552;
+  font-size: 18px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

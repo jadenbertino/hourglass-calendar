@@ -31,26 +31,26 @@ export default function Nav({children}) {
 
   return (
     <nav className="container">
-      <div className="row">
-        <div className="date">
-          <h3>{monthAndYear}</h3>
+      <div className="date">
+        <h3>{monthAndYear}</h3>
+        <div className="nav-date-btns">
           {children}
         </div>
-        <div className="auth">
-          {!user ? (
-            <>
-              <button className="btn" onClick={() => setModalContext('signin')}>Sign In</button>
-              <button className="btn" onClick={() => setModalContext('signup')}>Sign Up</button>
-              {modalContext === 'signin' && <SignInModal />}
-              {modalContext === 'signup' && <SignUpModal />}
-            </>
-          ) : (
-            <>
-              <span>Welcome, {user.displayName}</span>
-              <button className="btn logout-btn" onClick={handleSignOut}>Log Out</button>
-            </>
-          )}
-        </div>
+      </div>
+      <div className="auth">
+        {!user ? (
+          <>
+            <button className="btn" onClick={() => setModalContext('signin')}>Sign In</button>
+            <button className="btn" onClick={() => setModalContext('signup')}>Sign Up</button>
+            {modalContext === 'signin' && <SignInModal />}
+            {modalContext === 'signup' && <SignUpModal />}
+          </>
+        ) : (
+          <>
+            <span>Welcome, {user.displayName}</span>
+            <button className="btn logout-btn" onClick={handleSignOut}>Log Out</button>
+          </>
+        )}
       </div>
     </nav>
   )

@@ -28,19 +28,23 @@ export default function DailyView() {
 
   return (<>
     <Nav>
-      <button onClick={() => decrementDateBy(1)} className="btn nav-date-btn">
+      <button onClick={() => decrementDateBy(1)} className="btn">
         <i className="fa-solid fa-angle-left"></i>
       </button>
-      <button onClick={() => incrementDateBy(1)} className="btn nav-date-btn">
+      <button onClick={() => incrementDateBy(1)} className="btn">
         <i className="fa-solid fa-angle-right"></i>
       </button>
     </Nav>
 
     <main>
       <Sidebar/>
-      <div className="day-of-month">
-        <h3>{dayName}</h3>
-        <h2>{dayOfMonth}</h2>
+      <div className="container daily-view">
+        <div className="row">
+          <div className="day-of-month">
+            <h3>{dayName}</h3>
+            <h2>{dayOfMonth}</h2>
+          </div>
+        </div>
       </div>
       {modalContext === "newEvent" && <NewEventModal/> }
     </main>
