@@ -1,11 +1,12 @@
+import './App.css';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext';
 
 // pages & components
 import {Locked, DailyView} from './pages/pages'
 
-// styles
-import './App.css';
+
 
 function App() {
   const { authIsReady } = useAuthContext()

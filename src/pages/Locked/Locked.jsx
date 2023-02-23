@@ -1,6 +1,6 @@
 import {useAuthContext} from "../../hooks/useAuthContext"
 import { useModalContext } from '../../hooks/useModalContext';
-import { NewEventModal, Sidebar, SignInModal, SignUpModal, DailyView, Nav } from '../../components/components'
+import { SignInModal, SignUpModal, Nav } from '../../components/components'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 

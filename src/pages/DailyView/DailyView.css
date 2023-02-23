@@ -1,0 +1,11 @@
+.nav-date-btn {
+  margin-left: 12px;
+  background-color: #404552;
+  font-size: 18px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
