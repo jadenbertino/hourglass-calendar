@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Nav, Sidebar, NewEventModal } from '../../components/components'
 import { useModalContext } from '../../hooks/useModalContext'
 import { useDateContext } from '../../hooks/useDateContext'
@@ -21,11 +21,19 @@ export default function DailyView() {
 
   const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, convertToHours } = useDateContext()
   const {modalContext} = useModalContext()
-  const { entries: events } = useCollection("events", [
-    ["date", "==", formattedDate], 
-    ["uid", "==", user && user.uid]
+  const [query, setQuery] = useState([
+    `date == ${formattedDate}`,
+    `uid == ${user && user.uid}`,
   ])
+  // querying firestore
 
+  const { events } = useCollection("events", query)
+  useEffect(() => {
+    setQuery([
+      `date == ${formattedDate}`,
+      `uid == ${user && user.uid}`,
+    ])
+  }, [formattedDate])
 
   const hours = new Array(24).fill(null)
   const hourGridLines = new Array(24).fill(null)
