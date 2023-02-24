@@ -18,22 +18,16 @@ export default function DailyView() {
       nav('/')
     }
   }, [user])
-
+  
+  // set date + query events for date
   const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, convertToHours } = useDateContext()
   const {modalContext} = useModalContext()
-  const [query, setQuery] = useState([
-    `date == ${formattedDate}`,
-    `uid == ${user && user.uid}`,
-  ])
-  // querying firestore
-
-  const { events } = useCollection("events", query)
+  const query = useRef([`uid == ${user && user.uid}`]).current
+  const { events: allEvents } = useCollection("events", query)
+  const [events, setEvents] = useState([]) 
   useEffect(() => {
-    setQuery([
-      `date == ${formattedDate}`,
-      `uid == ${user && user.uid}`,
-    ])
-  }, [formattedDate])
+    allEvents && setEvents(allEvents.filter(event => event.date === formattedDate))
+  }, [formattedDate, allEvents])
 
   const hours = new Array(24).fill(null)
   const hourGridLines = new Array(24).fill(null)
