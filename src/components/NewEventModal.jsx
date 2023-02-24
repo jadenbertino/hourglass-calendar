@@ -10,11 +10,13 @@ import { Modal } from './components'
 import './NewEventModal.css'
 
 export default function NewEventModal() {
+  const { user } = useAuthContext()
   const { setModalContext } = useModalContext()
+  const { isMeridian, isMilitary, parseTime, convertToMilitary, formattedDate } = useDateContext()
 
   // form controls
   const [eventName, setEventName] = useState('')
-  const [eventDate, setEventDate] = useState('')
+  const [eventDate, setEventDate] = useState(formattedDate)
   const [eventStartTime, setEventStartTime] = useState('')
   const [eventEndTime, setEventEndTime] = useState('')
   const [eventNotes, setEventNotes] = useState('')
@@ -24,8 +26,6 @@ export default function NewEventModal() {
   const [validStartTime, setValidStartTime] = useState(true)
   const [validEndTime, setValidEndTime] = useState(true)
   
-  const { user } = useAuthContext()
-  const { isMeridian, isMilitary, parseTime, convertToMilitary } = useDateContext()
 
   /*
 
