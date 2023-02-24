@@ -54,8 +54,32 @@ main {
   transform: translateX(-12px)
 }
 
-.events .divider {
+.divider {
   border-top: 1px solid gray;
   min-height: 50px;
   width: 100%;
+}
+
+.event {
+  position: fixed;
+  background-color: #ff595e;
+  width: 100%;
+  transform: translateX(12px);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.event .name {
+  font-size: 20px;
+}
+
+.event .time {
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.event .notes {
+  margin-top: 12px;
 }

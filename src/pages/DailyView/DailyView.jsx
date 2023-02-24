@@ -19,12 +19,13 @@ export default function DailyView() {
     }
   }, [user])
 
-  const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, convertToMilitary } = useDateContext()
+  const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, convertToHours } = useDateContext()
   const {modalContext} = useModalContext()
   const { entries: events } = useCollection("events", [
     ["date", "==", formattedDate], 
     ["uid", "==", user && user.uid]
   ])
+
 
   const hours = new Array(24).fill(null)
   const hourGridLines = new Array(24).fill(null)
@@ -61,6 +62,21 @@ export default function DailyView() {
             {hourGridLines.map((_, index) => (
               <div className="divider" key={index}></div>
             ))}
+            {events && events.map((event, i)=> {
+              const start = convertToHours(event.startTime)
+              const end = convertToHours(event.endTime)
+              const eventStyles = {
+                'top': `${start * 50}px`,
+                'height': `${(end - start) * 50}px`
+              }
+              return (
+                <div key={i} style={eventStyles} className="event">
+                  <h3 className="name">{event.name}</h3>
+                  <p className="time">{event.startTime} - {event.endTime}</p>
+                  <p className="notes">{event.notes}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

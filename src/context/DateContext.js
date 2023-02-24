@@ -93,8 +93,18 @@ export function DateContextProvider({ children }) {
     return `${hoursFormatted}:${minutesFormatted}`
   }
 
+  function convertToHours(time) {
+    if (!isMeridian(time) && !isMilitary(time)) {
+      console.log('string must be in meridian or military')
+      return
+    }
+
+    const { hours, minutes } = parseTime(time)
+    return hours + minutes / 60
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );
