@@ -20,7 +20,7 @@ export default function DailyView() {
   }, [user])
   
   // set date + query events for date
-  const { incrementDateBy, decrementDateBy, dayName, parseDate, dayOfMonth, formattedDate, convertToHours } = useDateContext()
+  const { incrementDateBy, decrementDateBy, dayName, convertToMeridian, dayOfMonth, formattedDate, convertToHours } = useDateContext()
   const {modalContext} = useModalContext()
   const query = useRef([`uid == ${user && user.uid}`]).current
   const { events: allEvents } = useCollection("events", query)
@@ -77,7 +77,7 @@ export default function DailyView() {
               return (
                 <div key={i} style={eventStyles} className="event">
                   <h3 className="name">{event.name}</h3>
-                  <p className="time">{event.startTime} - {event.endTime}</p>
+                  <p className="time">{convertToMeridian(event.startTime)} - {convertToMeridian(event.endTime)}</p>
                   <p className="notes">{event.notes}</p>
                 </div>
               )

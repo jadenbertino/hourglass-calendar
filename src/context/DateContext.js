@@ -93,6 +93,23 @@ export function DateContextProvider({ children }) {
     return `${hoursFormatted}:${minutesFormatted}`
   }
 
+  function convertToMeridian(time) {
+    if (!isMeridian(time) && !isMilitary(time)) {
+      console.log('string must be in meridian or military')
+      return
+    }
+
+    if (isMeridian(time)) return time
+
+    // is in military time
+    const { hours, minutes } = parseTime(time)
+    const hoursFormatted = hours === 0 ? 12 :
+      hours > 12 ? hours - 12 : hours
+    const minutesFormatted = minutes === 0 ? "" : minutes.toString().padStart(2, "0")
+    const meridian = hours < 12 ? 'am' : 'pm'
+    return `${hoursFormatted}${minutesFormatted === "" ? "" : ":"}${minutesFormatted}${meridian}`
+  }
+
   function convertToHours(time) {
     if (!isMeridian(time) && !isMilitary(time)) {
       console.log('string must be in meridian or military')
@@ -111,7 +128,7 @@ export function DateContextProvider({ children }) {
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );
