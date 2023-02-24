@@ -25,7 +25,7 @@ export default function NewEventModal() {
   const [validEndTime, setValidEndTime] = useState(true)
   
   const { user } = useAuthContext()
-  const { isMeridian, isMilitary, parseTime } = useDateContext()
+  const { isMeridian, isMilitary, parseTime, convertToMilitary } = useDateContext()
 
   /*
 
@@ -85,6 +85,7 @@ export default function NewEventModal() {
         alert("Please ensure that event start time is before event end time.\nIf the time doesn't include AM/PM then it is interpreted as military time.")
       }
     }
+
     if (validDate && validStartTime && validEndTime) createEvent()
   }
 
@@ -93,14 +94,13 @@ export default function NewEventModal() {
     event creation
 
   */
-
   async function createEvent() {
     const event = {
       name: eventName,
       notes: eventNotes,
       date: eventDate,
-      startTime: eventStartTime,
-      endTime: eventEndTime,
+      startTime: convertToMilitary(eventStartTime),
+      endTime: convertToMilitary(eventEndTime),
       uid: user.uid
     };
     await addDoc(collection(db, "events"), event);

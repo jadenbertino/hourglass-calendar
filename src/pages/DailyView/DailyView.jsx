@@ -19,13 +19,13 @@ export default function DailyView() {
     }
   }, [user])
 
-  const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate } = useDateContext()
+  const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, convertToMilitary } = useDateContext()
   const {modalContext} = useModalContext()
   const { entries: events } = useCollection("events", [
     ["date", "==", formattedDate], 
     ["uid", "==", user && user.uid]
   ])
-  
+
   const hours = new Array(24).fill(null)
   const hourGridLines = new Array(24).fill(null)
 
