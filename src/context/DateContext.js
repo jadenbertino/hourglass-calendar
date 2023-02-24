@@ -44,12 +44,45 @@ export function DateContextProvider({ children }) {
   }
 
   function isMilitary(time) {
-    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    const militaryRegex = /^([01]\d|2[0-3]|\d):([0-5]\d)$/;
     return militaryRegex.test(time)
   }
 
+  function parseTime(str) {
+    /*
+      str is in HH:MM:XM or HH:XM format,
+      extracts { hours, minutes } from string
+    */
+    try {
+      // remove whitespace
+      str = str.replace(/\s/g, "");
+      const hoursRegex = /^\d+(?=:|[a-zA-Z])/;
+      let hours = Number(str.match(hoursRegex)[0]);
+      const minutes = str.includes(":") ? Number(str.match(/:(.{2})/)[1]) : 0;
+      
+      // pm? => add 12 to hours
+      if (hours !== 12 && str.toLowerCase().includes('pm')) {
+        hours += 12
+      }
+
+      // hours is 12am? => subtract 12 hours
+      if (hours === 12 && str.toLowerCase().includes('am')) {
+        hours -= 12
+      }
+
+      // military time must be < 24:00
+      if (hours >= 24) {
+        throw new Error('Time cannot be past 24hrs')
+      }
+
+      return { hours, minutes }
+    } catch {
+      console.log('invalid time string')
+    }
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

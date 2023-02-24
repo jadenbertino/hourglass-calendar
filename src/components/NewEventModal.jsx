@@ -25,7 +25,7 @@ export default function NewEventModal() {
   const [validEndTime, setValidEndTime] = useState(true)
   
   const { user } = useAuthContext()
-  const { isMeridian, isMilitary } = useDateContext()
+  const { isMeridian, isMilitary, parseTime } = useDateContext()
 
   /*
 
@@ -39,88 +39,53 @@ export default function NewEventModal() {
     setValidDate(true)
   }
 
-  function parseTime(str) {
-    /*
-      str is in HH:MM:XM or HH:XM format, 
-      with an optional space in between time & meridian
-    */
-    try {
-      // remove whitespace
-      str = str.replace(/\s/g, "");
-      const hoursRegex = /^\d+(?=:|[a-zA-Z])/;
-
-      const time = {
-        'hours': Number(str.match(hoursRegex)[0]),
-        // grab 2 digits after the colon or set to 0 if no colon
-        'minutes': str.includes(":") ? Number(str.match(/:(.{2})/)[1]) : 0
-      }
-      
-      // pm? => add 12 to hours
-      if (time.hours !== 12 && str.toLowerCase().includes('pm')) {
-        time.hours += 12
-      }
-
-      // hours is 12am? => subtract 12 hours
-      if (time.hours === 12 && str.toLowerCase().includes('am')) {
-        time.hours -= 12
-      }
-
-      // military time must be < 24:00
-      if (time.hours >= 24) {
-        throw new Error('Time cannot be past 24hrs')
-      }
-
-      // note that the TIME is what you want, date will be inaccurate
-      const date = new Date();
-      date.setHours(time.hours)
-      date.setMinutes(time.minutes)
-      return date
-    } catch {
-      console.log('invalid time string')
-    }
-  }
-
   function validateFormControls(e) {
     e.preventDefault()
     resetValidation()
 
     // can't check state within this function because state updates are scheduled
     // could do a useEffect but this is simpler
-    let allFieldsAreValid = true
+    let validDate = true;
+    let validStartTime = true;
+    let validEndTime = true;
 
     // date must be 10 chars (YYYY-MM-DD)
     if (eventDate.length !== 10) {
       setValidDate(false)
-      allFieldsAreValid = false
+      validDate = false
       alert('Please ensure event data is in MM/DD/YYYY format')
     }
 
+    // valid start time
     if (!isMilitary(eventStartTime) && !isMeridian(eventStartTime)) {
       setValidStartTime(false)
-      allFieldsAreValid = false
+      validStartTime = false
       alert("Please ensure event times are in HH:MM:XM or HH:MM format")
     }
 
+    // valid end time
     if (!isMilitary(eventEndTime) && !isMeridian(eventEndTime)) {
       setValidEndTime(false)
-      allFieldsAreValid = false
+      validEndTime = false
       // only show alert if first time was valid to avoid duplicates
-      if (isMilitary(eventStartTime) || isMeridian(eventStartTime)) {
+      if (validStartTime) {
         alert("Please ensure event times are in HH:MM:XM or HH:MM format")
       }
     }
-
-    // start time must be before end time
-    const startTime = parseTime(eventStartTime)
-    const endTime = parseTime(eventEndTime)
-    if (startTime && endTime && startTime.getTime() > endTime.getTime()) {
-      setValidStartTime(false)
-      setValidEndTime(false)
-      allFieldsAreValid = false
-      alert("Please ensure that event start time is before event end time.\nIf the time doesn't include AM/PM then it is interpreted as military time.")
-    }
     
-    if (allFieldsAreValid) createEvent()
+    // start time must be before end time
+    if (validStartTime && validEndTime) {
+      const {hours: startHours, minutes: startMinutes} = parseTime(eventStartTime)
+      const {hours: endHours, minutes: endMinutes} = parseTime(eventEndTime)
+      if (startHours * 60 + startMinutes >= endHours * 60 + endMinutes) {
+        validStartTime = false;
+        validEndTime = false;
+        setValidStartTime(false)
+        setValidEndTime(false)
+        alert("Please ensure that event start time is before event end time.\nIf the time doesn't include AM/PM then it is interpreted as military time.")
+      }
+    }
+    if (validDate && validStartTime && validEndTime) createEvent()
   }
 
   /*
