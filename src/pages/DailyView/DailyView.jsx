@@ -38,14 +38,66 @@ export default function DailyView() {
 
     <main>
       <Sidebar/>
-      <div className="container daily-view">
-        <div className="row">
-          <div className="day-of-month">
+      <div className="daily-view">
+        <div className="day-of-month">
+          <div className="spacer"></div>
+          <div className="wrapper">
             <h3>{dayName}</h3>
             <h2>{dayOfMonth}</h2>
           </div>
+        </div>
+        <div className="times-and-events">
+          <div className="times">
+            <div>12am</div>
+            <div>1am</div>
+            <div>2am</div>
+            <div>3am</div>
+            <div>4am</div>
+            <div>5am</div>
+            <div>6am</div>
+            <div>7am</div>
+            <div>8am</div>
+            <div>9am</div>
+            <div>10am</div>
+            <div>11am</div>
+            <div>12pm</div>
+            <div>1pm</div>
+            <div>2pm</div>
+            <div>3pm</div>
+            <div>4pm</div>
+            <div>5pm</div>
+            <div>6pm</div>
+            <div>7pm</div>
+            <div>8pm</div>
+            <div>9pm</div>
+            <div>10pm</div>
+            <div>11pm</div>
+          </div>
           <div className="events">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi expedita quae ratione repellendus. Consectetur minima a quos libero, fugit nihil dignissimos hic possimus nemo! Praesentium ipsum enim ea pariatur impedit!</p>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
+            <div className="divider"></div>
           </div>
         </div>
       </div>
