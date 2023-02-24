@@ -25,6 +25,9 @@ export default function DailyView() {
     ["date", "==", formattedDate], 
     ["uid", "==", user && user.uid]
   ])
+  
+  const hours = new Array(24).fill(null)
+  const hourGridLines = new Array(24).fill(null)
 
   return (<>
     <Nav>
@@ -48,56 +51,16 @@ export default function DailyView() {
         </div>
         <div className="times-and-events">
           <div className="times">
-            <div>12am</div>
-            <div>1am</div>
-            <div>2am</div>
-            <div>3am</div>
-            <div>4am</div>
-            <div>5am</div>
-            <div>6am</div>
-            <div>7am</div>
-            <div>8am</div>
-            <div>9am</div>
-            <div>10am</div>
-            <div>11am</div>
-            <div>12pm</div>
-            <div>1pm</div>
-            <div>2pm</div>
-            <div>3pm</div>
-            <div>4pm</div>
-            <div>5pm</div>
-            <div>6pm</div>
-            <div>7pm</div>
-            <div>8pm</div>
-            <div>9pm</div>
-            <div>10pm</div>
-            <div>11pm</div>
+            {hours.map((_, i) => {
+              const hourName = i % 12 === 0 ? 12 : i % 12;
+              const meridian = i < 12 ? 'am' : 'pm';
+              return <div key={i}>{hourName}{meridian}</div>
+            })}
           </div>
           <div className="events">
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
-            <div className="divider"></div>
+            {hourGridLines.map((_, index) => (
+              <div className="divider" key={index}></div>
+            ))}
           </div>
         </div>
       </div>
