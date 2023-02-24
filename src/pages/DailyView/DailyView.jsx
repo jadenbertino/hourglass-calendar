@@ -74,11 +74,15 @@ export default function DailyView() {
                 'top': `${start * 50}px`,
                 'height': `${(end - start) * 50}px`
               }
+              const size = end - start <= 1 ? 'small' :
+                  end - start <= 2 ? 'medium' : 'large'
               return (
-                <div key={i} style={eventStyles} className="event">
-                  <h3 className="name">{event.name}</h3>
-                  <p className="time">{convertToMeridian(event.startTime)} - {convertToMeridian(event.endTime)}</p>
-                  <p className="notes">{event.notes}</p>
+                <div key={i} style={eventStyles} className={`event ${size}`} id={event.id}>
+                  <h3 className="title">{event.name}</h3>
+                  {size !== 'small' && <>
+                    <p className="time">{convertToMeridian(event.startTime)} - {convertToMeridian(event.endTime)}</p>
+                    <p className="notes">{event.notes}</p>
+                  </>}
                 </div>
               )
             })}
@@ -89,3 +93,15 @@ export default function DailyView() {
     </main>
   </>)
 }
+
+
+/*
+  <= 30m
+    title only
+    padding
+  <= 60m
+    title only
+    padding
+  <= 120m
+    
+*/
