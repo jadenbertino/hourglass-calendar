@@ -103,8 +103,15 @@ export function DateContextProvider({ children }) {
     return hours + minutes / 60
   }
 
+  function parseDate(str) {
+    // assumes YYYY-MM-DD format
+    const [year, month, day] = str.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
+    return date
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

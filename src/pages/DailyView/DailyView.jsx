@@ -20,13 +20,16 @@ export default function DailyView() {
   }, [user])
   
   // set date + query events for date
-  const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, convertToHours } = useDateContext()
+  const { incrementDateBy, decrementDateBy, dayName, parseDate, dayOfMonth, formattedDate, convertToHours } = useDateContext()
   const {modalContext} = useModalContext()
   const query = useRef([`uid == ${user && user.uid}`]).current
   const { events: allEvents } = useCollection("events", query)
   const [events, setEvents] = useState([]) 
   useEffect(() => {
-    allEvents && setEvents(allEvents.filter(event => event.date === formattedDate))
+    allEvents && setEvents(allEvents.filter(
+      event => event.date === formattedDate).sort(
+        (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
+    )
   }, [formattedDate, allEvents])
 
   const hours = new Array(24).fill(null)
