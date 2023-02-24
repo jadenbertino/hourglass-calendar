@@ -38,8 +38,18 @@ export function DateContextProvider({ children }) {
     setDateContext(newDate)
   }
 
+  function isMeridian(time) {
+    const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
+    return meridianRegex.test(time)
+  }
+
+  function isMilitary(time) {
+    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    return militaryRegex.test(time)
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

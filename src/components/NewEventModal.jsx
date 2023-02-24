@@ -3,6 +3,7 @@ import { collection , addDoc } from "firebase/firestore"
 import { db } from "../firebase/init"
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useModalContext } from '../hooks/useModalContext'
+import { useDateContext } from '../hooks/useDateContext'
 import { Modal } from './components'
 
 // styles
@@ -24,6 +25,7 @@ export default function NewEventModal() {
   const [validEndTime, setValidEndTime] = useState(true)
   
   const { user } = useAuthContext()
+  const { isMeridian, isMilitary } = useDateContext()
 
   /*
 
@@ -35,14 +37,6 @@ export default function NewEventModal() {
     setValidStartTime(true)
     setValidEndTime(true)
     setValidDate(true)
-  }
-  
-  function isNotValidTimeFormat(time) {
-    // start time & end time must be in HH:MM:XM or military (HH:MM) format
-    const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
-    const militaryRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
-
-    return !meridianRegex.test(time) && !militaryRegex.test(time)
   }
 
   function parseTime(str) {
@@ -101,17 +95,17 @@ export default function NewEventModal() {
       alert('Please ensure event data is in MM/DD/YYYY format')
     }
 
-    if (isNotValidTimeFormat(eventStartTime)) {
+    if (!isMilitary(eventStartTime) && !isMeridian(eventStartTime)) {
       setValidStartTime(false)
       allFieldsAreValid = false
       alert("Please ensure event times are in HH:MM:XM or HH:MM format")
     }
 
-    if (isNotValidTimeFormat(eventEndTime)) {
+    if (!isMilitary(eventEndTime) && !isMeridian(eventEndTime)) {
       setValidEndTime(false)
       allFieldsAreValid = false
-      // don't duplicate alert
-      if (!isNotValidTimeFormat(eventStartTime)) {
+      // only show alert if first time was valid to avoid duplicates
+      if (isMilitary(eventStartTime) || isMeridian(eventStartTime)) {
         alert("Please ensure event times are in HH:MM:XM or HH:MM format")
       }
     }
