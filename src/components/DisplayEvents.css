@@ -13,7 +13,7 @@
 .event {
   position: fixed;
   background-color: #ff595e;
-  width: 100%;
+  width: calc(100% - 24px);
   transform: translateX(12px);
   display: flex;
   flex-direction: column;

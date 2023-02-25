@@ -17,15 +17,16 @@ main {
 }
 
 .day-of-month .wrapper {
-  padding: 20px 0;
-  width: 65px;
-  border-right: 1px solid gray;
+  margin-left: 68px;
+  padding: 16px 24px;
+  border-left: 1px solid gray;
+  width: 100px;
 }
 
-.day-of-month .wrapper > * {
+/* .day-of-month .wrapper > * {
   position: relative;
   left: 80px;
-}
+} */
 
 .daily-view {
   width: 100%;
@@ -37,14 +38,15 @@ main {
 }
 
 .times {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  border-right: 1px solid gray;
   padding-right: 24px;
+  border-right: 1px solid gray;
   transform: translateY(-8px);
 }
 
 .times > * {
   height: 50px;
+  width: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

@@ -9,7 +9,10 @@ export default function Sidebar() {
   return (
     <div className="container sidebar">
       <div className="row">
-        <button className='btn new-event-btn' onClick={() => setModalContext('newEvent')}>New Event</button>
+        <button className='btn new-event-btn' onClick={() => setModalContext('newEvent')}>
+          <i className="fa-solid fa-plus"></i>
+          New Event
+        </button>
       </div>
     </div>
   )
