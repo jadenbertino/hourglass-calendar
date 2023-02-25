@@ -1,7 +1,7 @@
-
 .events {
   width: 100%;
-  transform: translateX(-12px)
+  transform: translateX(-12px);
+  cursor: pointer;
 }
 
 .divider {

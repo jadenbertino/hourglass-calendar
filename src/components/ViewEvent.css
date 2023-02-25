@@ -1,0 +1,32 @@
+.view-event {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 576px;
+  width: 100%;
+}
+
+.view-event .name {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* .view-event .date {
+  width: 100%;
+}
+
+.view-event .start-time,
+.view-event .end-time {
+  width: 50%;
+} */
+
+.view-event .dot,
+.view-event .time {
+  margin-left: 12px;
+}
+
+.view-event .notes {
+  width: 100%;
+  margin-top: 12px;
+  border-top: 1px solid gray;
+  padding-top: 12px;
+}

@@ -9,21 +9,38 @@ export function DateContextProvider({ children }) {
   const [dayName, setDayName] = useState('')
   const [dayOfMonth, setDayOfMonth] = useState('')
   const [formattedDate, setFormattedDate] = useState('')
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
+  const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+  const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+];
   // Re-format anytime date changes
   useEffect(() => {
-    setDayName(days[dateContext.getDay()])
+    setDayName(shortDayNames[dateContext.getDay()])
     setDayOfMonth(dateContext.getDate())
     setFormattedDate(formatDate(dateContext))
   }, [dateContext])
-
+  
   function formatDate(date) {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    return formattedDate
+    // YYYY-MM-DD
+    try {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      return formattedDate
+    } catch { }
+  }
+
+  function formatReadableDate(str) {
+    // Fri, February 24
+    try {
+      const date = parseDate(str)
+      const dayName = fullDayNames[date.getDay()]
+      const dayNumber = date.getDate()
+      const monthName = monthNames[date.getMonth()]
+      return `${dayName}, ${monthName} ${dayNumber}`
+    }
+    catch {}
   }
 
   function incrementDateBy(num) {
@@ -122,13 +139,15 @@ export function DateContextProvider({ children }) {
 
   function parseDate(str) {
     // assumes YYYY-MM-DD format
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!regex.test(str)) return
     const [year, month, day] = str.split('-').map(Number)
     const date = new Date(year, month - 1, day)
     return date
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

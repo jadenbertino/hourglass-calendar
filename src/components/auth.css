@@ -12,17 +12,6 @@
   margin-top: 16px;
 }
 
-.auth-modal .close-modal-btn {
-  position: absolute;
-  top: 8px; 
-  right: 16px;
-  background-color: transparent;
-  border: none;
-  padding: 12px;
-  font-size: 16px;
-}
+.close-modal-btn {
 
-.modal .close-modal-btn {
-  color: #EAF2EF;
-  padding: 16px 12px;
 }
