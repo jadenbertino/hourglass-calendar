@@ -19,7 +19,8 @@ export default function DisplayEvents({targetDate, allEvents}) {
     )
   }, [targetDate, allEvents])
   
-  function openEvent(id) {
+  function openEvent(e, id) {
+    // e.target.style.zIndex = "5"
     setViewId(id)
     setModalContext('view-event')
   }
@@ -39,7 +40,7 @@ export default function DisplayEvents({targetDate, allEvents}) {
         const size = end - start <= 1 ? 'small' :
             end - start <= 2 ? 'medium' : 'large'
         return (
-          <div key={i} style={eventStyles} className={`event ${size}`} id={event.id} onClick={() => openEvent(event.id)}>
+          <div key={i} style={eventStyles} className={`event ${size}`} id={event.id} onClick={(e) => openEvent(e, event.id)}>
             <h3 className="title">{event.name}</h3>
             {size !== 'small' && <>
               <p className="time">{convertToMeridian(event.startTime)} - {convertToMeridian(event.endTime)}</p>

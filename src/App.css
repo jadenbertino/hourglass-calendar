@@ -83,10 +83,13 @@ form .invalid {
   border: 1px solid transparent;
 }
 
-.close-modal-btn {
+.modal-actions {
   position: absolute;
   top: 8px; 
   right: 16px;
+}
+
+.modal-icon {
   background-color: transparent;
   border: none;
   padding: 12px;

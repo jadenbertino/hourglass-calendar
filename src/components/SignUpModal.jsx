@@ -71,7 +71,7 @@ export default function SignUpModal() {
           />
           <button className="btn">Sign Up</button>
         </form>
-        <button type="button" className="close-modal-btn" onClick={() => setModalContext('')}>
+        <button type="button" className="modal-actions modal-icon" onClick={() => setModalContext('')}>
           <i className="fa-solid fa-x"></i>
         </button>
       </div>

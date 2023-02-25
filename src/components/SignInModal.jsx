@@ -72,7 +72,7 @@ export default function SignInModal() {
           />
           <button className="btn">Sign In</button>
         </form>
-        <button type="button" className="close-modal-btn" onClick={() => setModalContext('')}>
+        <button type="button" className="modal-actions modal-icon" onClick={() => setModalContext('')}>
           <i className="fa-solid fa-x"></i>
         </button>
       </div>

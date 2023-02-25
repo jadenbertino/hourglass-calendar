@@ -10,15 +10,6 @@
   margin-bottom: 8px;
 }
 
-/* .view-event .date {
-  width: 100%;
-}
-
-.view-event .start-time,
-.view-event .end-time {
-  width: 50%;
-} */
-
 .view-event .dot,
 .view-event .time {
   margin-left: 12px;
@@ -29,4 +20,12 @@
   margin-top: 12px;
   border-top: 1px solid gray;
   padding-top: 12px;
+}
+
+.view-event .modal-actions {
+  margin-top: 12px;
+}
+.view-event .modal-icon {
+  margin-left: 12px;
+  padding: 8px;
 }
