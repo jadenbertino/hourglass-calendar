@@ -4,6 +4,7 @@ import { useDateContext } from "../hooks/useDateContext"
 import { useModalContext } from '../hooks/useModalContext'
 import { useEffect, useState } from "react"
 import ViewEvent from './ViewEvent'
+import NewEventModal from './NewEventModal'
 
 export default function DisplayEvents({targetDate, allEvents}) {
   const { convertToHours, convertToMeridian } = useDateContext()
@@ -11,7 +12,7 @@ export default function DisplayEvents({targetDate, allEvents}) {
   const [events, setEvents] = useState([])
   const [viewId, setViewId] = useState('')
   const { modalContext, setModalContext } = useModalContext()
-
+  
   useEffect(() => {
     allEvents && setEvents(allEvents.filter(
       event => event.date === targetDate).sort(
@@ -51,6 +52,9 @@ export default function DisplayEvents({targetDate, allEvents}) {
       })}
       {modalContext === 'view-event' && 
         <ViewEvent allEvents={allEvents} viewId={viewId}/>
+      }
+      {modalContext === 'edit-event' &&
+        <NewEventModal allEvents={allEvents} eventId={viewId} />
       }
     </div>
   )

@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { collection , addDoc } from "firebase/firestore"
+import { useEffect, useState } from 'react'
+import { collection , addDoc, doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/init"
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useModalContext } from '../hooks/useModalContext'
@@ -9,10 +9,11 @@ import { Modal } from './components'
 // styles
 import './NewEventModal.css'
 
-export default function NewEventModal() {
+export default function NewEventModal({allEvents, eventId}) {
   const { user } = useAuthContext()
   const { setModalContext } = useModalContext()
   const { isMeridian, isMilitary, parseTime, convertToMilitary, formattedDate } = useDateContext()
+  const [event, setEvent] = useState(null)
 
   // form controls
   const [eventName, setEventName] = useState('')
@@ -20,12 +21,28 @@ export default function NewEventModal() {
   const [eventStartTime, setEventStartTime] = useState('')
   const [eventEndTime, setEventEndTime] = useState('')
   const [eventNotes, setEventNotes] = useState('')
-
+  
   // form validation
   const [validDate, setValidDate] = useState(true)
   const [validStartTime, setValidStartTime] = useState(true)
   const [validEndTime, setValidEndTime] = useState(true)
   
+  // edit existing event
+  useEffect(() => {
+    if (allEvents && eventId) {
+      setEvent(allEvents.find(event => event.id === eventId))
+    }
+  }, [allEvents, eventId])
+
+  useEffect(() => {
+    if (event) {
+      setEventName(event.name)
+      setEventDate(event.date)
+      setEventStartTime(event.startTime)
+      setEventEndTime(event.endTime)
+      setEventNotes(event.notes)
+    }
+  }, [event])
 
   /*
 
@@ -103,7 +120,15 @@ export default function NewEventModal() {
       endTime: convertToMilitary(eventEndTime),
       uid: user.uid
     };
-    await addDoc(collection(db, "events"), event);
+    if (eventId) {
+      // edit existing event
+      const ref = doc(db, "events", eventId)
+      await updateDoc(ref, event)
+    } else {
+      // create new event
+      await addDoc(collection(db, "events"), event);
+    }
+    // close modal upon completion
     setModalContext('')
   }
 

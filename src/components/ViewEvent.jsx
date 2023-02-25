@@ -26,7 +26,7 @@ export default function ViewEvent({allEvents, viewId}) {
             <button className="modal-icon delete-event">
               <i className="fa-solid fa-trash"></i>
             </button>
-            <button className="modal-icon edit-event">
+            <button className="modal-icon edit-event" onClick={() => setModalContext('edit-event')}>
               <i className="fa-solid fa-pen-to-square"></i>
             </button>
             <button className="modal-icon close-modal" onClick={() => setModalContext('')}>
