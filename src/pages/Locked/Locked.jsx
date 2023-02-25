@@ -1,8 +1,12 @@
 import {useAuthContext} from "../../hooks/useAuthContext"
 import { useModalContext } from '../../hooks/useModalContext';
-import { SignInModal, SignUpModal, Nav } from '../../components/components'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+
+// components
+import SignInModal from "../../components/SignInModal";
+import SignUpModal from "../../components/SignUpModal";
+import Nav from "../../components/Nav";
 
 // styles
 import './Locked.css'

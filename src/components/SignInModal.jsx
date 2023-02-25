@@ -1,4 +1,4 @@
-import { Modal } from './components'
+import Modal from './Modal'
 import { useEffect, useState } from 'react'
 import { useSignIn } from '../hooks/useSignIn'
 import { useAuthContext } from '../hooks/useAuthContext'

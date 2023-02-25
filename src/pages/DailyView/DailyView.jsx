@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
-import { Nav, Sidebar, NewEventModal } from '../../components/components'
 import { useModalContext } from '../../hooks/useModalContext'
 import { useDateContext } from '../../hooks/useDateContext'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useCollection } from '../../hooks/useCollection'
+
+// components
+import Nav from '../../components/Nav'
+import Sidebar from '../../components/Sidebar'
+import NewEventModal from '../../components/NewEventModal'
 
 // styles
 import './DailyView.css'

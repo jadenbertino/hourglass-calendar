@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import {useSignOut} from '../hooks/useSignOut'
-import { SignInModal, SignUpModal } from './components'
+import SignInModal from'./SignInModal'
+import SignUpModal from'./SignUpModal'
 
 // context
 import { useAuthContext } from '../hooks/useAuthContext'

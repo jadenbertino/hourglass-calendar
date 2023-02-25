@@ -4,7 +4,7 @@ import { db } from "../firebase/init"
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useModalContext } from '../hooks/useModalContext'
 import { useDateContext } from '../hooks/useDateContext'
-import { Modal } from './components'
+import Modal from '../components/Modal'
 
 // styles
 import './NewEventModal.css'
