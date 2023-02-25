@@ -4,11 +4,16 @@ import Modal from './Modal'
 import { useState, useEffect } from 'react'
 import { useDateContext } from '../hooks/useDateContext'
 import { useModalContext } from '../hooks/useModalContext'
+import { db } from '../firebase/init'
+import { doc, deleteDoc } from 'firebase/firestore'
+import { ModalContext } from '../context/ModalContext'
+import confirmDeleteModal from './ConfirmDeleteModal'
 
 export default function ViewEvent({allEvents, viewId}) {
   const [event, setEvent] = useState(null)
   const { convertToMeridian, formatReadableDate } = useDateContext()
-  const { setModalContext } = useModalContext()
+  const { modalContext, setModalContext } = useModalContext()
+
   useEffect(() => {
     allEvents && setEvent(allEvents.find(event => event.id === viewId))
   }, [allEvents, viewId])
@@ -23,7 +28,7 @@ export default function ViewEvent({allEvents, viewId}) {
           <p className="time">{convertToMeridian(event.startTime)} - {convertToMeridian(event.endTime)}</p>
           <p className="notes">{event.notes}</p>
           <div className="modal-actions">
-            <button className="modal-icon delete-event">
+            <button className="modal-icon delete-event" onClick={() => setModalContext('confirm-delete')}>
               <i className="fa-solid fa-trash"></i>
             </button>
             <button className="modal-icon edit-event" onClick={() => setModalContext('edit-event')}>

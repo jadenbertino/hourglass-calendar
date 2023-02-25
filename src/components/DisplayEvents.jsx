@@ -5,6 +5,7 @@ import { useModalContext } from '../hooks/useModalContext'
 import { useEffect, useState } from "react"
 import ViewEvent from './ViewEvent'
 import NewEventModal from './NewEventModal'
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 
 export default function DisplayEvents({targetDate, allEvents}) {
   const { convertToHours, convertToMeridian } = useDateContext()
@@ -55,6 +56,9 @@ export default function DisplayEvents({targetDate, allEvents}) {
       }
       {modalContext === 'edit-event' &&
         <NewEventModal allEvents={allEvents} eventId={viewId} />
+      }
+      {modalContext === 'confirm-delete' &&
+        <ConfirmDeleteModal id={viewId} />
       }
     </div>
   )
