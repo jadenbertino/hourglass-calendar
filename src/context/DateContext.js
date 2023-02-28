@@ -15,13 +15,13 @@ export function DateContextProvider({ children }) {
 ];
   // Re-format anytime date changes
   useEffect(() => {
-    setDayName(shortDayNames[dateContext.getDay()])
+    setDayName(shortDayNames[dateContext.getDay()]) // Sunday, Monday, etc
     setDayOfMonth(dateContext.getDate())
     setFormattedDate(formatDate(dateContext))
   }, [dateContext])
   
   function formatDate(date) {
-    // YYYY-MM-DD
+    // date object => YYYY-MM-DD
     try {
       const year = date.getFullYear();
       const month = (date.getMonth() + 1).toString().padStart(2, '0');

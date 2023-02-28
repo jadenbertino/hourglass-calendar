@@ -20,7 +20,7 @@ nav .date {
   margin-left: 24px;
 }
 
-.auth .logout-btn {
+.logout-btn {
   background-color: #598392;
 }
 
@@ -48,4 +48,22 @@ nav .date {
 .reset-date-btn {
   margin-left: 16px;
   background-color: #404552;
+}
+
+.set-view-and-signout {
+  display: flex;
+  align-items: center;
+}
+
+.set-view-form {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.set-view-form select {
+  padding: 6px;
+  border-radius: 4px;
+  background-color: #3f8efc;
+  color: white;
+  border: none;
 }

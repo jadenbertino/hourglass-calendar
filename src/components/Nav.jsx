@@ -10,6 +10,7 @@ import { useDateContext } from '../hooks/useDateContext'
 
 // styles
 import './Nav.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function Nav({decrementDate, incrementDate}) {
   const [monthAndYear, setMonthAndYear] = useState('')
@@ -17,9 +18,12 @@ export default function Nav({decrementDate, incrementDate}) {
   const { dateContext, resetDateToToday } = useDateContext()
   const { user } = useAuthContext()
   const { signout } = useSignOut()
+  const [view, setView] = useState('/daily')
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const nav = useNavigate()
 
   useEffect(() => {
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    // Formats like so: February 2023
     const month = monthNames[dateContext.getMonth()]
     const year = dateContext.getFullYear()
     setMonthAndYear(`${month} ${year}`)
@@ -29,6 +33,10 @@ export default function Nav({decrementDate, incrementDate}) {
     signout()
     setModalContext('')
   }
+  
+  useEffect(() => {
+    nav(view)
+  }, [view])
 
   return (
     <nav className="container">
@@ -48,21 +56,25 @@ export default function Nav({decrementDate, incrementDate}) {
           </button>
         </div>
       </div>
-      <div className="auth">
-        {!user ? (
-          <>
-            <button className="btn" onClick={() => setModalContext('signin')}>Sign In</button>
-            <button className="btn" onClick={() => setModalContext('signup')}>Sign Up</button>
-            {modalContext === 'signin' && <SignInModal />}
-            {modalContext === 'signup' && <SignUpModal />}
-          </>
-        ) : (
-          <>
-            <span>Welcome, {user.displayName}</span>
-            <button className="btn logout-btn" onClick={handleSignOut}>Log Out</button>
-          </>
-        )}
-      </div>
+      {!user ? (
+        <div className="auth">
+          <button className="btn" onClick={() => setModalContext('signin')}>Sign In</button>
+          <button className="btn" onClick={() => setModalContext('signup')}>Sign Up</button>
+          {modalContext === 'signin' && <SignInModal />}
+          {modalContext === 'signup' && <SignUpModal />}
+        </div>
+      ) : (
+        <div className="set-view-and-signout">
+          <form className="set-view-form">
+            <select onChange={(e) => setView(e.target.value)}>
+              <option value="/daily">Daily</option>
+              <option value="/weekly">Weekly</option>
+              <option value="/monthly">Monthly</option>
+            </select>
+          </form>
+          <button className="btn logout-btn" onClick={handleSignOut}>Log Out</button>
+        </div>
+      )}
     </nav>
   )
 }
