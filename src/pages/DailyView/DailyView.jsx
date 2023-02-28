@@ -9,6 +9,7 @@ import { useCollection } from '../../hooks/useCollection'
 import Nav from '../../components/Nav'
 import Sidebar from '../../components/Sidebar'
 import NewEventModal from '../../components/NewEventModal'
+import Hours from '../../components/Hours'
 
 // styles
 import './DailyView.css'
@@ -32,7 +33,6 @@ export default function DailyView() {
   const [events, setEvents] = useState([]) 
 
 
-  const hours = new Array(24).fill(null)
 
   return (<>
     <Nav>
@@ -43,25 +43,18 @@ export default function DailyView() {
         <i className="fa-solid fa-angle-right"></i>
       </button>
     </Nav>
-
+    
     <main>
       <Sidebar/>
       <div className="daily-view">
         <div className="day-of-month">
-          <div className="spacer"></div>
           <div className="wrapper">
             <h3>{dayName}</h3>
             <h2>{dayOfMonth}</h2>
           </div>
         </div>
         <div className="times-and-events">
-          <div className="times">
-            {hours.map((_, i) => {
-              const hourName = i % 12 === 0 ? 12 : i % 12;
-              const meridian = i < 12 ? 'am' : 'pm';
-              return <div key={i}>{hourName}{meridian}</div>
-            })}
-          </div>
+          <Hours />
           <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
         </div>
       </div>

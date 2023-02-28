@@ -1,0 +1,13 @@
+.hours {
+  padding-right: 24px;
+  border-right: 1px solid gray;
+  transform: translateY(-8px);
+}
+
+.hours > * {
+  height: 50px;
+  width: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
