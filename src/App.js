@@ -4,8 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext';
 
 // pages & components
-import {Locked, DailyView} from './pages/pages'
-
+import Locked from './pages/Locked';
+import DailyView from './pages/DailyView';
+import WeeklyView from './pages/WeeklyView';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Locked />} />
           <Route path="/daily" element={<DailyView />} />
+          <Route path="/weekly" element={<WeeklyView />} />
         </Routes>
       </>)}
     </Router>

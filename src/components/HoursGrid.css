@@ -2,6 +2,8 @@
   padding-right: 24px;
   border-right: 1px solid gray;
   transform: translateY(-8px);
+  display: inline-flex;
+  flex-direction: column;
 }
 
 .hours > * {
