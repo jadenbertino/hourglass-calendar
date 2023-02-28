@@ -25,6 +25,7 @@ export default function DailyView() {
     }
   }, [user])
   
+  
   // set date + query events for date
   const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, resetDateToToday } = useDateContext()
   const {modalContext} = useModalContext()
@@ -33,11 +34,14 @@ export default function DailyView() {
 
   return (<>
     <Nav>
-      <button onClick={() => decrementDateBy(1)} className="btn">
+      <button className="btn change-date-btn" onClick={() => decrementDateBy(1)}>
         <i className="fa-solid fa-angle-left"></i>
       </button>
-      <button onClick={() => incrementDateBy(1)} className="btn">
+      <button className="btn change-date-btn" onClick={() => incrementDateBy(1)}>
         <i className="fa-solid fa-angle-right"></i>
+      </button>
+      <button className="btn reset-date-btn" onClick={resetDateToToday}>
+        Today
       </button>
     </Nav>
     
