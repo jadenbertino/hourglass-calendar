@@ -149,7 +149,6 @@ export function DateContextProvider({ children }) {
   function resetDateToToday() {
     const today = new Date()
     setDateContext(today)
-    console.log('reset')
   }
 
   return (

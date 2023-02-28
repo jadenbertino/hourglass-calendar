@@ -33,18 +33,7 @@ export default function DailyView() {
   const { events: allEvents } = useCollection("events", query)
 
   return (<>
-    <Nav>
-      <button className="btn change-date-btn" onClick={() => decrementDateBy(1)}>
-        <i className="fa-solid fa-angle-left"></i>
-      </button>
-      <button className="btn change-date-btn" onClick={() => incrementDateBy(1)}>
-        <i className="fa-solid fa-angle-right"></i>
-      </button>
-      <button className="btn reset-date-btn" onClick={resetDateToToday}>
-        Today
-      </button>
-    </Nav>
-    
+    <Nav incrementDate={() => incrementDateBy(1)} decrementDate={() => decrementDateBy(1)}/>
     <main>
       <Sidebar/>
       <div className="daily-view">

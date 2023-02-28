@@ -11,7 +11,7 @@ import { useDateContext } from '../hooks/useDateContext'
 // styles
 import './Nav.css'
 
-export default function Nav({children}) {
+export default function Nav({decrementDate, incrementDate}) {
   const [monthAndYear, setMonthAndYear] = useState('')
   const { modalContext, setModalContext } = useModalContext()
   const { dateContext, resetDateToToday } = useDateContext()
@@ -37,7 +37,15 @@ export default function Nav({children}) {
           <h3>{monthAndYear}</h3>
         </div>
         <div className="nav-date-btns">
-          {children}
+          <button className="btn change-date-btn" onClick={decrementDate}>
+          <i className="fa-solid fa-angle-left"></i>
+          </button>
+          <button className="btn change-date-btn" onClick={incrementDate}>
+            <i className="fa-solid fa-angle-right"></i>
+          </button>
+          <button className="btn reset-date-btn" onClick={resetDateToToday}>
+            Today
+          </button>
         </div>
       </div>
       <div className="auth">
