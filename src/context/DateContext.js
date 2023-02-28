@@ -146,8 +146,14 @@ export function DateContextProvider({ children }) {
     return date
   }
 
+  function resetDateToToday() {
+    const today = new Date()
+    setDateContext(today)
+    console.log('reset')
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

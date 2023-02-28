@@ -14,7 +14,7 @@ import './Nav.css'
 export default function Nav({children}) {
   const [monthAndYear, setMonthAndYear] = useState('')
   const { modalContext, setModalContext } = useModalContext()
-  const { dateContext } = useDateContext()
+  const { dateContext, resetDateToToday } = useDateContext()
   const { user } = useAuthContext()
   const { signout } = useSignOut()
 
@@ -33,7 +33,9 @@ export default function Nav({children}) {
   return (
     <nav className="container">
       <div className="date">
-        <h3>{monthAndYear}</h3>
+        <div className="month-and-year-wrapper" onClick={resetDateToToday}>
+          <h3>{monthAndYear}</h3>
+        </div>
         <div className="nav-date-btns">
           {children}
         </div>

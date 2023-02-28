@@ -26,7 +26,6 @@ nav .date {
 
 .nav-date-btns {
   display: flex;
-  margin-left: 8px;
 }
 
 .nav-date-btns > * {
@@ -39,4 +38,9 @@ nav .date {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.month-and-year-wrapper {
+  padding: 12px 8px;
+  cursor: pointer;
 }

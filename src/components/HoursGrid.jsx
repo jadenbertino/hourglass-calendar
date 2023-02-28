@@ -1,6 +1,6 @@
-import './Hours.css'
+import './HoursGrid.css'
 
-export default function Hours() {
+export default function HoursGrid() {
   const hours = new Array(24).fill(null)
   
   return (

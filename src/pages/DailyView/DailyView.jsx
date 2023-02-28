@@ -9,7 +9,7 @@ import { useCollection } from '../../hooks/useCollection'
 import Nav from '../../components/Nav'
 import Sidebar from '../../components/Sidebar'
 import NewEventModal from '../../components/NewEventModal'
-import Hours from '../../components/Hours'
+import HoursGrid from '../../components/HoursGrid'
 
 // styles
 import './DailyView.css'
@@ -26,13 +26,10 @@ export default function DailyView() {
   }, [user])
   
   // set date + query events for date
-  const { incrementDateBy, decrementDateBy, dayName, convertToMeridian, dayOfMonth, formattedDate, convertToHours } = useDateContext()
+  const { incrementDateBy, decrementDateBy, dayName, dayOfMonth, formattedDate, resetDateToToday } = useDateContext()
   const {modalContext} = useModalContext()
   const query = useRef([`uid == ${user && user.uid}`]).current
   const { events: allEvents } = useCollection("events", query)
-  const [events, setEvents] = useState([]) 
-
-
 
   return (<>
     <Nav>
@@ -48,13 +45,13 @@ export default function DailyView() {
       <Sidebar/>
       <div className="daily-view">
         <div className="day-of-month">
-          <div className="wrapper">
+          <div className="wrapper" onClick={resetDateToToday}>
             <h3>{dayName}</h3>
             <h2>{dayOfMonth}</h2>
           </div>
         </div>
         <div className="times-and-events">
-          <Hours />
+          <HoursGrid />
           <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
         </div>
       </div>
