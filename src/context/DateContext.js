@@ -9,16 +9,21 @@ export function DateContextProvider({ children }) {
   const [dayName, setDayName] = useState('')
   const [dayOfMonth, setDayOfMonth] = useState('')
   const [formattedDate, setFormattedDate] = useState('')
+  
+  const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   // Re-format anytime date changes
   
   useEffect(() => {
-    setDayName(shortDayNames[dateContext.getDay()]) // Sun, Mon, etc
+    setDayName(getShortDayName(dateContext)) // Sun, Mon, etc
     setDayOfMonth(dateContext.getDate())
     setFormattedDate(formatDate(dateContext))
   }, [dateContext])
+
+  function getShortDayName(date) {
+    return shortDayNames[date.getDay()]
+  }
 
   function formatDate(date) {
     // date object => YYYY-MM-DD
@@ -151,8 +156,18 @@ export function DateContextProvider({ children }) {
     setDateContext(today)
   }
 
+  function getWeek(startDate) {
+    let week = [];
+    for (let i = 0; i < 7; i++) {
+      let newDate = new Date(startDate);
+      newDate.setDate(startDate.getDate() + i);
+      week.push(newDate);
+    }
+    return week
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

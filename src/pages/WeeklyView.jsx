@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
@@ -19,14 +19,16 @@ export default function WeeklyView() {
   const { user } = useAuthContext()
   const nav = useNavigate()
   const {
+    dateContext,
+    getShortDayName,
     incrementDateBy,
     decrementDateBy,
-    dayName,
-    dayOfMonth,
     formattedDate,
-    resetDateToToday
+    resetDateToToday,
+    getWeek
   } = useDateContext();
   const { modalContext } = useModalContext();
+  const [week, setWeek] = useState([]);
 
   // if user isn't signed in redirect to signin / signup page
   useEffect(() => {
@@ -35,10 +37,14 @@ export default function WeeklyView() {
     }
   }, [user]);
 
+  useEffect(() => {
+    setWeek(getWeek(dateContext))
+  }, [dateContext])
+
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events: allEvents } = useCollection('events', query);
-  
+
   return (
     <>
       <Nav
@@ -49,10 +55,12 @@ export default function WeeklyView() {
         <Sidebar />
         <div className="weekly-view">
           <div className="day-of-month">
-            <div className="wrapper" onClick={resetDateToToday}>
-              <h3>{dayName}</h3>
-              <h2>{dayOfMonth}</h2>
-            </div>
+            {week.map(date => (
+              <div className="wrapper" onClick={resetDateToToday}>
+                <p>{getShortDayName(date)}</p>
+                <h2>{date.getDate()}</h2>
+              </div>
+            ))}
           </div>
           <div className="times-and-events">
             <HoursGrid />
