@@ -49,12 +49,12 @@ export default function DailyView() {
       <main>
         <Sidebar />
         <section id="daily-view">
-          <div className="day-of-month">
-            <div className="wrapper" onClick={resetDateToToday}>
-              <h3>{getShortDayName(dateContext)}</h3>
-              <h2>{dateContext.getDate()}</h2>
+          <header className="date-wrapper">
+            <div className="date" onClick={resetDateToToday}>
+              <h3 className="day-of-week">{getShortDayName(dateContext)}</h3>
+              <h2 className="day-of-month">{dateContext.getDate()}</h2>
             </div>
-          </div>
+          </header>
           <div className="times-and-events">
             <HoursGrid />
             <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />

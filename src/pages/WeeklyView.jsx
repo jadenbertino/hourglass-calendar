@@ -54,14 +54,14 @@ export default function WeeklyView() {
       <main>
         <Sidebar />
         <section id="weekly-view">
-          <div className="day-of-month">
+          <header className="date-wrapper">
             {week.map((date, i) => (
-              <div className="wrapper" onClick={resetDateToToday} key={i}>
-                <p>{getShortDayName(date)}</p>
-                <h2>{date.getDate()}</h2>
+              <div className="date" onClick={resetDateToToday} key={i}>
+                <h3 className="day-of-week">{getShortDayName(date)}</h3>
+                <h2 className="day-of-month">{date.getDate()}</h2>
               </div>
             ))}
-          </div>
+          </header>
           <div className="times-and-events">
             <HoursGrid />
             <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />

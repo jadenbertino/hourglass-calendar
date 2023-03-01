@@ -48,12 +48,12 @@ export default function MonthlyView() {
       <main>
         <Sidebar />
         <section id="monthly-view">
-          <div className="day-of-month">
-            <div className="wrapper" onClick={resetDateToToday}>
+          <header className="date-wrapper">
+            <div className="date" onClick={resetDateToToday}>
               <h3>{dayName}</h3>
               <h2>{dayOfMonth}</h2>
             </div>
-          </div>
+          </header>
           <div className="times-and-events">
             <HoursGrid />
             <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />

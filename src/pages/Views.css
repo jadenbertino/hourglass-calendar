@@ -4,20 +4,21 @@ main {
   transform: translateY(80px);
 }
 
-.day-of-month {
+.date-wrapper {
   position: sticky;
   top: 0;
   z-index: 2;
   background-color: #404552;
+  padding-left: 68px;
 }
 
-.day-of-month .wrapper {
-  margin-left: 68px;
+.date-wrapper .date {
   padding: 16px 24px;
   border-left: 1px solid gray;
   cursor: pointer;
   display: inline-flex;
   flex-direction: column;
+  text-align: center;
 }
 
 #daily-view,
@@ -29,4 +30,14 @@ main {
 .times-and-events {
   display: flex;
   margin-top: 8px;
+}
+
+.day-of-week {
+  margin-bottom: 4px;
+}
+
+/* weekly */
+
+#weekly-view .date {
+  width: calc(100% / 7);
 }
