@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
@@ -10,22 +10,14 @@ import HoursGrid from '../components/HoursGrid';
 import Nav from '../components/Nav';
 import NewEventModal from '../components/NewEventModal';
 import Sidebar from '../components/Sidebar';
+import DisplayEvents from '../components/DisplayEvents';
 
 // styles
-import DisplayEvents from '../components/DisplayEvents';
 import './DailyView.css';
 
 export default function DailyView() {
   const { user } = useAuthContext();
-  // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
-  useEffect(() => {
-    if (!user) {
-      nav('/');
-    }
-  }, [user]);
-
-  // set date + query events for date
   const {
     incrementDateBy,
     decrementDateBy,
@@ -35,6 +27,15 @@ export default function DailyView() {
     resetDateToToday
   } = useDateContext();
   const { modalContext } = useModalContext();
+
+  // if user isn't signed in redirect to signin / signup page
+  useEffect(() => {
+    if (!user) {
+      nav('/');
+    }
+  }, [user]);
+
+  // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events: allEvents } = useCollection('events', query);
 

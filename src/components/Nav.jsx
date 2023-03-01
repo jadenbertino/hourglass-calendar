@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import {useSignOut} from '../hooks/useSignOut'
 import SignInModal from'./SignInModal'
 import SignUpModal from'./SignUpModal'
+import { useLocation } from 'react-router-dom'
 
 // context
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -18,7 +19,8 @@ export default function Nav({decrementDate, incrementDate}) {
   const { dateContext, resetDateToToday } = useDateContext()
   const { user } = useAuthContext()
   const { signout } = useSignOut()
-  const [view, setView] = useState('/daily')
+  const path = useLocation().pathname
+  const [view, setView] = useState(path)
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const nav = useNavigate()
 
@@ -66,7 +68,7 @@ export default function Nav({decrementDate, incrementDate}) {
       ) : (
         <div className="set-view-and-signout">
           <form className="set-view-form">
-            <select onChange={(e) => setView(e.target.value)}>
+            <select value={view} onChange={(e) => setView(e.target.value)}>
               <option value="/daily">Daily</option>
               <option value="/weekly">Weekly</option>
               <option value="/monthly">Monthly</option>
