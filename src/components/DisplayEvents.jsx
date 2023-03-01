@@ -7,11 +7,12 @@ import ViewEvent from './ViewEvent'
 import NewEventModal from './NewEventModal'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 
-export default function DisplayEvents({targetDate, allEvents, columns}) {
+export default function DisplayEvents({ allEvents, targetDate }) {
   const { convertToHours, convertToMeridian } = useDateContext()
   const hourGridLines = new Array(24).fill(null)
   const [events, setEvents] = useState([])
   const [viewId, setViewId] = useState('')
+  const [viewEvent, setViewEvent] = useState({})
   const { modalContext, setModalContext } = useModalContext()
   
   useEffect(() => {
@@ -21,17 +22,19 @@ export default function DisplayEvents({targetDate, allEvents, columns}) {
     )
   }, [targetDate, allEvents])
   
-  function openEvent(e, id) {
-    // e.target.style.zIndex = "5"
+  function openEvent(id) {
+    setViewEvent(allEvents.find(e => e.id === id))
     setViewId(id)
     setModalContext('view-event')
   }
 
   return (
     <div className="calendar-column">
+
       {hourGridLines.map((_, i) => (
         <div className="divider" key={i}></div>
       ))}
+
       {events && events.map((event, i)=> {
         const start = convertToHours(event.startTime)
         const end = convertToHours(event.endTime)
@@ -40,9 +43,10 @@ export default function DisplayEvents({targetDate, allEvents, columns}) {
           'height': `${(end - start) * 50}px`
         }
         const size = end - start <= 1 ? 'small' :
-            end - start <= 2 ? 'medium' : 'large'
+          end - start <= 2 ? 'medium' : 'large'
+        
         return (
-          <div key={i} style={eventStyles} className={`event ${size}`} id={event.id} onClick={(e) => openEvent(e, event.id)}>
+          <div key={i} style={eventStyles} className={`event ${size}`} id={event.id} onClick={() => openEvent(event.id)}>
             <h3 className="title">{event.name}</h3>
             {size !== 'small' && <>
               <p className="time">{convertToMeridian(event.startTime)} - {convertToMeridian(event.endTime)}</p>
@@ -51,8 +55,9 @@ export default function DisplayEvents({targetDate, allEvents, columns}) {
           </div>
         )
       })}
+      
       {modalContext === 'view-event' && 
-        <ViewEvent allEvents={allEvents} viewId={viewId}/>
+        <ViewEvent event={viewEvent}/>
       }
       {modalContext === 'edit-event' &&
         <NewEventModal allEvents={allEvents} eventId={viewId} />
