@@ -4,27 +4,15 @@ export const DateContext = createContext();
 
 export function DateContextProvider({ children }) {
   const [dateContext, setDateContext] = useState(new Date());
-
-  // date formatting
-  const [dayName, setDayName] = useState('')
-  const [dayOfMonth, setDayOfMonth] = useState('')
-  const [formattedDate, setFormattedDate] = useState('')
   
   const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-  // Re-format anytime date changes
-  
-  useEffect(() => {
-    setDayName(getShortDayName(dateContext)) // Sun, Mon, etc
-    setDayOfMonth(dateContext.getDate())
-    setFormattedDate(formatDate(dateContext))
-  }, [dateContext])
 
   function getShortDayName(date) {
     return shortDayNames[date.getDay()]
   }
-
+  
   function formatDate(date) {
     // date object => YYYY-MM-DD
     try {
@@ -167,7 +155,7 @@ export function DateContextProvider({ children }) {
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, dayName, dayOfMonth, formattedDate, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

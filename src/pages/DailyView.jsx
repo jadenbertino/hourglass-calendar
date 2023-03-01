@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -19,12 +20,12 @@ export default function DailyView() {
   const { user } = useAuthContext();
   const nav = useNavigate();
   const {
+    dateContext,
     incrementDateBy,
     decrementDateBy,
-    dayName,
-    dayOfMonth,
     formattedDate,
-    resetDateToToday
+    resetDateToToday,
+    getShortDayName
   } = useDateContext();
   const { modalContext } = useModalContext();
 
@@ -50,8 +51,8 @@ export default function DailyView() {
         <div className="daily-view">
           <div className="day-of-month">
             <div className="wrapper" onClick={resetDateToToday}>
-              <h3>{dayName}</h3>
-              <h2>{dayOfMonth}</h2>
+              <h3>{getShortDayName(dateContext)}</h3>
+              <h2>{dateContext.getDate()}</h2>
             </div>
           </div>
           <div className="times-and-events">

@@ -55,8 +55,8 @@ export default function WeeklyView() {
         <Sidebar />
         <div className="weekly-view">
           <div className="day-of-month">
-            {week.map(date => (
-              <div className="wrapper" onClick={resetDateToToday}>
+            {week.map((date, i) => (
+              <div className="wrapper" onClick={resetDateToToday} key={i}>
                 <p>{getShortDayName(date)}</p>
                 <h2>{date.getDate()}</h2>
               </div>
