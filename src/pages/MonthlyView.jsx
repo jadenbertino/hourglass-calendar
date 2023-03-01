@@ -13,9 +13,9 @@ import Sidebar from '../components/Sidebar';
 import DisplayEvents from '../components/DisplayEvents';
 
 // styles
-import './WeeklyView.css'
+import './MonthlyView.css'
 
-export default function WeeklyView() {
+export default function MonthlyView() {
   const { user } = useAuthContext()
   const nav = useNavigate()
   const {
@@ -47,7 +47,7 @@ export default function WeeklyView() {
       />
       <main>
         <Sidebar />
-        <div className="weekly-view">
+        <div className="monthly-view">
           <div className="day-of-month">
             <div className="wrapper" onClick={resetDateToToday}>
               <h3>{dayName}</h3>

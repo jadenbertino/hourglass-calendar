@@ -7,7 +7,7 @@ import { useAuthContext } from './hooks/useAuthContext';
 import Locked from './pages/Locked';
 import DailyView from './pages/DailyView';
 import WeeklyView from './pages/WeeklyView';
-
+import MonthlyView from './pages/MonthlyView'
 
 function App() {
   const { authIsReady } = useAuthContext()
@@ -18,6 +18,7 @@ function App() {
           <Route path="/" element={<Locked />} />
           <Route path="/daily" element={<DailyView />} />
           <Route path="/weekly" element={<WeeklyView />} />
+          <Route path="/monthly" element={<MonthlyView />} />
         </Routes>
       </>)}
     </Router>

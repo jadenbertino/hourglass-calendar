@@ -9,17 +9,17 @@ export function DateContextProvider({ children }) {
   const [dayName, setDayName] = useState('')
   const [dayOfMonth, setDayOfMonth] = useState('')
   const [formattedDate, setFormattedDate] = useState('')
-  const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-];
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+  const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   // Re-format anytime date changes
+  
   useEffect(() => {
-    setDayName(shortDayNames[dateContext.getDay()]) // Sunday, Monday, etc
+    setDayName(shortDayNames[dateContext.getDay()]) // Sun, Mon, etc
     setDayOfMonth(dateContext.getDate())
     setFormattedDate(formatDate(dateContext))
   }, [dateContext])
-  
+
   function formatDate(date) {
     // date object => YYYY-MM-DD
     try {

@@ -1,0 +1,30 @@
+main {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  transform: translateY(80px);
+}
+
+.day-of-month {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #404552;
+}
+
+.day-of-month .wrapper {
+  margin-left: 68px;
+  padding: 16px 24px;
+  border-left: 1px solid gray;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.monthly-view {
+  width: 100%;
+}
+
+.times-and-events {
+  display: flex;
+  margin-top: 8px;
+}
