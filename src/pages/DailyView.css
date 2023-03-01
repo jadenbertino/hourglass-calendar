@@ -4,10 +4,6 @@ main {
   transform: translateY(80px);
 }
 
-.daily-view {
-  padding-left: 20px;
-}
-
 .day-of-month {
   position: sticky;
   top: 0;

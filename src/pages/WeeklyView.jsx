@@ -45,6 +45,22 @@ export default function WeeklyView() {
         incrementDate={() => incrementDateBy(7)}
         decrementDate={() => decrementDateBy(7)}
       />
+      <main>
+        <Sidebar />
+        <div className="weekly-view">
+          <div className="day-of-month">
+            <div className="wrapper" onClick={resetDateToToday}>
+              <h3>{dayName}</h3>
+              <h2>{dayOfMonth}</h2>
+            </div>
+          </div>
+          <div className="times-and-events">
+            <HoursGrid />
+            <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
+          </div>
+        </div>
+        {modalContext === 'newEvent' && <NewEventModal />}
+      </main>
     </>
   )
 }

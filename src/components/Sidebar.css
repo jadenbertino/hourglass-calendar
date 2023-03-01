@@ -8,8 +8,10 @@
   align-items: center;
   background-color: #31343F;
   border-right: 1px solid #93A8AC;
+  margin-right: 20px;
 }
 
 .sidebar .fa-plus {
   margin-right: 8px;
 }
+
