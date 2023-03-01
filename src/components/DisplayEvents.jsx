@@ -10,7 +10,6 @@ import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 export default function DisplayEvents({targetDate, allEvents, columns}) {
   const { convertToHours, convertToMeridian } = useDateContext()
   const hourGridLines = new Array(24).fill(null)
-  const columnsArray = new Array(columns).fill(null)
   const [events, setEvents] = useState([])
   const [viewId, setViewId] = useState('')
   const { modalContext, setModalContext } = useModalContext()
@@ -29,13 +28,9 @@ export default function DisplayEvents({targetDate, allEvents, columns}) {
   }
 
   return (
-    <div className="events">
-      {columnsArray.map((col, i) => (
-        <div className="calendar-column" key={i} style={{"width": `calc(100% / ${columns}`}}>
-          {hourGridLines.map((_, i) => (
-            <div className="divider" key={i}></div>
-          ))}
-        </div>
+    <div className="calendar-column">
+      {hourGridLines.map((_, i) => (
+        <div className="divider" key={i}></div>
       ))}
       {events && events.map((event, i)=> {
         const start = convertToHours(event.startTime)

@@ -22,7 +22,7 @@ export default function DailyView() {
     dateContext,
     incrementDateBy,
     decrementDateBy,
-    formattedDate,
+    formatDate,
     resetDateToToday,
     getShortDayName
   } = useDateContext();
@@ -56,7 +56,9 @@ export default function DailyView() {
           </header>
           <div className="times-and-events">
             <HoursList />
-            <DisplayEvents targetDate={formattedDate} allEvents={allEvents} columns={1} />
+            <div className="events">
+              <DisplayEvents targetDate={formatDate(dateContext)} allEvents={allEvents} />
+            </div>
           </div>
         </section>
         {modalContext === 'newEvent' && <NewEventModal />}

@@ -23,7 +23,7 @@ export default function WeeklyView() {
     getShortDayName,
     incrementDateBy,
     decrementDateBy,
-    formattedDate,
+    formatDate,
     resetDateToToday,
     getWeek
   } = useDateContext();
@@ -64,7 +64,11 @@ export default function WeeklyView() {
           </header>
           <div className="times-and-events">
             <HoursList />
-            <DisplayEvents columns={7}/>
+            <div className="events">
+              {week && week.map((date, i) => (
+                <DisplayEvents targetDate={formatDate(date)} allEvents={allEvents} key={i} />
+              ))}
+            </div>
           </div>
         </section>
         {modalContext === 'newEvent' && <NewEventModal />}

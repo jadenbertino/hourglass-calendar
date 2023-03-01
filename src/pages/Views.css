@@ -43,3 +43,7 @@ main {
 #weekly-view .date {
   width: calc(100% / 7);
 }
+
+#weekly-view .event {
+  width: calc(100% - 12px);
+}
