@@ -15,15 +15,21 @@ export default function DisplayEvents({ allEvents, targetDate }) {
   const [viewEvent, setViewEvent] = useState({})
   const { modalContext, setModalContext } = useModalContext()
   
+  // always have up to date copy of events for that day
   useEffect(() => {
     allEvents && setEvents(allEvents.filter(
       event => event.date === targetDate).sort(
         (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
     )
   }, [targetDate, allEvents])
+
+  // click event => change view id => view event
+  
+  function getEvent(id) {
+    return allEvents.find(e => e.id === id)
+  }
   
   function openEvent(id) {
-    setViewEvent(allEvents.find(e => e.id === id))
     setViewId(id)
     setModalContext('view-event')
   }
@@ -55,9 +61,9 @@ export default function DisplayEvents({ allEvents, targetDate }) {
           </div>
         )
       })}
-      
+
       {modalContext === 'view-event' && 
-        <ViewEvent event={viewEvent}/>
+        <ViewEvent event={() => getEvent(viewId)}/>
       }
       {modalContext === 'edit-event' &&
         <NewEventModal allEvents={allEvents} eventId={viewId} />
