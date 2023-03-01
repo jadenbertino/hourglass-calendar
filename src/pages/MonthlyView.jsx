@@ -23,7 +23,8 @@ export default function MonthlyView() {
     decrementDateBy,
     dayName,
     dayOfMonth,
-    formattedDate,
+    formatDate,
+    dateContext,
     resetDateToToday
   } = useDateContext();
   const { modalContext } = useModalContext();
@@ -56,7 +57,7 @@ export default function MonthlyView() {
           </header>
           <div className="times-and-events">
             <HoursList />
-            <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
+            <DisplayEvents targetDate={formatDate(dateContext)} allEvents={allEvents} />
           </div>
         </section>
         {modalContext === 'newEvent' && <NewEventModal />}

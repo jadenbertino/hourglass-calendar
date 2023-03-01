@@ -12,12 +12,12 @@ import './NewEventModal.css'
 export default function NewEventModal({allEvents, eventId}) {
   const { user } = useAuthContext()
   const { setModalContext } = useModalContext()
-  const { isMeridian, isMilitary, parseTime, convertToMilitary, formattedDate } = useDateContext()
+  const { isMeridian, isMilitary, parseTime, convertToMilitary, formatDate, dateContext } = useDateContext()
   const [event, setEvent] = useState(null)
 
   // form controls
   const [eventName, setEventName] = useState('')
-  const [eventDate, setEventDate] = useState(formattedDate)
+  const [eventDate, setEventDate] = useState(formatDate(dateContext))
   const [eventStartTime, setEventStartTime] = useState('')
   const [eventEndTime, setEventEndTime] = useState('')
   const [eventNotes, setEventNotes] = useState('')
