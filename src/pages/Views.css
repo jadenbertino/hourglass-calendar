@@ -10,6 +10,7 @@ main {
   z-index: 2;
   background-color: #404552;
   padding-left: 68px;
+  height: 90px;
 }
 
 .date-wrapper .date {
@@ -18,7 +19,9 @@ main {
   cursor: pointer;
   display: inline-flex;
   flex-direction: column;
+  justify-content: center;
   text-align: center;
+  height: 100%;
 }
 
 #daily-view,

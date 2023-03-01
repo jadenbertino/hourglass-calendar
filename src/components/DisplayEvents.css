@@ -1,13 +1,12 @@
 .events {
   width: 100%;
-  transform: translateX(-12px);
   cursor: pointer;
   display: flex;
 }
 
 .calendar-column {
-  padding-top: 8px;
-  border-right: 1px solid gray;
+  padding-top: 20px;
+  border-left: 1px solid gray;
 }
 
 .divider {

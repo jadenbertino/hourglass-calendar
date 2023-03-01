@@ -1,15 +1,25 @@
 .hours {
-  padding-right: 24px;
-  border-right: 1px solid gray;
+  margin-top: 28px;
+  /* border-right: 1px solid gray; */
   transform: translateY(-8px);
   display: inline-flex;
   flex-direction: column;
 }
 
-.hours > * {
+.hour-wrapper {
   height: 50px;
-  width: 44px;
+  width: 68px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.hour {
+  transform: translateY(-8px);
+}
+
+.border-provider {
+  border-top: solid 1px gray;
+  width: 12px;
+  height: 1px;
+  margin-left: 12px;
 }

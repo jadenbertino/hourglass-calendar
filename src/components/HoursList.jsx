@@ -9,9 +9,9 @@ export default function HoursList() {
         const hourName = i % 12 === 0 ? 12 : i % 12;
         const meridian = i < 12 ? 'am' : 'pm';
         return (
-          <div key={i}>
-            {hourName}
-            {meridian}
+          <div className="hour-wrapper" key={i}>
+            <span className="hour">{hourName}{meridian}</span>
+            <div className="border-provider"></div>
           </div>
         );
       })}
