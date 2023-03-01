@@ -29,7 +29,6 @@ main {
 
 .times-and-events {
   display: flex;
-  margin-top: 8px;
 }
 
 .day-of-week {

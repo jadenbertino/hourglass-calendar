@@ -6,18 +6,18 @@ import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
 
 // components
-import HoursGrid from '../components/HoursGrid';
+import DisplayEvents from '../components/DisplayEvents';
+import HoursList from '../components/HoursList';
 import Nav from '../components/Nav';
 import NewEventModal from '../components/NewEventModal';
 import Sidebar from '../components/Sidebar';
-import DisplayEvents from '../components/DisplayEvents';
 
 // styles
-import './Views.css'
+import './Views.css';
 
 export default function MonthlyView() {
-  const { user } = useAuthContext()
-  const nav = useNavigate()
+  const { user } = useAuthContext();
+  const nav = useNavigate();
   const {
     incrementDateBy,
     decrementDateBy,
@@ -38,7 +38,7 @@ export default function MonthlyView() {
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events: allEvents } = useCollection('events', query);
-  
+
   return (
     <>
       <Nav
@@ -55,12 +55,12 @@ export default function MonthlyView() {
             </div>
           </header>
           <div className="times-and-events">
-            <HoursGrid />
+            <HoursList />
             <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
           </div>
         </section>
         {modalContext === 'newEvent' && <NewEventModal />}
       </main>
     </>
-  )
+  );
 }

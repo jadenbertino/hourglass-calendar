@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -7,11 +6,11 @@ import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
 
 // components
-import HoursGrid from '../components/HoursGrid';
+import DisplayEvents from '../components/DisplayEvents';
+import HoursList from '../components/HoursList';
 import Nav from '../components/Nav';
 import NewEventModal from '../components/NewEventModal';
 import Sidebar from '../components/Sidebar';
-import DisplayEvents from '../components/DisplayEvents';
 
 // styles
 import './Views.css';
@@ -56,8 +55,8 @@ export default function DailyView() {
             </div>
           </header>
           <div className="times-and-events">
-            <HoursGrid />
-            <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
+            <HoursList />
+            <DisplayEvents targetDate={formattedDate} allEvents={allEvents} columns={1} />
           </div>
         </section>
         {modalContext === 'newEvent' && <NewEventModal />}

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
@@ -6,18 +6,18 @@ import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
 
 // components
-import HoursGrid from '../components/HoursGrid';
+import DisplayEvents from '../components/DisplayEvents';
+import HoursList from '../components/HoursList';
 import Nav from '../components/Nav';
 import NewEventModal from '../components/NewEventModal';
 import Sidebar from '../components/Sidebar';
-import DisplayEvents from '../components/DisplayEvents';
 
 // styles
-import './Views.css'
+import './Views.css';
 
 export default function WeeklyView() {
-  const { user } = useAuthContext()
-  const nav = useNavigate()
+  const { user } = useAuthContext();
+  const nav = useNavigate();
   const {
     dateContext,
     getShortDayName,
@@ -38,8 +38,8 @@ export default function WeeklyView() {
   }, [user]);
 
   useEffect(() => {
-    setWeek(getWeek(dateContext))
-  }, [dateContext])
+    setWeek(getWeek(dateContext));
+  }, [dateContext]);
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
@@ -63,12 +63,12 @@ export default function WeeklyView() {
             ))}
           </header>
           <div className="times-and-events">
-            <HoursGrid />
-            <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
+            <HoursList />
+            <DisplayEvents columns={7}/>
           </div>
         </section>
         {modalContext === 'newEvent' && <NewEventModal />}
       </main>
     </>
-  )
+  );
 }
