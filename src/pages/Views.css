@@ -20,7 +20,9 @@ main {
   flex-direction: column;
 }
 
-.weekly-view {
+#daily-view,
+#weekly-view,
+#monthly-view {
   width: 100%;
 }
 

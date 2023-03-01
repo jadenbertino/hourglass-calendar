@@ -13,7 +13,7 @@ import Sidebar from '../components/Sidebar';
 import DisplayEvents from '../components/DisplayEvents';
 
 // styles
-import './WeeklyView.css'
+import './Views.css'
 
 export default function WeeklyView() {
   const { user } = useAuthContext()
@@ -53,7 +53,7 @@ export default function WeeklyView() {
       />
       <main>
         <Sidebar />
-        <div className="weekly-view">
+        <section id="weekly-view">
           <div className="day-of-month">
             {week.map((date, i) => (
               <div className="wrapper" onClick={resetDateToToday} key={i}>
@@ -66,7 +66,7 @@ export default function WeeklyView() {
             <HoursGrid />
             <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
           </div>
-        </div>
+        </section>
         {modalContext === 'newEvent' && <NewEventModal />}
       </main>
     </>

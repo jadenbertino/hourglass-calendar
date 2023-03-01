@@ -13,7 +13,7 @@ import Sidebar from '../components/Sidebar';
 import DisplayEvents from '../components/DisplayEvents';
 
 // styles
-import './MonthlyView.css'
+import './Views.css'
 
 export default function MonthlyView() {
   const { user } = useAuthContext()
@@ -47,7 +47,7 @@ export default function MonthlyView() {
       />
       <main>
         <Sidebar />
-        <div className="monthly-view">
+        <section id="monthly-view">
           <div className="day-of-month">
             <div className="wrapper" onClick={resetDateToToday}>
               <h3>{dayName}</h3>
@@ -58,7 +58,7 @@ export default function MonthlyView() {
             <HoursGrid />
             <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
           </div>
-        </div>
+        </section>
         {modalContext === 'newEvent' && <NewEventModal />}
       </main>
     </>

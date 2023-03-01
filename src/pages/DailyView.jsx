@@ -14,7 +14,7 @@ import Sidebar from '../components/Sidebar';
 import DisplayEvents from '../components/DisplayEvents';
 
 // styles
-import './DailyView.css';
+import './Views.css';
 
 export default function DailyView() {
   const { user } = useAuthContext();
@@ -48,7 +48,7 @@ export default function DailyView() {
       />
       <main>
         <Sidebar />
-        <div className="daily-view">
+        <section id="daily-view">
           <div className="day-of-month">
             <div className="wrapper" onClick={resetDateToToday}>
               <h3>{getShortDayName(dateContext)}</h3>
@@ -59,7 +59,7 @@ export default function DailyView() {
             <HoursGrid />
             <DisplayEvents targetDate={formattedDate} allEvents={allEvents} />
           </div>
-        </div>
+        </section>
         {modalContext === 'newEvent' && <NewEventModal />}
       </main>
     </>
