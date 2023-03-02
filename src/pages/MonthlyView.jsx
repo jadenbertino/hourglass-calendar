@@ -12,6 +12,8 @@ import Nav from "../components/Nav";
 import NewEventModal from "../components/NewEventModal";
 import Sidebar from "../components/Sidebar";
 import DayOfMonthEvents from "../components/DayOfMonthEvents";
+import ViewEvent from "../components/ViewEvent";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 
 // styles
 import "./Views.css";
@@ -32,6 +34,7 @@ export default function MonthlyView() {
     resetDateToToday,
     getShortDayName,
   } = useDateContext();
+  const [viewEventId, setViewEventId] = useState('')
 
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
@@ -49,6 +52,10 @@ export default function MonthlyView() {
         (eventA, eventB) =>
           convertToHours(eventA.startTime) - convertToHours(eventB.startTime)
       );
+  }
+
+  function getEvent(id) {
+    return events.find(e => e.id === id)
   }
 
   useEffect(() => {
@@ -88,13 +95,22 @@ export default function MonthlyView() {
                 <div className="day" key={i}>
                   <div className="day-wrapper">
                     <p className="day-number">{date.getDate()}</p>
-                    <DayOfMonthEvents events={getEvents(date)} />
+                    <DayOfMonthEvents events={getEvents(date)} setViewEventId={setViewEventId} />
                   </div>
                 </div>
               ))}
           </div>
         </section>
         {modalContext === "newEvent" && <NewEventModal />}
+        {modalContext === 'view-event' && 
+          <ViewEvent event={getEvent(viewEventId)} />
+        }
+        {modalContext === 'edit-event' &&
+          <NewEventModal eventToEdit={getEvent(viewEventId)} />
+        }
+        {modalContext === 'confirm-delete' && 
+          <ConfirmDeleteModal id={viewEventId} />
+        } 
       </main>
     </>
   );

@@ -81,12 +81,18 @@ main {
   height: calc(100% / 5);
   border: 1px solid gray;
   padding: 8px;
+  overflow: hidden;
 }
 
 .monthly-events .day-wrapper {
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.monthly-events .day-number {
+  text-align: center;
+  margin-bottom: 8px;
 }
 
 .monthly-event {
@@ -111,9 +117,4 @@ main {
 
 .monthly-event .name {
   font-weight: bold;
-}
-
-#monthly .day-number {
-  text-align: center;
-  margin-bottom: 8px;
 }
