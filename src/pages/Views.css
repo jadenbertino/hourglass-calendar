@@ -24,10 +24,15 @@ main {
   height: 100%;
 }
 
-#daily-view,
-#weekly-view,
-#monthly-view {
+#daily,
+#weekly,
+#monthly {
   width: 100%;
+}
+
+#daily,
+#weekly {
+  margin-left: 20px;
 }
 
 .times-and-events {
@@ -40,10 +45,37 @@ main {
 
 /* weekly */
 
-#weekly-view .date {
+#weekly .date {
   width: calc(100% / 7);
 }
 
-#weekly-view .event {
+#weekly .event {
   width: calc(100% - 12px);
+}
+
+/* monthly */
+
+#monthly .sidebar {
+  margin-right: 0;
+}
+
+#monthly .date-wrapper {
+  padding-left: 0;
+  display: flex;
+}
+
+#monthly .day-name {
+  width: calc(100% / 7);
+}
+
+.monthly-events {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.monthly-events .day {
+  width: calc(100% / 7);
+  height: calc(100% / 5);
+  border: 1px solid gray;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
@@ -16,8 +16,9 @@ import Sidebar from '../components/Sidebar';
 import './Views.css';
 
 export default function MonthlyView() {
+  const [week, setWeek] = useState([]);
   const { user } = useAuthContext();
-  const nav = useNavigate();
+  const { modalContext } = useModalContext();
   const {
     incrementDateBy,
     decrementDateBy,
@@ -25,16 +26,24 @@ export default function MonthlyView() {
     dayOfMonth,
     formatDate,
     dateContext,
-    resetDateToToday
+    getWeek,
+    resetDateToToday,
+    getShortDayName
   } = useDateContext();
-  const { modalContext } = useModalContext();
+  const [monthDates, setMonthDates] = useState(new Array(35).fill(null))
 
   // if user isn't signed in redirect to signin / signup page
+  const nav = useNavigate();
   useEffect(() => {
     if (!user) {
       nav('/');
     }
   }, [user]);
+  
+  
+  useEffect(() => {
+    setWeek(getWeek(dateContext));
+  }, [dateContext]);
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
@@ -43,21 +52,23 @@ export default function MonthlyView() {
   return (
     <>
       <Nav
-        incrementDate={() => incrementDateBy(7)}
-        decrementDate={() => decrementDateBy(7)}
+        incrementDate={() => incrementDateBy(30)}
+        decrementDate={() => decrementDateBy(30)}
       />
       <main>
         <Sidebar />
-        <section id="monthly-view">
+        <section id="monthly">
           <header className="date-wrapper">
-            <div className="date" onClick={resetDateToToday}>
-              <h3>{dayName}</h3>
-              <h2>{dayOfMonth}</h2>
-            </div>
+            {week.map((date, i) => (
+              <h3 className="date day-name" onClick={resetDateToToday} key={i}>
+                {getShortDayName(date)}
+              </h3>
+            ))}
           </header>
-          <div className="times-and-events">
-            <HoursList />
-            <DisplayEvents targetDate={formatDate(dateContext)} allEvents={allEvents} />
+          <div className="monthly-events">
+            {monthDates.map((date, i) => (
+              <div className="day" key={i}></div>
+            ))}
           </div>
         </section>
         {modalContext === 'newEvent' && <NewEventModal />}

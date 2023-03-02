@@ -61,7 +61,7 @@ export default function DailyView() {
       />
       <main>
         <Sidebar />
-        <section id="daily-view">
+        <section id="daily">
           <header className="date-wrapper">
             <div className="date" onClick={resetDateToToday}>
               <h3 className="day-of-week">{getShortDayName(dateContext)}</h3>

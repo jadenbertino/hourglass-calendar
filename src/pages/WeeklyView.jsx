@@ -68,7 +68,7 @@ export default function WeeklyView() {
       />
       <main>
         <Sidebar />
-        <section id="weekly-view">
+        <section id="weekly">
           <header className="date-wrapper">
             {week.map((date, i) => (
               <div className="date" onClick={resetDateToToday} key={i}>
