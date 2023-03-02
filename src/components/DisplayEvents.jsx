@@ -47,10 +47,6 @@ export default function DisplayEvents({ events, setViewEventId }) {
           </div>
         )
       })}
-
-      {/* {modalContext === 'view-event' && 
-        <ViewEvent event={() => getEvent(viewId)}/>
-      }*/}
     </div>
   )
 }

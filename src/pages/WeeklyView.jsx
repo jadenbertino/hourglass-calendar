@@ -74,7 +74,7 @@ export default function WeeklyView() {
             {week.map((date, i) => (
               <div className="date" onClick={resetDateToToday} key={i}>
                 <h3 className="day-of-week">{getShortDayName(date)}</h3>
-                <h2 className="day-of-month">{date.getDate()}</h2>
+                <h2>{date.getDate()}</h2>
               </div>
             ))}
           </header>
@@ -95,7 +95,7 @@ export default function WeeklyView() {
       {modalContext === 'edit-event' &&
         <NewEventModal eventToEdit={getEvent(viewEventId)} />
       }
-      {modalContext === 'confirm-delete' &&
+      {modalContext === 'confirm-delete' && 
         <ConfirmDeleteModal id={viewEventId} />
       } 
     </>
