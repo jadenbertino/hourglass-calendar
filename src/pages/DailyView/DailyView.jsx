@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useCollection } from '../hooks/useCollection';
-import { useDateContext } from '../hooks/useDateContext';
-import { useModalContext } from '../hooks/useModalContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useCollection } from '../../hooks/useCollection';
+import { useDateContext } from '../../hooks/useDateContext';
+import { useModalContext } from '../../hooks/useModalContext';
 
 // components
-import DisplayEvents from '../components/DisplayEvents';
-import HoursList from '../components/HoursList';
-import Nav from '../components/Nav';
-import NewEventModal from '../components/NewEventModal';
-import Sidebar from '../components/Sidebar';
-import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
+import DisplayEvents from '../../components/DisplayEvents';
+import HoursList from '../../components/HoursList';
+import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
+import NewEventModal from '../../components/modals/NewEventModal';
+import Nav from '../../components/Nav';
+import Sidebar from '../../components/Sidebar';
 
 // styles
-import './Views.css';
-import ViewEvent from '../components/ViewEvent';
+import ViewEvent from '../../components/modals/ViewEvent';
+import '../Views.css';
 
 export default function DailyView() {
   const { user } = useAuthContext();
@@ -31,10 +31,10 @@ export default function DailyView() {
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [viewEventId, setViewEventId] = useState('');
-  const [todayEvents, setTodayEvents] = useState([])
+  const [todayEvents, setTodayEvents] = useState([]);
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events: allEvents } = useCollection('events', query);
-  
+
   // if user isn't signed in redirect to signin / signup page
   useEffect(() => {
     if (!user) {
@@ -43,15 +43,21 @@ export default function DailyView() {
   }, [user]);
 
   function getEvent(id) {
-    return allEvents.find(e => e.id === id)
+    return allEvents.find(e => e.id === id);
   }
-  
+
   useEffect(() => {
-    allEvents && setTodayEvents(allEvents.filter(
-      event => event.date === formatDate(dateContext)).sort(
-        (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
-    )
-  }, [dateContext, allEvents])
+    allEvents &&
+      setTodayEvents(
+        allEvents
+          .filter(event => event.date === formatDate(dateContext))
+          .sort(
+            (eventA, eventB) =>
+              convertToHours(eventA.startTime) -
+              convertToHours(eventB.startTime)
+          )
+      );
+  }, [dateContext, allEvents]);
 
   return (
     <>
@@ -71,21 +77,24 @@ export default function DailyView() {
           <div className="times-and-events">
             <HoursList />
             <div className="events">
-              <DisplayEvents events={todayEvents} setViewEventId={setViewEventId} />
+              <DisplayEvents
+                events={todayEvents}
+                setViewEventId={setViewEventId}
+              />
             </div>
           </div>
         </section>
       </main>
       {modalContext === 'newEvent' && <NewEventModal />}
-      {modalContext === 'view-event' && 
+      {modalContext === 'view-event' && (
         <ViewEvent event={getEvent(viewEventId)} />
-      }
-      {modalContext === 'edit-event' &&
+      )}
+      {modalContext === 'edit-event' && (
         <NewEventModal eventToEdit={getEvent(viewEventId)} />
-      }
-      {modalContext === 'confirm-delete' &&
+      )}
+      {modalContext === 'confirm-delete' && (
         <ConfirmDeleteModal id={viewEventId} />
-      } 
+      )}
     </>
   );
 }

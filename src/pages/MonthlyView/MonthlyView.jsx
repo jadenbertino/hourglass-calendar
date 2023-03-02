@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useCollection } from "../hooks/useCollection";
-import { useDateContext } from "../hooks/useDateContext";
-import { useModalContext } from "../hooks/useModalContext";
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useCollection } from '../../hooks/useCollection';
+import { useDateContext } from '../../hooks/useDateContext';
+import { useModalContext } from '../../hooks/useModalContext';
 
 // components
-import DisplayEvents from "../components/DisplayEvents";
-import HoursList from "../components/HoursList";
-import Nav from "../components/Nav";
-import NewEventModal from "../components/NewEventModal";
-import Sidebar from "../components/Sidebar";
-import DayOfMonthEvents from "../components/DayOfMonthEvents";
-import ViewEvent from "../components/ViewEvent";
-import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
+import DisplayEvents from '../../components/DisplayEvents';
+import HoursList from '../../components/HoursList';
+import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
+import NewEventModal from '../../components/modals/NewEventModal';
+import ViewEvent from '../../components/modals/ViewEvent';
+import Nav from '../../components/Nav';
+import Sidebar from '../../components/Sidebar';
+import DayOfMonthEvents from './DayOfMonthEvents';
 
 // styles
-import "./Views.css";
+import '../Views.css';
 
 export default function MonthlyView() {
   const [weekDates, setWeekDates] = useState(null);
@@ -32,7 +32,7 @@ export default function MonthlyView() {
     getMonth,
     getWeek,
     resetDateToToday,
-    getShortDayName,
+    getShortDayName
   } = useDateContext();
   const [viewEventId, setViewEventId] = useState('')
   const daySizeRef = useRef(null)
@@ -56,14 +56,14 @@ export default function MonthlyView() {
   const nav = useNavigate();
   useEffect(() => {
     if (!user) {
-      nav("/");
+      nav('/');
     }
   }, [user]);
 
   function getEvents(date) {
     const formattedDate = formatDate(date);
     return events
-      .filter((event) => event.date === formattedDate)
+      .filter(event => event.date === formattedDate)
       .sort(
         (eventA, eventB) =>
           convertToHours(eventA.startTime) - convertToHours(eventB.startTime)
@@ -71,7 +71,7 @@ export default function MonthlyView() {
   }
 
   function getEvent(id) {
-    return events.find(e => e.id === id)
+    return events.find(e => e.id === id);
   }
 
   useEffect(() => {
@@ -81,13 +81,13 @@ export default function MonthlyView() {
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
-  const { events } = useCollection("events", query);
+  const { events } = useCollection('events', query);
 
   return (
     <>
       <Nav
-        incrementDate={() => incrementDateBy(30)}
-        decrementDate={() => decrementDateBy(30)}
+        incrementDate={() => incrementDateBy(28)}
+        decrementDate={() => decrementDateBy(28)}
       />
       <main>
         <Sidebar />
@@ -98,8 +98,7 @@ export default function MonthlyView() {
                 <h3
                   className="date day-name"
                   onClick={resetDateToToday}
-                  key={i}
-                >
+                  key={i}>
                   {getShortDayName(date)}
                 </h3>
               ))}
@@ -111,22 +110,25 @@ export default function MonthlyView() {
                 <div className="day" key={i} ref={i === 0 ? daySizeRef : null}>
                   <div className="day-wrapper">
                     <p className="day-number">{date.getDate()}</p>
-                    <DayOfMonthEvents events={getEvents(date)} setViewEventId={setViewEventId} />
+                    <DayOfMonthEvents
+                      events={getEvents(date)}
+                      setViewEventId={setViewEventId}
+                    />
                   </div>
                 </div>
               ))}
           </div>
         </section>
-        {modalContext === "newEvent" && <NewEventModal />}
-        {modalContext === 'view-event' && 
+        {modalContext === 'newEvent' && <NewEventModal />}
+        {modalContext === 'view-event' && (
           <ViewEvent event={getEvent(viewEventId)} />
-        }
-        {modalContext === 'edit-event' &&
+        )}
+        {modalContext === 'edit-event' && (
           <NewEventModal eventToEdit={getEvent(viewEventId)} />
-        }
-        {modalContext === 'confirm-delete' && 
+        )}
+        {modalContext === 'confirm-delete' && (
           <ConfirmDeleteModal id={viewEventId} />
-        } 
+        )}
       </main>
     </>
   );

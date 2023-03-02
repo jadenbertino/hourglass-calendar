@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext';
 
 // pages & components
-import Locked from './pages/Locked';
-import DailyView from './pages/DailyView';
-import WeeklyView from './pages/WeeklyView';
-import MonthlyView from './pages/MonthlyView'
+import Locked from './pages/Locked/Locked';
+import DailyView from './pages/DailyView/DailyView';
+import WeeklyView from './pages/WeeklyView/WeeklyView';
+import MonthlyView from './pages/MonthlyView/MonthlyView'
 
 function App() {
   const { authIsReady } = useAuthContext()

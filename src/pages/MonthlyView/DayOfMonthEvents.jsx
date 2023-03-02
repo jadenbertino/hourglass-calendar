@@ -1,13 +1,13 @@
-import { useDateContext } from "../hooks/useDateContext"
-import { useModalContext } from "../hooks/useModalContext"
+import { useDateContext } from '../../hooks/useDateContext';
+import { useModalContext } from '../../hooks/useModalContext';
 
 export default function DayOfMonthEvents({ events, setViewEventId }) {
-  const { convertToMeridian } = useDateContext()
-  const { setModalContext } = useModalContext()
+  const { convertToMeridian } = useDateContext();
+  const { setModalContext } = useModalContext();
 
   function openEvent(id) {
-    setViewEventId(id)
-    setModalContext('view-event')
+    setViewEventId(id);
+    setModalContext('view-event');
   }
 
   return (
@@ -20,5 +20,5 @@ export default function DayOfMonthEvents({ events, setViewEventId }) {
         </div>
       ))}
     </>
-  )
+  );
 }

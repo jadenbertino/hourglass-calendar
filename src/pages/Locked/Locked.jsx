@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthContext } from '../hooks/useAuthContext';
-import { useModalContext } from '../hooks/useModalContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useModalContext } from '../../hooks/useModalContext';
 
 // components
-import Nav from '../components/Nav';
-import SignInModal from '../components/SignInModal';
-import SignUpModal from '../components/SignUpModal';
+import SignInModal from '../../components/modals/SignInModal';
+import SignUpModal from '../../components/modals/SignUpModal';
+import Nav from '../../components/Nav';
 
 // styles
 import './Locked.css';
