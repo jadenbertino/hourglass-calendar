@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
@@ -11,9 +11,11 @@ import HoursList from '../components/HoursList';
 import Nav from '../components/Nav';
 import NewEventModal from '../components/NewEventModal';
 import Sidebar from '../components/Sidebar';
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
 
 // styles
 import './Views.css';
+import ViewEvent from '../components/ViewEvent';
 
 export default function DailyView() {
   const { user } = useAuthContext();
@@ -24,10 +26,15 @@ export default function DailyView() {
     decrementDateBy,
     formatDate,
     resetDateToToday,
-    getShortDayName
+    getShortDayName,
+    convertToHours
   } = useDateContext();
   const { modalContext } = useModalContext();
-
+  const [viewEventId, setViewEventId] = useState('');
+  const [todayEvents, setTodayEvents] = useState([])
+  const query = useRef([`uid == ${user && user.uid}`]).current;
+  const { events: allEvents } = useCollection('events', query);
+  
   // if user isn't signed in redirect to signin / signup page
   useEffect(() => {
     if (!user) {
@@ -35,9 +42,16 @@ export default function DailyView() {
     }
   }, [user]);
 
-  // set date + query events for date
-  const query = useRef([`uid == ${user && user.uid}`]).current;
-  const { events: allEvents } = useCollection('events', query);
+  function getEvent(id) {
+    return allEvents.find(e => e.id === id)
+  }
+  
+  useEffect(() => {
+    allEvents && setTodayEvents(allEvents.filter(
+      event => event.date === formatDate(dateContext)).sort(
+        (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
+    )
+  }, [dateContext, allEvents])
 
   return (
     <>
@@ -57,12 +71,21 @@ export default function DailyView() {
           <div className="times-and-events">
             <HoursList />
             <div className="events">
-              <DisplayEvents targetDate={formatDate(dateContext)} allEvents={allEvents} />
+              <DisplayEvents events={todayEvents} setViewEventId={setViewEventId} />
             </div>
           </div>
         </section>
-        {modalContext === 'newEvent' && <NewEventModal />}
       </main>
+      {modalContext === 'newEvent' && <NewEventModal />}
+      {modalContext === 'view-event' && 
+        <ViewEvent event={getEvent(viewEventId)} />
+      }
+      {modalContext === 'edit-event' &&
+        <NewEventModal eventToEdit={getEvent(viewEventId)} />
+      }
+      {modalContext === 'confirm-delete' &&
+        <ConfirmDeleteModal id={viewEventId} />
+      } 
     </>
   );
 }

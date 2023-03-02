@@ -7,30 +7,16 @@ import ViewEvent from './ViewEvent'
 import NewEventModal from './NewEventModal'
 import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 
-export default function DisplayEvents({ allEvents, targetDate }) {
+export default function DisplayEvents({ events, setViewEventId }) {
   const { convertToHours, convertToMeridian } = useDateContext()
   const hourGridLines = new Array(24).fill(null)
-  const [events, setEvents] = useState([])
-  const [viewId, setViewId] = useState('')
-  const [viewEvent, setViewEvent] = useState({})
-  const { modalContext, setModalContext } = useModalContext()
+  const { setModalContext } = useModalContext()
   
   // always have up to date copy of events for that day
-  useEffect(() => {
-    allEvents && setEvents(allEvents.filter(
-      event => event.date === targetDate).sort(
-        (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
-    )
-  }, [targetDate, allEvents])
 
   // click event => change view id => view event
-  
-  function getEvent(id) {
-    return allEvents.find(e => e.id === id)
-  }
-  
   function openEvent(id) {
-    setViewId(id)
+    setViewEventId(id)
     setModalContext('view-event')
   }
 
@@ -62,15 +48,9 @@ export default function DisplayEvents({ allEvents, targetDate }) {
         )
       })}
 
-      {modalContext === 'view-event' && 
+      {/* {modalContext === 'view-event' && 
         <ViewEvent event={() => getEvent(viewId)}/>
-      }
-      {modalContext === 'edit-event' &&
-        <NewEventModal allEvents={allEvents} eventId={viewId} />
-      }
-      {modalContext === 'confirm-delete' &&
-        <ConfirmDeleteModal id={viewId} />
-      }
+      }*/}
     </div>
   )
 }

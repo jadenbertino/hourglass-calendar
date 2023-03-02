@@ -9,7 +9,7 @@ import Modal from '../components/Modal'
 // styles
 import './NewEventModal.css'
 
-export default function NewEventModal({allEvents, eventId}) {
+export default function NewEventModal({ eventToEdit }) {
   const { user } = useAuthContext()
   const { setModalContext } = useModalContext()
   const { isMeridian, isMilitary, parseTime, convertToMilitary, formatDate, dateContext } = useDateContext()
@@ -29,10 +29,10 @@ export default function NewEventModal({allEvents, eventId}) {
   
   // edit existing event
   useEffect(() => {
-    if (allEvents && eventId) {
-      setEvent(allEvents.find(event => event.id === eventId))
+    if (eventToEdit) {
+      setEvent(eventToEdit)
     }
-  }, [allEvents, eventId])
+  }, [eventToEdit])
 
   useEffect(() => {
     if (event) {
@@ -120,9 +120,9 @@ export default function NewEventModal({allEvents, eventId}) {
       endTime: convertToMilitary(eventEndTime),
       uid: user.uid
     };
-    if (eventId) {
+    if (eventToEdit) {
       // edit existing event
-      const ref = doc(db, "events", eventId)
+      const ref = doc(db, "events", eventToEdit.id)
       await updateDoc(ref, event)
     } else {
       // create new event

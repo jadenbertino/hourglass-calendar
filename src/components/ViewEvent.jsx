@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react'
 import { useDateContext } from '../hooks/useDateContext'
 import { useModalContext } from '../hooks/useModalContext'
 
-export default function ViewEvent({event}) {
+export default function ViewEvent({ event }) {
   const { convertToMeridian, formatReadableDate } = useDateContext()
   const { setModalContext } = useModalContext()
-  console.log('event:', event)
+
   return (
     <Modal>
       {event && 
