@@ -154,8 +154,18 @@ export function DateContextProvider({ children }) {
     return week
   }
 
+  function getMonth(startDate) {
+    let month = [];
+    for (let i = 0; i < 35; i++) {
+      let newDate = new Date(startDate);
+      newDate.setDate(startDate.getDate() + i);
+      month.push(formatDate(newDate));
+    }
+    return month
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, getMonth, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

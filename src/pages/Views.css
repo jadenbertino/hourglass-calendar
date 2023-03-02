@@ -67,6 +67,7 @@ main {
 
 #monthly .day-name {
   width: calc(100% / 7);
+  border-right: solid 1px gray;
 }
 
 .monthly-events {

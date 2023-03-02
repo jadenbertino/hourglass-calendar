@@ -11,26 +11,32 @@ import HoursList from '../components/HoursList';
 import Nav from '../components/Nav';
 import NewEventModal from '../components/NewEventModal';
 import Sidebar from '../components/Sidebar';
+import DayOfMonth from '../components/DayOfMonth';
 
 // styles
 import './Views.css';
 
+/*
+  TODO: change week and month to weekDates and monthDates
+  TODO: getWeek and getMonth return strings, not date objects
+*/
 export default function MonthlyView() {
-  const [week, setWeek] = useState([]);
+
+  const [week, setWeek] = useState(null)
+  const [month, setMonth] = useState(null)
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
   const {
     incrementDateBy,
     decrementDateBy,
-    dayName,
-    dayOfMonth,
+    convertToHours,
     formatDate,
     dateContext,
+    getMonth,
     getWeek,
     resetDateToToday,
     getShortDayName
   } = useDateContext();
-  const [monthDates, setMonthDates] = useState(new Array(35).fill(null))
 
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
@@ -39,15 +45,21 @@ export default function MonthlyView() {
       nav('/');
     }
   }, [user]);
-  
+
+  function getEvents(formattedDate) {
+    return events.filter(
+      event => event.date === formattedDate).sort(
+        (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
+  }
   
   useEffect(() => {
     setWeek(getWeek(dateContext));
+    setMonth(getMonth(dateContext));
   }, [dateContext]);
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
-  const { events: allEvents } = useCollection('events', query);
+  const { events } = useCollection('events', query);
 
   return (
     <>
@@ -58,16 +70,18 @@ export default function MonthlyView() {
       <main>
         <Sidebar />
         <section id="monthly">
-          <header className="date-wrapper">
-            {week.map((date, i) => (
+          <header className="date-wrapper weekday-names">
+            {week && week.map((date, i) => (
               <h3 className="date day-name" onClick={resetDateToToday} key={i}>
                 {getShortDayName(date)}
               </h3>
             ))}
           </header>
           <div className="monthly-events">
-            {monthDates.map((date, i) => (
-              <div className="day" key={i}></div>
+            {events && month && month.map((date, i) => (
+              <div className="day" key={i}>
+                <DayOfMonth events={getEvents(formatDate(date))} />
+              </div>
             ))}
           </div>
         </section>
