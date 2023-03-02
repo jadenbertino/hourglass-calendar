@@ -55,8 +55,9 @@ main {
 
 /* monthly */
 
-#monthly .sidebar {
-  margin-right: 0;
+#monthly {
+  display: flex;
+  flex-direction: column;
 }
 
 #monthly .date-wrapper {
