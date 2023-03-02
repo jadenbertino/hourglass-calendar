@@ -159,7 +159,7 @@ export function DateContextProvider({ children }) {
     for (let i = 0; i < 35; i++) {
       let newDate = new Date(startDate);
       newDate.setDate(startDate.getDate() + i);
-      month.push(formatDate(newDate));
+      month.push(newDate);
     }
     return month
   }

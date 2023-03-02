@@ -46,7 +46,8 @@ export default function WeeklyView() {
     setWeek(getWeek(dateContext));
   }, [dateContext]);
 
-  function getEvents(formattedDate) {
+  function getEvents(date) {
+    const formattedDate = formatDate(date)
     return allEvents.filter(
       event => event.date === formattedDate).sort(
         (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
@@ -81,7 +82,7 @@ export default function WeeklyView() {
             <HoursList />
             <div className="events">
               {week && allEvents && week.map((date, i) => (
-                <DisplayEvents events={getEvents(formatDate(date))} key={i} setViewEventId={setViewEventId} />
+                <DisplayEvents events={getEvents(date)} key={i} setViewEventId={setViewEventId} />
               ))}
             </div>
           </div>

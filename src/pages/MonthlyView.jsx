@@ -16,14 +16,10 @@ import DayOfMonth from '../components/DayOfMonth';
 // styles
 import './Views.css';
 
-/*
-  TODO: change week and month to weekDates and monthDates
-  TODO: getWeek and getMonth return strings, not date objects
-*/
 export default function MonthlyView() {
 
-  const [week, setWeek] = useState(null)
-  const [month, setMonth] = useState(null)
+  const [weekDates, setWeekDates] = useState(null)
+  const [monthDates, setMonthDates] = useState(null)
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
   const {
@@ -46,15 +42,16 @@ export default function MonthlyView() {
     }
   }, [user]);
 
-  function getEvents(formattedDate) {
+  function getEvents(date) {
+    const formattedDate = formatDate(date)
     return events.filter(
       event => event.date === formattedDate).sort(
         (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
   }
   
   useEffect(() => {
-    setWeek(getWeek(dateContext));
-    setMonth(getMonth(dateContext));
+    setWeekDates(getWeek(dateContext));
+    setMonthDates(getMonth(dateContext));
   }, [dateContext]);
 
   // set date + query events for date
@@ -71,16 +68,16 @@ export default function MonthlyView() {
         <Sidebar />
         <section id="monthly">
           <header className="date-wrapper weekday-names">
-            {week && week.map((date, i) => (
+            {weekDates && weekDates.map((date, i) => (
               <h3 className="date day-name" onClick={resetDateToToday} key={i}>
                 {getShortDayName(date)}
               </h3>
             ))}
           </header>
           <div className="monthly-events">
-            {events && month && month.map((date, i) => (
+            {events && monthDates && monthDates.map((date, i) => (
               <div className="day" key={i}>
-                <DayOfMonth events={getEvents(formatDate(date))} />
+                <DayOfMonth events={getEvents(date)} />
               </div>
             ))}
           </div>
