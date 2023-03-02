@@ -11,6 +11,8 @@ import HoursList from '../components/HoursList';
 import Nav from '../components/Nav';
 import NewEventModal from '../components/NewEventModal';
 import Sidebar from '../components/Sidebar';
+import ViewEvent from '../components/ViewEvent';
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal';
 
 // styles
 import './Views.css';
@@ -25,10 +27,13 @@ export default function WeeklyView() {
     decrementDateBy,
     formatDate,
     resetDateToToday,
+    convertToHours,
     getWeek
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);
+  const [weekEvents, setWeekEvents] = useState([])
+  const [viewEventId, setViewEventId] = useState('')
 
   // if user isn't signed in redirect to signin / signup page
   useEffect(() => {
@@ -40,6 +45,16 @@ export default function WeeklyView() {
   useEffect(() => {
     setWeek(getWeek(dateContext));
   }, [dateContext]);
+
+  function getEvents(formattedDate) {
+    return allEvents.filter(
+      event => event.date === formattedDate).sort(
+        (eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime))
+  }
+
+  function getEvent(id) {
+    return allEvents.find(e => e.id == id)
+  }
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
@@ -65,14 +80,23 @@ export default function WeeklyView() {
           <div className="times-and-events">
             <HoursList />
             <div className="events">
-              {week && week.map((date, i) => (
-                <DisplayEvents targetDate={formatDate(date)} allEvents={allEvents} key={i} />
+              {week && allEvents && week.map((date, i) => (
+                <DisplayEvents events={getEvents(formatDate(date))} key={i} setViewEventId={setViewEventId} />
               ))}
             </div>
           </div>
         </section>
-        {modalContext === 'newEvent' && <NewEventModal />}
       </main>
+      {modalContext === 'newEvent' && <NewEventModal />}
+      {modalContext === 'view-event' && 
+        <ViewEvent event={getEvent(viewEventId)} />
+      }
+      {modalContext === 'edit-event' &&
+        <NewEventModal eventToEdit={getEvent(viewEventId)} />
+      }
+      {modalContext === 'confirm-delete' &&
+        <ConfirmDeleteModal id={viewEventId} />
+      } 
     </>
   );
 }
