@@ -80,6 +80,35 @@ main {
   width: calc(100% / 7);
   height: calc(100% / 5);
   border: 1px solid gray;
+  padding: 8px;
+}
+
+.monthly-events .day-wrapper {
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+}
+
+.monthly-event {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.monthly-event .color-dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  background-color: #ff595e;
+  border-radius: 50%;
+}
+
+.monthly-event .time {
+  margin: 0 6px;
+}
+
+.monthly-event .name {
+  font-weight: bold;
 }

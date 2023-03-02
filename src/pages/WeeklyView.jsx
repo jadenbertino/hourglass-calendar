@@ -54,7 +54,7 @@ export default function WeeklyView() {
   }
 
   function getEvent(id) {
-    return allEvents.find(e => e.id == id)
+    return allEvents.find(e => e.id === id)
   }
 
   // set date + query events for date
