@@ -112,3 +112,8 @@ main {
 .monthly-event .name {
   font-weight: bold;
 }
+
+#monthly .day-number {
+  text-align: center;
+  margin-bottom: 8px;
+}

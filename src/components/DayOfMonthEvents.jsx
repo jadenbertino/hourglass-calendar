@@ -1,6 +1,6 @@
 import { useDateContext } from "../hooks/useDateContext"
 
-export default function DayOfMonth({ events }) {
+export default function DayOfMonthEvents({ events }) {
   const { convertToMeridian } = useDateContext()
   return (
     <>

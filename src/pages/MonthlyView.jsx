@@ -11,7 +11,7 @@ import HoursList from "../components/HoursList";
 import Nav from "../components/Nav";
 import NewEventModal from "../components/NewEventModal";
 import Sidebar from "../components/Sidebar";
-import DayOfMonth from "../components/DayOfMonth";
+import DayOfMonthEvents from "../components/DayOfMonthEvents";
 
 // styles
 import "./Views.css";
@@ -87,7 +87,8 @@ export default function MonthlyView() {
               monthDates.map((date, i) => (
                 <div className="day" key={i}>
                   <div className="day-wrapper">
-                    <DayOfMonth events={getEvents(date)} />
+                    <p className="day-number">{date.getDate()}</p>
+                    <DayOfMonthEvents events={getEvents(date)} />
                   </div>
                 </div>
               ))}
