@@ -30,28 +30,32 @@ export default function MonthlyView() {
     formatDate,
     dateContext,
     getMonth,
+    getMonthName,
     getWeek,
     resetDateToToday,
     getShortDayName
   } = useDateContext();
   const [viewEventId, setViewEventId] = useState('')
   const daySizeRef = useRef(null)
-  const [dayHeight, setDayHeight] = useState(0)
+  const [numVisibleEvents, setNumVisibleEvents] = useState(0)
+
+
 
   useEffect(() => {
     const daySize = daySizeRef.current
     if (!daySize) return
 
     const observer = new ResizeObserver(entries => {
-      const { height, width } = entries[0].contentRect;
-      setDayHeight(height)
+      const { height } = entries[0].contentRect;
+      const eventsHeight = height - 26 + 4 // 26 is height of date header, 4 accounts for bottom magin of events
+      const numEvents = Math.floor(eventsHeight / 22) // 22 is height of each event
+      setNumVisibleEvents(numEvents)
     })
-
     observer.observe(daySize)
-
+    
     return () => observer.unobserve(daySize)
-  }, [daySizeRef])
-  
+  }) // for some reason the daySizeRef wasn't triggering an update so I run this on every render ig
+
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
   useEffect(() => {
@@ -104,15 +108,15 @@ export default function MonthlyView() {
               ))}
           </header>
           <div className="monthly-events">
-            {events &&
-              monthDates &&
+            {events && monthDates &&
               monthDates.map((date, i) => (
                 <div className="day" key={i} ref={i === 0 ? daySizeRef : null}>
                   <div className="day-wrapper">
-                    <p className="day-number">{date.getDate()}</p>
+                    <p className="day-number">{date.getDate() !== 1 ? date.getDate() : `${getMonthName(date)} ${date.getDate()}`}</p>
                     <DayOfMonthEvents
                       events={getEvents(date)}
                       setViewEventId={setViewEventId}
+                      numVisibleEvents={numVisibleEvents}
                     />
                   </div>
                 </div>

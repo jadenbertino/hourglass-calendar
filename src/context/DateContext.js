@@ -12,6 +12,10 @@ export function DateContextProvider({ children }) {
   function getShortDayName(date) {
     return shortDayNames[date.getDay()]
   }
+
+  function getMonthName(date) {
+    return monthNames[date.getMonth()]
+  }
   
   function formatDate(date) {
     // date object => YYYY-MM-DD
@@ -165,7 +169,7 @@ export function DateContextProvider({ children }) {
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, getMonth, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );
