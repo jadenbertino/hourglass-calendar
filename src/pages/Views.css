@@ -88,6 +88,7 @@ main {
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+  max-height: 100%;
 }
 
 .monthly-events .day-number {
@@ -98,7 +99,7 @@ main {
 .monthly-event {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   margin-bottom: 4px;
   cursor: pointer;
 }

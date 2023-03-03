@@ -35,7 +35,23 @@ export default function MonthlyView() {
     getShortDayName,
   } = useDateContext();
   const [viewEventId, setViewEventId] = useState('')
+  const daySizeRef = useRef(null)
+  const [dayHeight, setDayHeight] = useState(0)
 
+  useEffect(() => {
+    const daySize = daySizeRef.current
+    if (!daySize) return
+
+    const observer = new ResizeObserver(entries => {
+      const { height, width } = entries[0].contentRect;
+      setDayHeight(height)
+    })
+
+    observer.observe(daySize)
+
+    return () => observer.unobserve(daySize)
+  }, [daySizeRef])
+  
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
   useEffect(() => {
@@ -92,7 +108,7 @@ export default function MonthlyView() {
             {events &&
               monthDates &&
               monthDates.map((date, i) => (
-                <div className="day" key={i}>
+                <div className="day" key={i} ref={i === 0 ? daySizeRef : null}>
                   <div className="day-wrapper">
                     <p className="day-number">{date.getDate()}</p>
                     <DayOfMonthEvents events={getEvents(date)} setViewEventId={setViewEventId} />
