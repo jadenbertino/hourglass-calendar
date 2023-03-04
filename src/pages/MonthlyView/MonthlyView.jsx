@@ -17,6 +17,7 @@ import DayOfMonthEvents from './DayOfMonthEvents';
 
 // styles
 import '../Views.css';
+import AllEventsModal from './AllEventsModal';
 
 export default function MonthlyView() {
   const [weekDates, setWeekDates] = useState(null);
@@ -36,9 +37,9 @@ export default function MonthlyView() {
     getShortDayName
   } = useDateContext();
   const [viewEventId, setViewEventId] = useState('')
+  const [viewEvents, setViewEvents] = useState({})
   const daySizeRef = useRef(null)
   const [numVisibleEvents, setNumVisibleEvents] = useState(0)
-
 
 
   useEffect(() => {
@@ -116,6 +117,7 @@ export default function MonthlyView() {
                     <DayOfMonthEvents
                       events={getEvents(date)}
                       setViewEventId={setViewEventId}
+                      setViewEvents={setViewEvents}
                       numVisibleEvents={numVisibleEvents}
                     />
                   </div>
@@ -132,6 +134,9 @@ export default function MonthlyView() {
         )}
         {modalContext === 'confirm-delete' && (
           <ConfirmDeleteModal id={viewEventId} />
+        )}
+        {modalContext === 'view-day-of-month' && (
+          <AllEventsModal events={viewEvents} />
         )}
       </main>
     </>

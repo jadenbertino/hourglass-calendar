@@ -120,3 +120,21 @@ main {
   font-weight: bold;
 }
 
+/* day of month */
+
+.day-of-month-modal {
+  padding-right: 40px;
+}
+
+.day-of-month-modal h3 {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eaf2ef;
+}
+
+.day-of-month-modal .close-modal {
+  position: absolute;
+  top: 0;
+  right: 8px;
+}
+

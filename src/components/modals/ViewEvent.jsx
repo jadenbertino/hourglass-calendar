@@ -1,6 +1,5 @@
 import './ViewEvent.css';
 
-import { useEffect, useState } from 'react';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
 import Modal from './Modal';
