@@ -16,7 +16,6 @@ main {
 .date-wrapper .date {
   padding: 16px 24px;
   border-left: 1px solid gray;
-  cursor: pointer;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;

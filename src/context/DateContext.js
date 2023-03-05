@@ -52,6 +52,42 @@ export function DateContextProvider({ children }) {
     setDateContext(newDate)
   }
 
+  function incrementMonth() {
+    // Get the date 6 days from the input (top right)
+    const endOfWeek = new Date(dateContext.getTime());
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+    const currentMonth = endOfWeek.getMonth()
+    
+    const newDate = new Date(endOfWeek.getTime());
+    while (newDate.getMonth() === currentMonth) {
+      newDate.setDate(newDate.getDate() + 7)
+    }
+    
+    newDate.setDate(newDate.getDate() - 6)
+    setDateContext(newDate)
+  }
+
+  function decrementMonth() {
+    // get current month
+    const endOfWeek = new Date(dateContext.getTime());
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+    const currentMonth = endOfWeek.getMonth();
+  
+    const newDate = new Date(endOfWeek.getTime());
+    while (true) {
+      // step back in 7 day increments
+      newDate.setDate(newDate.getDate() - 7);
+      const newMonth = newDate.getMonth();
+
+      // once newDate is 2 months behind currentMonth, increment by 1 => puts you at start of previous month
+      if ((newMonth + 2) % 12 === currentMonth) {
+        newDate.setDate(newDate.getDate() + 1);
+        setDateContext(newDate);
+        return;
+      }
+    }
+  }
+
   function isMeridian(time) {
     const meridianRegex = /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[AP]M$/i;
     return meridianRegex.test(time)
@@ -169,7 +205,7 @@ export function DateContextProvider({ children }) {
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

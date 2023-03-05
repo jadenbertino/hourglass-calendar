@@ -32,8 +32,9 @@ export default function MonthlyView() {
     getMonth,
     getMonthName,
     getWeek,
-    resetDateToToday,
-    getShortDayName
+    getShortDayName,
+    incrementMonth,
+    decrementMonth
   } = useDateContext();
   const [viewEventId, setViewEventId] = useState('');
   const [viewEvents, setViewEvents] = useState({});
@@ -89,8 +90,8 @@ export default function MonthlyView() {
   return (
     <>
       <Nav
-        incrementDate={() => incrementDateBy(28)}
-        decrementDate={() => decrementDateBy(28)}
+        incrementDate={incrementMonth}
+        decrementDate={decrementMonth}
       />
       <main>
         <section id="monthly">
