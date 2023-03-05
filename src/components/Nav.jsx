@@ -16,7 +16,7 @@ import './Nav.css';
 export default function Nav({ decrementDate, incrementDate }) {
   const [monthAndYear, setMonthAndYear] = useState('');
   const { modalContext, setModalContext } = useModalContext();
-  const { dateContext, resetDateToToday } = useDateContext();
+  const { dateContext, resetDateToToday, getWeek } = useDateContext();
   const { user } = useAuthContext();
   const { signout } = useSignOut();
   const path = useLocation().pathname;
@@ -39,7 +39,9 @@ export default function Nav({ decrementDate, incrementDate }) {
 
   useEffect(() => {
     // Formats like so: February 2023
-    const month = monthNames[dateContext.getMonth()];
+    const startMonth = monthNames[dateContext.getMonth()];
+    const endMonth = monthNames[getWeek(dateContext)[6].getMonth()]
+    const month = startMonth === endMonth ? startMonth : `${startMonth.slice(0,3)} — ${endMonth.slice(0,3)}`
     const year = dateContext.getFullYear();
     setMonthAndYear(`${month} ${year}`);
   }, [dateContext]);
