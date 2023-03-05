@@ -41,6 +41,9 @@ export default function MonthlyView() {
   const daySizeRef = useRef(null)
   const [numVisibleEvents, setNumVisibleEvents] = useState(0)
 
+  // set date + query events for date
+  const query = useRef([`uid == ${user && user.uid}`]).current;
+  const { events } = useCollection('events', query);
 
   useEffect(() => {
     const daySize = daySizeRef.current
@@ -83,10 +86,6 @@ export default function MonthlyView() {
     setWeekDates(getWeek(dateContext));
     setMonthDates(getMonth(dateContext));
   }, [dateContext]);
-
-  // set date + query events for date
-  const query = useRef([`uid == ${user && user.uid}`]).current;
-  const { events } = useCollection('events', query);
 
   return (
     <>
