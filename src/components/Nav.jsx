@@ -58,16 +58,24 @@ export default function Nav({ decrementDate, incrementDate }) {
 
     else if (loc === "/monthly") {
       // display month with most number of days
+      // 35 days per view so guaranteed to show two months
+      const monthDates = getMonth(dateContext)
       const monthCounter = {}
-      for (let date of getMonth(dateContext)) {
+      for (let date of monthDates) {
         const monthName = monthNames[date.getMonth()]
         monthCounter[monthName] = monthCounter[monthName] + 1 || 1
       }
-      const endMonth = monthNames[getMonth(dateContext)[34].getMonth()]
-      month =
-      startMonth === endMonth
-        ? startMonth
-        : `${startMonth.slice(0, 3)} — ${endMonth.slice(0, 3)}`;
+
+      let mostFrequentMonth;
+      let maxCount = -Infinity;
+
+      for (const [monthName, monthCount] of Object.entries(monthCounter)) {
+        if (monthCount > maxCount) {
+          mostFrequentMonth = monthName
+          maxCount = monthCount
+        }
+      }
+      month = mostFrequentMonth;
     }
 
     setMonthAndYear(`${month} ${year}`);
