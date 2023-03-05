@@ -86,6 +86,10 @@ export default function Nav({ decrementDate, incrementDate }) {
         </div>
       ) : (
         <div className="set-view-and-signout">
+          <button className='btn new-event-btn' onClick={() => setModalContext('newEvent')}>
+            <i className="fa-solid fa-plus"></i>
+            New Event
+          </button>
           <form className="set-view-form">
             <select value={view} onChange={e => setView(e.target.value)}>
               <option value="/daily">Daily</option>

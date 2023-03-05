@@ -30,11 +30,6 @@ main {
   width: 100%;
 }
 
-#daily,
-#weekly {
-  margin-left: 20px;
-}
-
 .times-and-events {
   display: flex;
 }
@@ -58,6 +53,7 @@ main {
 #monthly {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 #monthly .date-wrapper {

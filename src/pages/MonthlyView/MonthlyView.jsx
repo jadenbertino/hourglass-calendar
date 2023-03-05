@@ -12,7 +12,6 @@ import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import Nav from '../../components/Nav';
-import Sidebar from '../../components/Sidebar';
 import DayOfMonthEvents from './DayOfMonthEvents';
 
 // styles
@@ -93,51 +92,52 @@ export default function MonthlyView() {
         incrementDate={() => incrementDateBy(28)}
         decrementDate={() => decrementDateBy(28)}
       />
-      <main>
-        <Sidebar />
-        <section id="monthly">
-          <header className="date-wrapper weekday-names">
-            {weekDates &&
-              weekDates.map((date, i) => (
-                <h3
-                  className="date day-name"
-                  onClick={resetDateToToday}
-                  key={i}>
-                  {getShortDayName(date)}
-                </h3>
-              ))}
-          </header>
-          <div className="monthly-events">
-            {events && monthDates &&
-              monthDates.map((date, i) => (
-                <div className="day" key={i} ref={i === 0 ? daySizeRef : null}>
-                  <div className="day-wrapper">
-                    <p className="day-number">{date.getDate() !== 1 ? date.getDate() : `${getMonthName(date)} ${date.getDate()}`}</p>
-                    <DayOfMonthEvents
-                      events={getEvents(date)}
-                      setViewEventId={setViewEventId}
-                      setViewEvents={setViewEvents}
-                      numVisibleEvents={numVisibleEvents}
-                    />
+      <main><div className="container">
+        
+          <section id="monthly">
+            <header className="date-wrapper weekday-names">
+              {weekDates &&
+                weekDates.map((date, i) => (
+                  <h3
+                    className="date day-name"
+                    onClick={resetDateToToday}
+                    key={i}>
+                    {getShortDayName(date)}
+                  </h3>
+                ))}
+            </header>
+            <div className="monthly-events">
+              {events && monthDates &&
+                monthDates.map((date, i) => (
+                  <div className="day" key={i} ref={i === 0 ? daySizeRef : null}>
+                    <div className="day-wrapper">
+                      <p className="day-number">{date.getDate() !== 1 ? date.getDate() : `${getMonthName(date)} ${date.getDate()}`}</p>
+                      <DayOfMonthEvents
+                        events={getEvents(date)}
+                        setViewEventId={setViewEventId}
+                        setViewEvents={setViewEvents}
+                        numVisibleEvents={numVisibleEvents}
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
-          </div>
-        </section>
-        {modalContext === 'newEvent' && <NewEventModal />}
-        {modalContext === 'view-event' && (
-          <ViewEvent event={getEvent(viewEventId)} />
-        )}
-        {modalContext === 'edit-event' && (
-          <NewEventModal eventToEdit={getEvent(viewEventId)} />
-        )}
-        {modalContext === 'confirm-delete' && (
-          <ConfirmDeleteModal id={viewEventId} />
-        )}
-        {modalContext === 'view-day-of-month' && (
-          <AllEventsModal events={viewEvents} />
-        )}
-      </main>
+                ))}
+            </div>
+          </section>
+          {modalContext === 'newEvent' && <NewEventModal />}
+          {modalContext === 'view-event' && (
+            <ViewEvent event={getEvent(viewEventId)} />
+          )}
+          {modalContext === 'edit-event' && (
+            <NewEventModal eventToEdit={getEvent(viewEventId)} />
+          )}
+          {modalContext === 'confirm-delete' && (
+            <ConfirmDeleteModal id={viewEventId} />
+          )}
+          {modalContext === 'view-day-of-month' && (
+            <AllEventsModal events={viewEvents} />
+          )}
+        
+      </div></main>
     </>
   );
 }

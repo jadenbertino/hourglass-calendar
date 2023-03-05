@@ -12,7 +12,6 @@ import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import Nav from '../../components/Nav';
-import Sidebar from '../../components/Sidebar';
 
 // styles
 import '../Views.css';
@@ -71,31 +70,32 @@ export default function WeeklyView() {
         decrementDate={() => decrementDateBy(7)}
       />
       <main>
-        <Sidebar />
-        <section id="weekly">
-          <header className="date-wrapper">
-            {week.map((date, i) => (
-              <div className="date" onClick={resetDateToToday} key={i}>
-                <h3 className="day-of-week">{getShortDayName(date)}</h3>
-                <h2>{date.getDate()}</h2>
+        <div className="container">
+          <section id="weekly">
+            <header className="date-wrapper">
+              {week.map((date, i) => (
+                <div className="date" onClick={resetDateToToday} key={i}>
+                  <h3 className="day-of-week">{getShortDayName(date)}</h3>
+                  <h2>{date.getDate()}</h2>
+                </div>
+              ))}
+            </header>
+            <div className="times-and-events">
+              <HoursList />
+              <div className="events">
+                {week &&
+                  allEvents &&
+                  week.map((date, i) => (
+                    <DisplayEvents
+                      events={getEvents(date)}
+                      key={i}
+                      setViewEventId={setViewEventId}
+                    />
+                  ))}
               </div>
-            ))}
-          </header>
-          <div className="times-and-events">
-            <HoursList />
-            <div className="events">
-              {week &&
-                allEvents &&
-                week.map((date, i) => (
-                  <DisplayEvents
-                    events={getEvents(date)}
-                    key={i}
-                    setViewEventId={setViewEventId}
-                  />
-                ))}
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
       {modalContext === 'newEvent' && <NewEventModal />}
       {modalContext === 'view-event' && (

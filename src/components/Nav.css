@@ -67,3 +67,12 @@ nav .date {
   color: white;
   border: none;
 }
+
+nav .fa-plus {
+  margin-right: 8px;
+}
+
+nav .new-event-btn {
+  margin-right: 12px;
+  background-color: #0CCE6B;
+}

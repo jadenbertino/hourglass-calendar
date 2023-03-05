@@ -11,7 +11,6 @@ import HoursList from '../../components/HoursList';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import Nav from '../../components/Nav';
-import Sidebar from '../../components/Sidebar';
 
 // styles
 import ViewEvent from '../../components/modals/ViewEvent';
@@ -66,24 +65,25 @@ export default function DailyView() {
         decrementDate={() => decrementDateBy(1)}
       />
       <main>
-        <Sidebar />
-        <section id="daily">
-          <header className="date-wrapper">
-            <div className="date" onClick={resetDateToToday}>
-              <h3 className="day-of-week">{getShortDayName(dateContext)}</h3>
-              <h2>{dateContext.getDate()}</h2>
+        <div className="container">
+          <section id="daily">
+            <header className="date-wrapper">
+              <div className="date" onClick={resetDateToToday}>
+                <h3 className="day-of-week">{getShortDayName(dateContext)}</h3>
+                <h2>{dateContext.getDate()}</h2>
+              </div>
+            </header>
+            <div className="times-and-events">
+              <HoursList />
+              <div className="events">
+                <DisplayEvents
+                  events={todayEvents}
+                  setViewEventId={setViewEventId}
+                />
+              </div>
             </div>
-          </header>
-          <div className="times-and-events">
-            <HoursList />
-            <div className="events">
-              <DisplayEvents
-                events={todayEvents}
-                setViewEventId={setViewEventId}
-              />
-            </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
       {modalContext === 'newEvent' && <NewEventModal />}
       {modalContext === 'view-event' && (
