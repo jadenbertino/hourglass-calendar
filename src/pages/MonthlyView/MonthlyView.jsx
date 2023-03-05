@@ -102,7 +102,6 @@ export default function MonthlyView() {
                     weekDates.map((date, i) => (
                       <h3
                         className="date day-name"
-                        onClick={resetDateToToday}
                         key={i}>
                         {getShortDayName(date)}
                       </h3>

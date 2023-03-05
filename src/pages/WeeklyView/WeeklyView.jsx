@@ -75,7 +75,7 @@ export default function WeeklyView() {
               <div className="col">
                 <header className="date-wrapper">
                   {week.map((date, i) => (
-                    <div className="date" onClick={resetDateToToday} key={i}>
+                    <div className="date" key={i}>
                       <h3 className="day-of-week">{getShortDayName(date)}</h3>
                       <h2>{date.getDate()}</h2>
                     </div>

@@ -59,24 +59,29 @@ nav .date {
   align-items: center;
 }
 
+.set-view-and-signout button,
+.set-view-and-signout select {
+  font-size: 16px;
+  height: 40px;
+  margin-left: 20px;
+}
+
 .set-view-form {
   display: inline-block;
-  margin-right: 12px;
 }
 
 .set-view-form select {
-  padding: 6px;
+  padding: 8px;
   border-radius: 4px;
   background-color: #3f8efc;
   color: white;
   border: none;
 }
-
 nav .fa-plus {
   margin-right: 8px;
 }
 
 nav .new-event-btn {
-  margin-right: 12px;
   background-color: #0CCE6B;
+  font-size: 16px;
 }

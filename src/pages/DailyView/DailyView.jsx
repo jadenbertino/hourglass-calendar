@@ -70,7 +70,7 @@ export default function DailyView() {
             <div className="row">
               <div className="col">
                 <header className="date-wrapper">
-                  <div className="date" onClick={resetDateToToday}>
+                  <div className="date">
                     <h3 className="day-of-week">
                       {getShortDayName(dateContext)}
                     </h3>

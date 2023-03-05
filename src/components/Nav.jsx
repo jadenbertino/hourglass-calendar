@@ -111,9 +111,7 @@ export default function Nav({ decrementDate, incrementDate }) {
                   <i className="fa-solid fa-angle-right"></i>
                 </button>
               </div>
-              <div
-                className="month-and-year-wrapper"
-                onClick={resetDateToToday}>
+              <div className="month-and-year-wrapper">
                 <h3>{monthAndYear}</h3>
               </div>
             </div>
