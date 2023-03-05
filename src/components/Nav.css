@@ -31,10 +31,11 @@ nav .date {
 .month-and-year-wrapper {
   padding: 12px 8px;
   cursor: pointer;
+  margin-left: 16px;
 }
 
 .change-date-btn {
-  margin-left: 12px;
+  margin-left: 16px;
   background-color: #404552;
   font-size: 18px;
   border-radius: 50%;
@@ -46,7 +47,6 @@ nav .date {
 }
 
 .reset-date-btn {
-  margin-left: 16px;
   background-color: #404552;
 }
 

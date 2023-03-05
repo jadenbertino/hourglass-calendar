@@ -56,19 +56,19 @@ export default function Nav({ decrementDate, incrementDate }) {
   return (
     <nav className="container">
       <div className="date">
-        <div className="month-and-year-wrapper" onClick={resetDateToToday}>
-          <h3>{monthAndYear}</h3>
-        </div>
         <div className="nav-date-btns">
+          <button className="btn reset-date-btn" onClick={resetDateToToday}>
+            Today
+          </button>
           <button className="btn change-date-btn" onClick={decrementDate}>
             <i className="fa-solid fa-angle-left"></i>
           </button>
           <button className="btn change-date-btn" onClick={incrementDate}>
             <i className="fa-solid fa-angle-right"></i>
           </button>
-          <button className="btn reset-date-btn" onClick={resetDateToToday}>
-            Today
-          </button>
+        </div>
+        <div className="month-and-year-wrapper" onClick={resetDateToToday}>
+          <h3>{monthAndYear}</h3>
         </div>
       </div>
       {!user ? (
