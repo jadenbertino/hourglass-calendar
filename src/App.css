@@ -51,12 +51,19 @@ form * {
 */
 
 .container {
-  padding: 0 24px;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .row {
-  padding: 24px 0;
+  max-width: 1328px;  /* 1280 + 24px padding */
+  width: 100%;
+}
+
+.col {
+  padding: 0 24px;
 }
 
 .dfa {

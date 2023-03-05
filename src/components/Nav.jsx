@@ -16,7 +16,7 @@ import './Nav.css';
 export default function Nav({ decrementDate, incrementDate }) {
   const [monthAndYear, setMonthAndYear] = useState('');
   const { modalContext, setModalContext } = useModalContext();
-  const { dateContext, resetDateToToday, getWeek } = useDateContext();
+  const { dateContext, resetDateToToday, getWeek, getMonth } = useDateContext();
   const { user } = useAuthContext();
   const { signout } = useSignOut();
   const path = useLocation().pathname;
@@ -36,14 +36,42 @@ export default function Nav({ decrementDate, incrementDate }) {
     'December'
   ];
   const nav = useNavigate();
+  const loc = useLocation().pathname
 
   useEffect(() => {
     // Formats like so: February 2023
     const startMonth = monthNames[dateContext.getMonth()];
-    const endMonth = monthNames[getWeek(dateContext)[6].getMonth()]
-    const month = startMonth === endMonth ? startMonth : `${startMonth.slice(0,3)} — ${endMonth.slice(0,3)}`
     const year = dateContext.getFullYear();
+    let month;
+
+    if (loc === '/daily') {
+      month = startMonth;
+    }
+
+    else if (loc === "/weekly") {
+      const endMonth = monthNames[getWeek(dateContext)[6].getMonth()];
+      month =
+      startMonth === endMonth
+        ? startMonth
+        : `${startMonth.slice(0, 3)} — ${endMonth.slice(0, 3)}`;
+    }
+
+    else if (loc === "/monthly") {
+      // display month with most number of days
+      const monthCounter = {}
+      for (let date of getMonth(dateContext)) {
+        const monthName = monthNames[date.getMonth()]
+        monthCounter[monthName] = monthCounter[monthName] + 1 || 1
+      }
+      const endMonth = monthNames[getMonth(dateContext)[34].getMonth()]
+      month =
+      startMonth === endMonth
+        ? startMonth
+        : `${startMonth.slice(0, 3)} — ${endMonth.slice(0, 3)}`;
+    }
+
     setMonthAndYear(`${month} ${year}`);
+
   }, [dateContext]);
 
   function handleSignOut() {
@@ -56,52 +84,69 @@ export default function Nav({ decrementDate, incrementDate }) {
   }, [view]);
 
   return (
-    <nav className="container">
-      <div className="date">
-        <div className="nav-date-btns">
-          <button className="btn reset-date-btn" onClick={resetDateToToday}>
-            Today
-          </button>
-          <button className="btn change-date-btn" onClick={decrementDate}>
-            <i className="fa-solid fa-angle-left"></i>
-          </button>
-          <button className="btn change-date-btn" onClick={incrementDate}>
-            <i className="fa-solid fa-angle-right"></i>
-          </button>
-        </div>
-        <div className="month-and-year-wrapper" onClick={resetDateToToday}>
-          <h3>{monthAndYear}</h3>
+    <nav>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+
+            <div className="date">
+              <div className="nav-date-btns">
+                <button
+                  className="btn reset-date-btn"
+                  onClick={resetDateToToday}>
+                  Today
+                </button>
+                <button className="btn change-date-btn" onClick={decrementDate}>
+                  <i className="fa-solid fa-angle-left"></i>
+                </button>
+                <button className="btn change-date-btn" onClick={incrementDate}>
+                  <i className="fa-solid fa-angle-right"></i>
+                </button>
+              </div>
+              <div
+                className="month-and-year-wrapper"
+                onClick={resetDateToToday}>
+                <h3>{monthAndYear}</h3>
+              </div>
+            </div>
+            {!user ? (
+              <div className="auth">
+                <button
+                  className="btn"
+                  onClick={() => setModalContext('signin')}>
+                  Sign In
+                </button>
+                <button
+                  className="btn"
+                  onClick={() => setModalContext('signup')}>
+                  Sign Up
+                </button>
+                {modalContext === 'signin' && <SignInModal />}
+                {modalContext === 'signup' && <SignUpModal />}
+              </div>
+            ) : (
+              <div className="set-view-and-signout">
+                <button
+                  className="btn new-event-btn"
+                  onClick={() => setModalContext('newEvent')}>
+                  <i className="fa-solid fa-plus"></i>
+                  New Event
+                </button>
+                <form className="set-view-form">
+                  <select value={view} onChange={e => setView(e.target.value)}>
+                    <option value="/daily">Daily</option>
+                    <option value="/weekly">Weekly</option>
+                    <option value="/monthly">Monthly</option>
+                  </select>
+                </form>
+                <button className="btn logout-btn" onClick={handleSignOut}>
+                  Log Out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      {!user ? (
-        <div className="auth">
-          <button className="btn" onClick={() => setModalContext('signin')}>
-            Sign In
-          </button>
-          <button className="btn" onClick={() => setModalContext('signup')}>
-            Sign Up
-          </button>
-          {modalContext === 'signin' && <SignInModal />}
-          {modalContext === 'signup' && <SignUpModal />}
-        </div>
-      ) : (
-        <div className="set-view-and-signout">
-          <button className='btn new-event-btn' onClick={() => setModalContext('newEvent')}>
-            <i className="fa-solid fa-plus"></i>
-            New Event
-          </button>
-          <form className="set-view-form">
-            <select value={view} onChange={e => setView(e.target.value)}>
-              <option value="/daily">Daily</option>
-              <option value="/weekly">Weekly</option>
-              <option value="/monthly">Monthly</option>
-            </select>
-          </form>
-          <button className="btn logout-btn" onClick={handleSignOut}>
-            Log Out
-          </button>
-        </div>
-      )}
     </nav>
   );
 }

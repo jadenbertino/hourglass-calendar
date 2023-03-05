@@ -65,25 +65,31 @@ export default function DailyView() {
         decrementDate={() => decrementDateBy(1)}
       />
       <main>
-        <div className="container">
-          <section id="daily">
-            <header className="date-wrapper">
-              <div className="date" onClick={resetDateToToday}>
-                <h3 className="day-of-week">{getShortDayName(dateContext)}</h3>
-                <h2>{dateContext.getDate()}</h2>
-              </div>
-            </header>
-            <div className="times-and-events">
-              <HoursList />
-              <div className="events">
-                <DisplayEvents
-                  events={todayEvents}
-                  setViewEventId={setViewEventId}
-                />
+        <section id="daily">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <header className="date-wrapper">
+                  <div className="date" onClick={resetDateToToday}>
+                    <h3 className="day-of-week">
+                      {getShortDayName(dateContext)}
+                    </h3>
+                    <h2>{dateContext.getDate()}</h2>
+                  </div>
+                </header>
+                <div className="times-and-events">
+                  <HoursList />
+                  <div className="events">
+                    <DisplayEvents
+                      events={todayEvents}
+                      setViewEventId={setViewEventId}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
       {modalContext === 'newEvent' && <NewEventModal />}
       {modalContext === 'view-event' && (

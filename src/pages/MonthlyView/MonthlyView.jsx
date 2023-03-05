@@ -35,29 +35,29 @@ export default function MonthlyView() {
     resetDateToToday,
     getShortDayName
   } = useDateContext();
-  const [viewEventId, setViewEventId] = useState('')
-  const [viewEvents, setViewEvents] = useState({})
-  const daySizeRef = useRef(null)
-  const [numVisibleEvents, setNumVisibleEvents] = useState(0)
+  const [viewEventId, setViewEventId] = useState('');
+  const [viewEvents, setViewEvents] = useState({});
+  const daySizeRef = useRef(null);
+  const [numVisibleEvents, setNumVisibleEvents] = useState(0);
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events } = useCollection('events', query);
 
   useEffect(() => {
-    const daySize = daySizeRef.current
-    if (!daySize) return
+    const daySize = daySizeRef.current;
+    if (!daySize) return;
 
     const observer = new ResizeObserver(entries => {
       const { height } = entries[0].contentRect;
-      const eventsHeight = height - 26 + 4 // 26 is height of date header, 4 accounts for bottom magin of events
-      const numEvents = Math.floor(eventsHeight / 22) // 22 is height of each event
-      setNumVisibleEvents(numEvents)
-    })
-    observer.observe(daySize)
-    
-    return () => observer.unobserve(daySize)
-  }) // for some reason the daySizeRef wasn't triggering an update so I run this on every render ig
+      const eventsHeight = height - 26 + 4; // 26 is height of date header, 4 accounts for bottom magin of events
+      const numEvents = Math.floor(eventsHeight / 22); // 22 is height of each event
+      setNumVisibleEvents(numEvents);
+    });
+    observer.observe(daySize);
+
+    return () => observer.unobserve(daySize);
+  }); // for some reason the daySizeRef wasn't triggering an update so I run this on every render ig
 
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
@@ -92,52 +92,64 @@ export default function MonthlyView() {
         incrementDate={() => incrementDateBy(28)}
         decrementDate={() => decrementDateBy(28)}
       />
-      <main><div className="container">
-        
-          <section id="monthly">
-            <header className="date-wrapper weekday-names">
-              {weekDates &&
-                weekDates.map((date, i) => (
-                  <h3
-                    className="date day-name"
-                    onClick={resetDateToToday}
-                    key={i}>
-                    {getShortDayName(date)}
-                  </h3>
-                ))}
-            </header>
-            <div className="monthly-events">
-              {events && monthDates &&
-                monthDates.map((date, i) => (
-                  <div className="day" key={i} ref={i === 0 ? daySizeRef : null}>
-                    <div className="day-wrapper">
-                      <p className="day-number">{date.getDate() !== 1 ? date.getDate() : `${getMonthName(date)} ${date.getDate()}`}</p>
-                      <DayOfMonthEvents
-                        events={getEvents(date)}
-                        setViewEventId={setViewEventId}
-                        setViewEvents={setViewEvents}
-                        numVisibleEvents={numVisibleEvents}
-                      />
-                    </div>
-                  </div>
-                ))}
+      <main>
+        <section id="monthly">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <header className="date-wrapper weekday-names">
+                  {weekDates &&
+                    weekDates.map((date, i) => (
+                      <h3
+                        className="date day-name"
+                        onClick={resetDateToToday}
+                        key={i}>
+                        {getShortDayName(date)}
+                      </h3>
+                    ))}
+                </header>
+                <div className="monthly-events">
+                  {events &&
+                    monthDates &&
+                    monthDates.map((date, i) => (
+                      <div
+                        className="day"
+                        key={i}
+                        ref={i === 0 ? daySizeRef : null}>
+                        <div className="day-wrapper">
+                          <p className="day-number">
+                            {date.getDate() !== 1
+                              ? date.getDate()
+                              : `${getMonthName(date)} ${date.getDate()}`}
+                          </p>
+                          <DayOfMonthEvents
+                            events={getEvents(date)}
+                            setViewEventId={setViewEventId}
+                            setViewEvents={setViewEvents}
+                            numVisibleEvents={numVisibleEvents}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                </div>
+                {modalContext === 'newEvent' && <NewEventModal />}
+                {modalContext === 'view-event' && (
+                  <ViewEvent event={getEvent(viewEventId)} />
+                )}
+                {modalContext === 'edit-event' && (
+                  <NewEventModal eventToEdit={getEvent(viewEventId)} />
+                )}
+                {modalContext === 'confirm-delete' && (
+                  <ConfirmDeleteModal id={viewEventId} />
+                )}
+                {modalContext === 'view-day-of-month' && (
+                  <AllEventsModal events={viewEvents} />
+                )}
+              </div>
             </div>
-          </section>
-          {modalContext === 'newEvent' && <NewEventModal />}
-          {modalContext === 'view-event' && (
-            <ViewEvent event={getEvent(viewEventId)} />
-          )}
-          {modalContext === 'edit-event' && (
-            <NewEventModal eventToEdit={getEvent(viewEventId)} />
-          )}
-          {modalContext === 'confirm-delete' && (
-            <ConfirmDeleteModal id={viewEventId} />
-          )}
-          {modalContext === 'view-day-of-month' && (
-            <AllEventsModal events={viewEvents} />
-          )}
-        
-      </div></main>
+          </div>
+        </section>
+      </main>
     </>
   );
 }

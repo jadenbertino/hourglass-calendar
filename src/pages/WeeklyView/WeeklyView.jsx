@@ -31,7 +31,6 @@ export default function WeeklyView() {
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);
-  const [weekEvents, setWeekEvents] = useState([]);
   const [viewEventId, setViewEventId] = useState('');
 
   // if user isn't signed in redirect to signin / signup page
@@ -70,32 +69,36 @@ export default function WeeklyView() {
         decrementDate={() => decrementDateBy(7)}
       />
       <main>
-        <div className="container">
-          <section id="weekly">
-            <header className="date-wrapper">
-              {week.map((date, i) => (
-                <div className="date" onClick={resetDateToToday} key={i}>
-                  <h3 className="day-of-week">{getShortDayName(date)}</h3>
-                  <h2>{date.getDate()}</h2>
-                </div>
-              ))}
-            </header>
-            <div className="times-and-events">
-              <HoursList />
-              <div className="events">
-                {week &&
-                  allEvents &&
-                  week.map((date, i) => (
-                    <DisplayEvents
-                      events={getEvents(date)}
-                      key={i}
-                      setViewEventId={setViewEventId}
-                    />
+        <section id="weekly">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <header className="date-wrapper">
+                  {week.map((date, i) => (
+                    <div className="date" onClick={resetDateToToday} key={i}>
+                      <h3 className="day-of-week">{getShortDayName(date)}</h3>
+                      <h2>{date.getDate()}</h2>
+                    </div>
                   ))}
+                </header>
+                <div className="times-and-events">
+                  <HoursList />
+                  <div className="events">
+                    {week &&
+                      allEvents &&
+                      week.map((date, i) => (
+                        <DisplayEvents
+                          events={getEvents(date)}
+                          key={i}
+                          setViewEventId={setViewEventId}
+                        />
+                      ))}
+                  </div>
+                </div>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
       {modalContext === 'newEvent' && <NewEventModal />}
       {modalContext === 'view-event' && (

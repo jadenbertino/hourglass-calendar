@@ -1,14 +1,18 @@
 nav {
   background-color: #31343f;
   height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid #93A8AC;
   position: fixed;
   top: 0;
-  width: 100vw;
+  width: 100%;
   z-index: 2;
+}
+
+nav .col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
 }
 
 nav .date {

@@ -50,10 +50,10 @@ main {
 
 /* monthly */
 
-#monthly {
+#monthly .col {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100vh - 80px);
 }
 
 #monthly .date-wrapper {
@@ -78,6 +78,7 @@ main {
   border: 1px solid gray;
   padding: 8px;
   overflow: hidden;
+  min-height: 72px;
 }
 
 .monthly-events .day-wrapper {
