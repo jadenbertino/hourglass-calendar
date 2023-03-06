@@ -72,6 +72,10 @@ form * {
   justify-content: center;
 }
 
+.hide {
+  display: none;
+}
+
 /*
 
     REUSABLES
@@ -106,8 +110,12 @@ form .invalid {
   padding: 16px 12px;
 }
 
-@media screen and (max-width: 768px) {
-  .container {
+@media (max-width: 992px) {
+  .show-992 {
+    display: block !important;
+  }
 
+  .hide-992 {
+    display: none !important;
   }
 }

@@ -90,7 +90,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
                 <button className="btn hamburger">
                   <i className="fa-solid fa-bars"></i>
                 </button>
-                <div className="month-and-year-wrapper">
+                <div className="month-and-year-wrapper hide-992">
                   <h3>{monthAndYear}</h3>
                 </div>
               </div>
@@ -106,14 +106,20 @@ export default function Nav({ children, decrementDate, incrementDate }) {
                 </Link>
               </div>
               <div className="top-right">
-                <div className="nav-date-btns">
-                  <button className="btn change-date-btn" onClick={decrementDate}>
+                <div className="nav-date-btns hide-992">
+                  <button
+                    className="btn change-date-btn"
+                    onClick={decrementDate}>
                     <i className="fa-solid fa-angle-left"></i>
                   </button>
-                  <button className="btn reset-date-btn" onClick={resetDateToToday}>
+                  <button
+                    className="btn reset-date-btn"
+                    onClick={resetDateToToday}>
                     Today
                   </button>
-                  <button className="btn change-date-btn" onClick={incrementDate}>
+                  <button
+                    className="btn change-date-btn"
+                    onClick={incrementDate}>
                     <i className="fa-solid fa-angle-right"></i>
                   </button>
                 </div>
@@ -122,6 +128,26 @@ export default function Nav({ children, decrementDate, incrementDate }) {
                   onClick={() => setModalContext('newEvent')}>
                   <i className="fa-solid fa-plus"></i>
                   <span className="new-event-text">New Event</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="row nav-bottom-row hide show-992">
+            <div className="col">
+              <div className="month-and-year-wrapper">
+                <h3>{monthAndYear}</h3>
+              </div>
+              <div className="nav-date-btns">
+                <button className="btn change-date-btn" onClick={decrementDate}>
+                  <i className="fa-solid fa-angle-left"></i>
+                </button>
+                <button
+                  className="btn reset-date-btn"
+                  onClick={resetDateToToday}>
+                  Today
+                </button>
+                <button className="btn change-date-btn" onClick={incrementDate}>
+                  <i className="fa-solid fa-angle-right"></i>
                 </button>
               </div>
             </div>
