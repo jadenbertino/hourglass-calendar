@@ -1,7 +1,6 @@
 .hours {
-  margin-top: 28px;
   /* border-right: 1px solid gray; */
-  transform: translateY(-8px);
+  /* transform: translateY(-8px); */
   display: inline-flex;
   flex-direction: column;
 }
@@ -18,8 +17,11 @@
 }
 
 .border-provider {
-  border-top: solid 1px gray;
   width: 12px;
   height: 1px;
   margin-left: 12px;
+}
+
+.hour-wrapper:not(:first-child) .border-provider {
+  border-top: solid 1px gray;
 }

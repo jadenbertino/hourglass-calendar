@@ -25,7 +25,6 @@ export default function DisplayEvents({ events, setViewEventId }) {
       {hourGridLines.map((_, i) => (
         <div className="divider" key={i}></div>
       ))}
-
       {events &&
         events.map((event, i) => {
           const start = convertToHours(event.startTime);
