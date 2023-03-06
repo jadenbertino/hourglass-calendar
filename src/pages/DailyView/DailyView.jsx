@@ -26,13 +26,17 @@ export default function DailyView() {
     formatDate,
     resetDateToToday,
     getShortDayName,
-    convertToHours
+    getDayOfMonth,
+    convertToHours,
+    getMonthName,
+    getDayOfWeek
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [viewEventId, setViewEventId] = useState('');
   const [todayEvents, setTodayEvents] = useState([]);
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events: allEvents } = useCollection('events', query);
+  const [navDate, setNavDate] = useState('')
 
   // if user isn't signed in redirect to signin / signup page
   useEffect(() => {
@@ -46,6 +50,13 @@ export default function DailyView() {
   }
 
   useEffect(() => {
+    // change date on nav
+    const weekday = getDayOfWeek(dateContext)
+    const dayOfMonth = getDayOfMonth(dateContext)
+    const month = getMonthName(dateContext)
+    setNavDate(`${weekday}, ${month} ${dayOfMonth}`)
+
+    // get today's events
     allEvents &&
       setTodayEvents(
         allEvents
@@ -63,20 +74,7 @@ export default function DailyView() {
       <Nav
         incrementDate={() => incrementDateBy(1)}
         decrementDate={() => decrementDateBy(1)}>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <header className="date-wrapper day">
-                <div className="date">
-                  <h3 className="day-of-week">
-                    {getShortDayName(dateContext)}
-                  </h3>
-                  <h2>{dateContext.getDate()}</h2>
-                </div>
-              </header>
-            </div>
-          </div>
-        </div>
+        <h3>{navDate}</h3>
       </Nav>
       <main>
         <section id="daily">

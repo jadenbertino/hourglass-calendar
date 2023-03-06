@@ -76,6 +76,12 @@ form * {
   display: none;
 }
 
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 /*
 
     REUSABLES

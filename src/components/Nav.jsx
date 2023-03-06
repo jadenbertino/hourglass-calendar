@@ -86,14 +86,9 @@ export default function Nav({ children, decrementDate, incrementDate }) {
         <div className="container">
           <div className="row">
             <div className="col">
-              <div className="top-left">
-                <button className="btn hamburger">
-                  <i className="fa-solid fa-bars"></i>
-                </button>
-                <div className="month-and-year-wrapper hide-992">
-                  <h3>{monthAndYear}</h3>
-                </div>
-              </div>
+              <button className="btn hamburger">
+                <i className="fa-solid fa-bars"></i>
+              </button>
               <div className="change-views">
                 <Link to="/daily">
                   <button className="btn change-view-btn">Day</button>
@@ -105,37 +100,18 @@ export default function Nav({ children, decrementDate, incrementDate }) {
                   <button className="btn change-view-btn">Month</button>
                 </Link>
               </div>
-              <div className="top-right">
-                <div className="nav-date-btns hide-992">
-                  <button
-                    className="btn change-date-btn"
-                    onClick={decrementDate}>
-                    <i className="fa-solid fa-angle-left"></i>
-                  </button>
-                  <button
-                    className="btn reset-date-btn"
-                    onClick={resetDateToToday}>
-                    Today
-                  </button>
-                  <button
-                    className="btn change-date-btn"
-                    onClick={incrementDate}>
-                    <i className="fa-solid fa-angle-right"></i>
-                  </button>
-                </div>
-                <button
-                  className="btn new-event-btn"
-                  onClick={() => setModalContext('newEvent')}>
-                  <i className="fa-solid fa-plus"></i>
-                  <span className="new-event-text">New Event</span>
-                </button>
-              </div>
+              <button
+                className="btn new-event-btn"
+                onClick={() => setModalContext('newEvent')}>
+                <i className="fa-solid fa-plus"></i>
+                <span className="new-event-text">New Event</span>
+              </button>
             </div>
           </div>
-          <div className="row mobile">
+          <div className="row">
             <div className="col">
-              <div className="month-and-year-wrapper">
-                <h3>{monthAndYear}</h3>
+              <div className="date">
+                {children}
               </div>
               <div className="nav-date-btns">
                 <button className="btn change-date-btn" onClick={decrementDate}>
@@ -154,7 +130,6 @@ export default function Nav({ children, decrementDate, incrementDate }) {
           </div>
         </div>
       </nav>
-      {children}
     </div>
   );
 }

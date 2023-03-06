@@ -54,10 +54,9 @@ nav .date {
 
 .nav-date-btns {
   display: flex;
-  margin-right: 16px;
 }
 
-.month-and-year-wrapper {
+nav .date {
   padding: 12px 8px;
   margin-left: -8px;
 }
@@ -76,10 +75,6 @@ nav .date {
 .reset-date-btn {
   background-color: #404552;
   margin: 0 12px;
-}
-
-nav .row.mobile {
-  display: none;
 }
 
 nav button,
@@ -104,17 +99,6 @@ nav .new-event-text {
 .top-right {
   display: flex;
   align-items: center;
-}
-
-
-@media screen and (max-width: 992px) {
-  .nav-date-btns {
-    margin: 0;
-  }
-
-  nav .row.mobile {
-    display: block;
-  }
 }
 
 @media (max-width: 576px) {

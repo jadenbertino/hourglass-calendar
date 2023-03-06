@@ -4,9 +4,6 @@ main {
 }
 
 .date-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 2;
   background-color: #404552;
   padding-left: 68px;
   height: 90px;
@@ -32,11 +29,14 @@ main {
   display: flex;
 }
 
+/* weekly */
+header.weekly .col {
+  padding-left: 58px;
+}
+
 .day-of-week {
   margin-bottom: 4px;
 }
-
-/* weekly */
 
 .date-wrapper.weekly .date {
   width: calc(100% / 7);

@@ -8,13 +8,25 @@ export function DateContextProvider({ children }) {
   const shortDayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const fullDayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
+  
   function getShortDayName(date) {
     return shortDayNames[date.getDay()]
   }
 
   function getMonthName(date) {
     return monthNames[date.getMonth()]
+  }
+
+  function getDayOfMonth(date) {
+    return date.getDate()
+  }
+
+  function getYear(date) {
+    return date.getFullYear()
+  }
+
+  function getDayOfWeek(date) {
+    return fullDayNames[date.getDay()]
   }
   
   function formatDate(date) {
@@ -205,7 +217,7 @@ export function DateContextProvider({ children }) {
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, getDayOfMonth, getYear, getDayOfWeek, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );
