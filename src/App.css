@@ -119,3 +119,9 @@ form .invalid {
     display: none !important;
   }
 }
+
+@media (max-width: 768px) {
+  .col {
+    padding: 0 16px;
+  }
+}

@@ -78,15 +78,18 @@ nav .date {
   margin: 0 12px;
 }
 
-.nav-top-row button,
-.nav-top-row select {
+nav .row.mobile {
+  display: none;
+}
+
+nav button,
+nav select {
   font-size: 16px;
   height: 40px;
 }
 
 nav .new-event-btn {
   background-color: #0CCE6B;
-  font-size: 16px;
 }
 
 nav .new-event-text {
@@ -107,5 +110,26 @@ nav .new-event-text {
 @media screen and (max-width: 992px) {
   .nav-date-btns {
     margin: 0;
+  }
+
+  nav .row.mobile {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  nav .btn {
+    font-size: 14px;
+    padding: 4px 12px;
+  }
+
+  nav .change-view-btn {
+    margin: 0 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .new-event-text {
+    display: none;
   }
 }

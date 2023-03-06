@@ -84,7 +84,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
     <div className="nav-wrapper">
       <nav>
         <div className="container">
-          <div className="row nav-top-row">
+          <div className="row">
             <div className="col">
               <div className="top-left">
                 <button className="btn hamburger">
@@ -132,7 +132,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
               </div>
             </div>
           </div>
-          <div className="row nav-bottom-row hide show-992">
+          <div className="row mobile">
             <div className="col">
               <div className="month-and-year-wrapper">
                 <h3>{monthAndYear}</h3>
