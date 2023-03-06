@@ -51,34 +51,11 @@ export default function Nav({ children, decrementDate, incrementDate }) {
           ? startMonth
           : `${startMonth.slice(0, 3)} — ${endMonth.slice(0, 3)}`;
     } else if (loc === '/monthly') {
-      // display month with most number of days
-      // 35 days per view so guaranteed to show two months
-      const monthDates = getMonth(dateContext);
-      const monthCounter = {};
-      for (let date of monthDates) {
-        const monthName = monthNames[date.getMonth()];
-        monthCounter[monthName] = monthCounter[monthName] + 1 || 1;
-      }
-
-      let mostFrequentMonth;
-      let maxCount = -Infinity;
-
-      for (const [monthName, monthCount] of Object.entries(monthCounter)) {
-        if (monthCount > maxCount) {
-          mostFrequentMonth = monthName;
-          maxCount = monthCount;
-        }
-      }
-      month = mostFrequentMonth;
+      
     }
 
     setMonthAndYear(`${month} ${year}`);
   }, [dateContext]);
-
-  function handleSignOut() {
-    signout();
-    setModalContext('');
-  }
 
   return (
     <div className="nav-wrapper">

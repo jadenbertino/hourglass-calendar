@@ -19,6 +19,7 @@ import '../Views.css';
 import AllEventsModal from './AllEventsModal';
 
 export default function MonthlyView() {
+  // TODO: get weekdayNames ONCE
   const [weekDates, setWeekDates] = useState(null);
   const [monthDates, setMonthDates] = useState(null);
   const { user } = useAuthContext();
@@ -33,6 +34,7 @@ export default function MonthlyView() {
     getMonthName,
     getWeek,
     getShortDayName,
+    getYear,
     incrementMonth,
     decrementMonth
   } = useDateContext();
@@ -40,6 +42,7 @@ export default function MonthlyView() {
   const [viewEvents, setViewEvents] = useState({});
   const daySizeRef = useRef(null);
   const [numVisibleEvents, setNumVisibleEvents] = useState(0);
+  const [navDate, setNavDate] = useState('')
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
@@ -85,11 +88,46 @@ export default function MonthlyView() {
   useEffect(() => {
     setWeekDates(getWeek(dateContext));
     setMonthDates(getMonth(dateContext));
+
+    // change navDate
+
+    // get most frequently displayed month
+    const monthDates = getMonth(dateContext);
+    const monthCounter = {};
+    for (let date of monthDates) {
+      const monthName = getMonthName(date);
+      monthCounter[monthName] = (monthCounter[monthName] || 0) + 1;
+    }
+
+    let mostFrequentMonth;
+    let maxCount = -Infinity;
+
+    for (const [monthName, monthCount] of Object.entries(monthCounter)) {
+      if (monthCount > maxCount) {
+        mostFrequentMonth = monthName;
+        maxCount = monthCount;
+      }
+    }
+
+    // year of most frequent month
+    let mostFrequentYear;
+    for (let date of monthDates) {
+      const monthName = getMonthName(date)
+      if (monthName === mostFrequentMonth) {
+        mostFrequentYear = getYear(date)
+        break
+      }
+    }
+
+    setNavDate(`${mostFrequentMonth} ${mostFrequentYear}`)
   }, [dateContext]);
 
   return (
     <>
-      <Nav incrementDate={incrementMonth} decrementDate={decrementMonth}>
+      <div className="sticky">
+        <Nav incrementDate={incrementMonth} decrementDate={decrementMonth}>
+          <h3>{navDate}</h3>
+        </Nav>
         <div className="container">
           <div className="row">
             <div className="col">
@@ -104,7 +142,7 @@ export default function MonthlyView() {
             </div>
           </div>
         </div>
-      </Nav>
+      </div>
       <main>
         <section id="monthly">
           <div className="container">
