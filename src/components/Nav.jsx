@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSignOut } from '../hooks/useSignOut';
 import SignInModal from './modals/SignInModal';
 import SignUpModal from './modals/SignUpModal';
@@ -13,14 +13,12 @@ import { useModalContext } from '../hooks/useModalContext';
 import { useNavigate } from 'react-router-dom';
 import './Nav.css';
 
-export default function Nav({ decrementDate, incrementDate }) {
+export default function Nav({ children, decrementDate, incrementDate }) {
   const [monthAndYear, setMonthAndYear] = useState('');
   const { modalContext, setModalContext } = useModalContext();
   const { dateContext, resetDateToToday, getWeek, getMonth } = useDateContext();
   const { user } = useAuthContext();
   const { signout } = useSignOut();
-  const path = useLocation().pathname;
-  const [view, setView] = useState(path);
   const monthNames = [
     'January',
     'February',
@@ -36,7 +34,7 @@ export default function Nav({ decrementDate, incrementDate }) {
     'December'
   ];
   const nav = useNavigate();
-  const loc = useLocation().pathname
+  const loc = useLocation().pathname;
 
   useEffect(() => {
     // Formats like so: February 2023
@@ -46,24 +44,20 @@ export default function Nav({ decrementDate, incrementDate }) {
 
     if (loc === '/daily') {
       month = startMonth;
-    }
-
-    else if (loc === "/weekly") {
+    } else if (loc === '/weekly') {
       const endMonth = monthNames[getWeek(dateContext)[6].getMonth()];
       month =
-      startMonth === endMonth
-        ? startMonth
-        : `${startMonth.slice(0, 3)} — ${endMonth.slice(0, 3)}`;
-    }
-
-    else if (loc === "/monthly") {
+        startMonth === endMonth
+          ? startMonth
+          : `${startMonth.slice(0, 3)} — ${endMonth.slice(0, 3)}`;
+    } else if (loc === '/monthly') {
       // display month with most number of days
       // 35 days per view so guaranteed to show two months
-      const monthDates = getMonth(dateContext)
-      const monthCounter = {}
+      const monthDates = getMonth(dateContext);
+      const monthCounter = {};
       for (let date of monthDates) {
-        const monthName = monthNames[date.getMonth()]
-        monthCounter[monthName] = monthCounter[monthName] + 1 || 1
+        const monthName = monthNames[date.getMonth()];
+        monthCounter[monthName] = monthCounter[monthName] + 1 || 1;
       }
 
       let mostFrequentMonth;
@@ -71,15 +65,14 @@ export default function Nav({ decrementDate, incrementDate }) {
 
       for (const [monthName, monthCount] of Object.entries(monthCounter)) {
         if (monthCount > maxCount) {
-          mostFrequentMonth = monthName
-          maxCount = monthCount
+          mostFrequentMonth = monthName;
+          maxCount = monthCount;
         }
       }
       month = mostFrequentMonth;
     }
 
     setMonthAndYear(`${month} ${year}`);
-
   }, [dateContext]);
 
   function handleSignOut() {
@@ -87,69 +80,49 @@ export default function Nav({ decrementDate, incrementDate }) {
     setModalContext('');
   }
 
-  useEffect(() => {
-    nav(view);
-  }, [view]);
-
   return (
     <nav>
       <div className="container">
-        <div className="row">
+        <div className="row nav-top-row">
           <div className="col">
-
-            <div className="date">
-              <div className="nav-date-btns">
-                <button
-                  className="btn reset-date-btn"
-                  onClick={resetDateToToday}>
-                  Today
-                </button>
-                <button className="btn change-date-btn" onClick={decrementDate}>
-                  <i className="fa-solid fa-angle-left"></i>
-                </button>
-                <button className="btn change-date-btn" onClick={incrementDate}>
-                  <i className="fa-solid fa-angle-right"></i>
-                </button>
-              </div>
-              <div className="month-and-year-wrapper">
-                <h3>{monthAndYear}</h3>
-              </div>
+            <button className="btn hamburger">
+              <i className="fa-solid fa-bars"></i>
+            </button>
+            <div className="change-views">
+              <Link to="/daily">
+                <button className="btn change-view-btn">Day</button>
+              </Link>
+              <Link to="/weekly">
+                <button className="btn change-view-btn">Week</button>
+              </Link>
+              <Link to="/monthly">
+                <button className="btn change-view-btn">Month</button>
+              </Link>
             </div>
-            {!user ? (
-              <div className="auth">
-                <button
-                  className="btn"
-                  onClick={() => setModalContext('signin')}>
-                  Sign In
-                </button>
-                <button
-                  className="btn"
-                  onClick={() => setModalContext('signup')}>
-                  Sign Up
-                </button>
-                {modalContext === 'signin' && <SignInModal />}
-                {modalContext === 'signup' && <SignUpModal />}
-              </div>
-            ) : (
-              <div className="set-view-and-signout">
-                <button
-                  className="btn new-event-btn"
-                  onClick={() => setModalContext('newEvent')}>
-                  <i className="fa-solid fa-plus"></i>
-                  New Event
-                </button>
-                <form className="set-view-form">
-                  <select value={view} onChange={e => setView(e.target.value)}>
-                    <option value="/daily">Daily</option>
-                    <option value="/weekly">Weekly</option>
-                    <option value="/monthly">Monthly</option>
-                  </select>
-                </form>
-                <button className="btn logout-btn" onClick={handleSignOut}>
-                  Log Out
-                </button>
-              </div>
-            )}
+            <button
+              className="btn new-event-btn"
+              onClick={() => setModalContext('newEvent')}>
+              <i className="fa-solid fa-plus"></i>
+              <span className="new-event-text">New Event</span>
+            </button>
+          </div>
+        </div>
+        <div className="row nav-middle-row">
+          <div className="col">
+            <div className="month-and-year-wrapper">
+              <h3>{monthAndYear}</h3>
+            </div>
+            <div className="nav-date-btns">
+              <button className="btn change-date-btn" onClick={decrementDate}>
+                <i className="fa-solid fa-angle-left"></i>
+              </button>
+              <button className="btn reset-date-btn" onClick={resetDateToToday}>
+                Today
+              </button>
+              <button className="btn change-date-btn" onClick={incrementDate}>
+                <i className="fa-solid fa-angle-right"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

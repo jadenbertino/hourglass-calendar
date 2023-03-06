@@ -6,7 +6,6 @@ import { useModalContext } from '../../hooks/useModalContext';
 // components
 import SignInModal from '../../components/modals/SignInModal';
 import SignUpModal from '../../components/modals/SignUpModal';
-import Nav from '../../components/Nav';
 
 // styles
 import './Locked.css';
@@ -25,7 +24,6 @@ export default function Locked() {
 
   return (
     <>
-      <Nav />
       <main>
         <div className="content-locked">
           <i className="fa-solid fa-lock"></i>

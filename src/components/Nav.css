@@ -1,18 +1,25 @@
 nav {
   background-color: #31343f;
-  height: 80px;
+  /* height: 80px; */
   border-bottom: 1px solid #93A8AC;
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
   z-index: 2;
 }
 
+nav .container {
+  padding-top: 20px; 
+}
+
+nav .row {
+  padding-bottom: 20px;
+}
+
 nav .col {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  height: 80px;
+  justify-content: space-between;
 }
 
 nav .date {
@@ -28,17 +35,28 @@ nav .date {
   background-color: #598392;
 }
 
+.btn.hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  margin-left: -16px;
+}
+
+.fa-bars {
+  font-size: 24px;
+}
+
 .nav-date-btns {
   display: flex;
 }
 
 .month-and-year-wrapper {
   padding: 12px 8px;
-  margin-left: 16px;
+  margin-left: -8px;
 }
 
 .change-date-btn {
-  margin-left: 16px;
   background-color: #404552;
   font-size: 18px;
   border-radius: 50%;
@@ -51,36 +69,24 @@ nav .date {
 
 .reset-date-btn {
   background-color: #404552;
+  margin: 0 12px;
 }
 
-.set-view-and-signout {
-  display: flex;
-  align-items: center;
-}
-
-.set-view-and-signout button,
-.set-view-and-signout select {
+.nav-top-row button,
+.nav-top-row select {
   font-size: 16px;
   height: 40px;
-  margin-left: 20px;
-}
-
-.set-view-form {
-  display: inline-block;
-}
-
-.set-view-form select {
-  padding: 8px;
-  border-radius: 4px;
-  background-color: #3f8efc;
-  color: white;
-  border: none;
-}
-nav .fa-plus {
-  margin-right: 8px;
 }
 
 nav .new-event-btn {
   background-color: #0CCE6B;
   font-size: 16px;
+}
+
+nav .new-event-text {
+  margin-left: 8px;
+}
+
+.change-view-btn {
+  margin: 0 12px;
 }
