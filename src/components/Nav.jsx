@@ -81,51 +81,54 @@ export default function Nav({ children, decrementDate, incrementDate }) {
   }
 
   return (
-    <nav>
-      <div className="container">
-        <div className="row nav-top-row">
-          <div className="col">
-            <div className="top-left">
-              <button className="btn hamburger">
-                <i className="fa-solid fa-bars"></i>
-              </button>
-              <div className="month-and-year-wrapper">
-                <h3>{monthAndYear}</h3>
+    <div className="nav-wrapper">
+      <nav>
+        <div className="container">
+          <div className="row nav-top-row">
+            <div className="col">
+              <div className="top-left">
+                <button className="btn hamburger">
+                  <i className="fa-solid fa-bars"></i>
+                </button>
+                <div className="month-and-year-wrapper">
+                  <h3>{monthAndYear}</h3>
+                </div>
               </div>
-            </div>
-            <div className="change-views">
-              <Link to="/daily">
-                <button className="btn change-view-btn">Day</button>
-              </Link>
-              <Link to="/weekly">
-                <button className="btn change-view-btn">Week</button>
-              </Link>
-              <Link to="/monthly">
-                <button className="btn change-view-btn">Month</button>
-              </Link>
-            </div>
-            <div className="top-right">
-              <div className="nav-date-btns">
-                <button className="btn change-date-btn" onClick={decrementDate}>
-                  <i className="fa-solid fa-angle-left"></i>
-                </button>
-                <button className="btn reset-date-btn" onClick={resetDateToToday}>
-                  Today
-                </button>
-                <button className="btn change-date-btn" onClick={incrementDate}>
-                  <i className="fa-solid fa-angle-right"></i>
+              <div className="change-views">
+                <Link to="/daily">
+                  <button className="btn change-view-btn">Day</button>
+                </Link>
+                <Link to="/weekly">
+                  <button className="btn change-view-btn">Week</button>
+                </Link>
+                <Link to="/monthly">
+                  <button className="btn change-view-btn">Month</button>
+                </Link>
+              </div>
+              <div className="top-right">
+                <div className="nav-date-btns">
+                  <button className="btn change-date-btn" onClick={decrementDate}>
+                    <i className="fa-solid fa-angle-left"></i>
+                  </button>
+                  <button className="btn reset-date-btn" onClick={resetDateToToday}>
+                    Today
+                  </button>
+                  <button className="btn change-date-btn" onClick={incrementDate}>
+                    <i className="fa-solid fa-angle-right"></i>
+                  </button>
+                </div>
+                <button
+                  className="btn new-event-btn"
+                  onClick={() => setModalContext('newEvent')}>
+                  <i className="fa-solid fa-plus"></i>
+                  <span className="new-event-text">New Event</span>
                 </button>
               </div>
-              <button
-                className="btn new-event-btn"
-                onClick={() => setModalContext('newEvent')}>
-                <i className="fa-solid fa-plus"></i>
-                <span className="new-event-text">New Event</span>
-              </button>
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      {children}
+    </div>
   );
 }

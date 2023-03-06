@@ -62,21 +62,27 @@ export default function DailyView() {
     <>
       <Nav
         incrementDate={() => incrementDateBy(1)}
-        decrementDate={() => decrementDateBy(1)}
-      />
+        decrementDate={() => decrementDateBy(1)}>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              <header className="date-wrapper day">
+                <div className="date">
+                  <h3 className="day-of-week">
+                    {getShortDayName(dateContext)}
+                  </h3>
+                  <h2>{dateContext.getDate()}</h2>
+                </div>
+              </header>
+            </div>
+          </div>
+        </div>
+      </Nav>
       <main>
         <section id="daily">
           <div className="container">
             <div className="row">
               <div className="col">
-                <header className="date-wrapper">
-                  <div className="date">
-                    <h3 className="day-of-week">
-                      {getShortDayName(dateContext)}
-                    </h3>
-                    <h2>{dateContext.getDate()}</h2>
-                  </div>
-                </header>
                 <div className="times-and-events">
                   <HoursList />
                   <div className="events">

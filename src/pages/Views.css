@@ -38,7 +38,7 @@ main {
 
 /* weekly */
 
-#weekly .date {
+.date-wrapper.weekly .date {
   width: calc(100% / 7);
 }
 
@@ -48,21 +48,22 @@ main {
 
 /* monthly */
 
+.date-wrapper.monthly > .day-name {
+  width: calc(100% / 7);
+  border-right: solid 1px gray;
+}
+
 #monthly .col {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 80px);
 }
 
-#monthly .date-wrapper {
+.date-wrapper.monthly {
   padding-left: 0;
-  display: flex;
 }
 
-#monthly .day-name {
-  width: calc(100% / 7);
-  border-right: solid 1px gray;
-}
+#monthly 
 
 .monthly-events {
   display: flex;
