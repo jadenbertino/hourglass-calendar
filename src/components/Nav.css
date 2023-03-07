@@ -59,6 +59,7 @@ nav .date {
 nav .date {
   padding: 12px 8px;
   margin-left: -8px;
+  cursor: pointer;
 }
 
 .change-date-btn {

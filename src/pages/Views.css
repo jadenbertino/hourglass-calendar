@@ -100,11 +100,12 @@ header.weekly .col {
 }
 
 .monthly-event .time {
-  margin: 0 6px;
+  margin-left: 6px;
 }
 
 .monthly-event .name {
   font-weight: bold;
+  margin-left: 6px;
 }
 
 /* day of month */
@@ -125,3 +126,36 @@ header.weekly .col {
   right: 8px;
 }
 
+@media (max-width: 992px) {
+  .monthly .col {
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .monthly .day-name {
+    font-size: 16px;
+  }
+
+  .monthly-event .time {
+    display: none;
+  }
+  .monthly .day {
+    padding: 4px;
+  }
+  .monthly .day-number,
+  .monthly-event .name,
+  .monthly .hidden-events {
+    font-size: 14px;
+  }
+
+  .monthly .day-number {
+    white-space: normal;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .monthly .day-name {
+    font-size: 14px;
+  }
+}

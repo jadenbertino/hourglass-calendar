@@ -65,7 +65,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
           </div>
           <div className="row">
             <div className="col">
-              <div className="date">
+              <div className="date" onClick={resetDateToToday}>
                 {children}
               </div>
               <div className="nav-date-btns">

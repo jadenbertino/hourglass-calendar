@@ -172,7 +172,7 @@ export default function MonthlyView() {
                           <p className="day-number">
                             {date.getDate() !== 1
                               ? date.getDate()
-                              : `${getMonthName(date)} ${date.getDate()}`}
+                              : `${getMonthName(date).slice(0,3)} ${date.getDate()}`}
                           </p>
                           <DayOfMonthEvents
                             events={getEvents(date)}

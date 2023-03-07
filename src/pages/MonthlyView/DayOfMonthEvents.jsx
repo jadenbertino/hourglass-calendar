@@ -37,27 +37,6 @@ export default function DayOfMonthEvents({ events, setViewEventId, numVisibleEve
     }
   }, [events])
 
-  /*
-  NUM EVENTS TO SHOW PER DAY
-  - get total height of day container (dayHeight)
-  - dayHeight -= 26 (to account for date header)
-  - (dayHeight + eventMargin) // (eventHeight + eventMargin) = numVisibleEvents
-  - if events.length > numVisibleEvents
-    - mainEvents = events.slice(0, numVisibileEvents - 1)
-    - hiddenEvents = events.slice(numVisibleEvents - 1)
-  - else 
-    - render events
-  */
-
-
-  // const visibleEvents = !events || numVisibleEvents === 0 ? null :
-  //   events.length <= numVisibleEvents ? events : events.slice(0, numVisibleEvents - 1)
-  // const hiddenEvents = !events || numVisibleEvents === 0 ? null :
-  //   events.length > numVisibleEvents ? events.slice(numVisibleEvents - 1) : null
-  // numVisibleEvents !== 0 && events.length <= numVisibleEvents ? events : events.slice(0, numVisibleEvents - 1)
-
-  // const hiddenEvents = events.slice(numVisibleEvents !== 0 ? numVisibleEvents - 1 : events.length)
-
   return (
     <>
       {visibleEvents && visibleEvents.map((e, i) => (
@@ -67,7 +46,7 @@ export default function DayOfMonthEvents({ events, setViewEventId, numVisibleEve
           <span className="name">{e.name}</span>
         </div>
       ))}
-      {hiddenEvents.length ? <p onClick={viewAllEvents}>{hiddenEvents.length} more</p> : null}
+      {hiddenEvents.length ? <p className="hidden-events" onClick={viewAllEvents}>{hiddenEvents.length} more</p> : null}
     </>
   );
 }
