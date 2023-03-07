@@ -14,11 +14,11 @@ nav {
 }
 
 nav .container {
-  padding-top: 20px; 
+  padding-top: 16px; 
 }
 
 nav .row {
-  padding-bottom: 20px;
+  padding-bottom: 16px;
 }
 
 nav .col {
@@ -78,10 +78,8 @@ nav .date {
   margin: 0 12px;
 }
 
-nav button,
-nav select {
+nav .btn {
   font-size: 16px;
-  height: 40px;
 }
 
 nav .new-event-btn {
@@ -103,9 +101,26 @@ nav .new-event-text {
 }
 
 @media (max-width: 576px) {
+  nav .container {
+    padding-top: 12px;
+  }
+
+  nav .row {
+    padding-bottom: 12px;
+  }
+
   nav .btn {
     font-size: 14px;
-    padding: 4px 12px;
+    padding: 8px 12px;
+  }
+
+  nav .date {
+    padding: 8px;
+  }
+
+  nav .change-date-btn {
+    height: 32px;
+    width: 32px;
   }
 
   nav .change-view-btn {
