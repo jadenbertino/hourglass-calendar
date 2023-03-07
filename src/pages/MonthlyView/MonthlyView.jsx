@@ -24,6 +24,8 @@ export default function MonthlyView() {
   const [monthDates, setMonthDates] = useState(null);
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
+  const [bodyHeight, setBodyHeight] = useState(0);
+  const navRef = useRef(null)
   const {
     incrementDateBy,
     decrementDateBy,
@@ -42,12 +44,20 @@ export default function MonthlyView() {
   const [viewEvents, setViewEvents] = useState({});
   const daySizeRef = useRef(null);
   const [numVisibleEvents, setNumVisibleEvents] = useState(0);
-  const [navDate, setNavDate] = useState('')
+  const [navDate, setNavDate] = useState('');
+
+  // set height of body based off of nav height
+  useEffect(() => {
+    const navHeight = navRef.current.offsetHeight;
+    const mainHeight = window.innerHeight - navHeight;
+    setBodyHeight(mainHeight);
+  }, [weekDates]);
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events } = useCollection('events', query);
-
+  
+  // set number of events to display per day
   useEffect(() => {
     const daySize = daySizeRef.current;
     if (!daySize) return;
@@ -112,43 +122,45 @@ export default function MonthlyView() {
     // year of most frequent month
     let mostFrequentYear;
     for (let date of monthDates) {
-      const monthName = getMonthName(date)
+      const monthName = getMonthName(date);
       if (monthName === mostFrequentMonth) {
-        mostFrequentYear = getYear(date)
-        break
+        mostFrequentYear = getYear(date);
+        break;
       }
     }
 
-    setNavDate(`${mostFrequentMonth} ${mostFrequentYear}`)
+    setNavDate(`${mostFrequentMonth} ${mostFrequentYear}`);
   }, [dateContext]);
 
   return (
     <>
-      <div className="sticky">
+      <div className="sticky" ref={navRef}>
         <Nav incrementDate={incrementMonth} decrementDate={decrementMonth}>
           <h3>{navDate}</h3>
         </Nav>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <header className="date-wrapper monthly">
-                {weekDates &&
-                  weekDates.map((date, i) => (
-                    <h3 className="date day-name" key={i}>
-                      {getShortDayName(date)}
-                    </h3>
-                  ))}
-              </header>
-            </div>
-          </div>
-        </div>
-      </div>
-      <main>
-        <section id="monthly">
+        <header className="monthly">
           <div className="container">
             <div className="row">
               <div className="col">
-                <div className="monthly-events">
+                <div className="date-wrapper">
+                  {weekDates &&
+                    weekDates.map((date, i) => (
+                      <h3 className="date day-name" key={i}>
+                        {getShortDayName(date)}
+                      </h3>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      </div>
+      <main>
+        <section className="monthly">
+          <div className="container" >
+            <div className="row">
+              <div className="col">
+                <div className="monthly-events" style={{ 'height': `${bodyHeight}px` }}>
                   {events &&
                     monthDates &&
                     monthDates.map((date, i) => (

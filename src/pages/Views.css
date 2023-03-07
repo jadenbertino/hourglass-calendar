@@ -1,6 +1,5 @@
 main {
   display: flex;
-  min-height: calc(100vh - 80px);
 }
 
 .date-wrapper {
@@ -20,7 +19,7 @@ main {
 
 #daily,
 #weekly,
-#monthly {
+.monthly {
   width: 100%;
 }
 
@@ -47,27 +46,20 @@ header.weekly .col {
 
 /* monthly */
 
-.date-wrapper.monthly > .day-name {
+.monthly .day-name {
   width: calc(100% / 7);
   border-right: solid 1px gray;
+  padding: 12px 0;
 }
 
-#monthly .col {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 80px);
-}
-
-.date-wrapper.monthly {
+.monthly .date-wrapper {
   padding-left: 0;
 }
-
-#monthly 
 
 .monthly-events {
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+  height: calc(100vh - 80px);
 }
 
 .monthly-events .day {

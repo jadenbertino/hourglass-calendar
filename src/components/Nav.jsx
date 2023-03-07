@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 import './Nav.css';
 
 export default function Nav({ children, decrementDate, incrementDate }) {
-  const [monthAndYear, setMonthAndYear] = useState('');
   const { modalContext, setModalContext } = useModalContext();
   const { dateContext, resetDateToToday, getWeek, getMonth } = useDateContext();
   const { user } = useAuthContext();
@@ -35,27 +34,6 @@ export default function Nav({ children, decrementDate, incrementDate }) {
   ];
   const nav = useNavigate();
   const loc = useLocation().pathname;
-
-  useEffect(() => {
-    // Formats like so: February 2023
-    const startMonth = monthNames[dateContext.getMonth()];
-    const year = dateContext.getFullYear();
-    let month;
-
-    if (loc === '/daily') {
-      month = startMonth;
-    } else if (loc === '/weekly') {
-      const endMonth = monthNames[getWeek(dateContext)[6].getMonth()];
-      month =
-        startMonth === endMonth
-          ? startMonth
-          : `${startMonth.slice(0, 3)} — ${endMonth.slice(0, 3)}`;
-    } else if (loc === '/monthly') {
-      
-    }
-
-    setMonthAndYear(`${month} ${year}`);
-  }, [dateContext]);
 
   return (
     <div className="nav-wrapper">
