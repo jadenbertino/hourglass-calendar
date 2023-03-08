@@ -28,16 +28,32 @@ main {
 }
 
 /* weekly */
-header.weekly .col {
-  padding-left: 58px;
-}
 
-.day-of-week {
+#weekly .container,
+#weekly .row,
+#weekly .col,
+#weekly .weekly-events {
+  height: 100%;
+}
+.day-name {
   margin-bottom: 4px;
 }
 
-.date-wrapper.weekly .date {
-  width: calc(100% / 7);
+.weekly-events {
+  display: flex;
+}
+
+.date-sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-right: 1px solid gray;
+  padding-right: 16px;
+}
+
+.date-sidebar .date {
+  text-align: center;
 }
 
 #weekly .event {

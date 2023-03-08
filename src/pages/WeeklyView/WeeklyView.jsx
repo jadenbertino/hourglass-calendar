@@ -12,6 +12,7 @@ import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import Nav from '../../components/Nav';
+import WeeklyEvents from './WeeklyEvents';
 
 // styles
 import '../Views.css';
@@ -93,36 +94,18 @@ export default function WeeklyView() {
 
   return (
     <>
-      <div className="sticky">
-        <Nav
-          incrementDate={() => incrementDateBy(7)}
-          decrementDate={() => decrementDateBy(7)}>
-          <h3>{navDate}</h3>
-        </Nav>
-        <header>
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="date-wrapper weekly">
-                  {week.map((date, i) => (
-                    <div className="date" key={i}>
-                      <h3 className="day-of-week">{getShortDayName(date)}</h3>
-                      <h2>{date.getDate()}</h2>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-      </div>
-
+      <Nav
+        incrementDate={() => incrementDateBy(7)}
+        decrementDate={() => decrementDateBy(7)}>
+        <h3>{navDate}</h3>
+      </Nav>
       <main>
         <section id="weekly">
           <div className="container">
             <div className="row">
               <div className="col">
-                <div className="times-and-events">
+                <WeeklyEvents weekDates={week} />
+                {/* <div className="times-and-events">
                   <HoursList />
                   <div className="events">
                     {week &&
@@ -135,7 +118,7 @@ export default function WeeklyView() {
                         />
                       ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
