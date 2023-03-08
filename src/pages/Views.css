@@ -35,6 +35,7 @@ main {
 #weekly .weekly-events {
   height: 100%;
 }
+
 .day-name {
   margin-bottom: 4px;
 }
@@ -43,21 +44,33 @@ main {
   display: flex;
 }
 
+#weekly .events {
+  display: flex;
+  flex-direction: column;
+}
+
+.weekday {
+  width: 100%;
+  height: calc(100% / 7);
+  border: 1px solid gray;
+}
+
 .date-sidebar {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  border-right: 1px solid gray;
-  padding-right: 16px;
 }
 
 .date-sidebar .date {
-  text-align: center;
-}
-
-#weekly .event {
-  width: calc(100% - 12px);
+  padding: 0 16px;
+  border: 1px solid gray;
+  border-left: 2px solid gray;
+  height: calc(100% / 7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* monthly */

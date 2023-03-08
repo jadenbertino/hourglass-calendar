@@ -6,13 +6,11 @@ import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
 
 // components
-import DisplayEvents from '../../components/DisplayEvents';
-import HoursList from '../../components/HoursList';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import Nav from '../../components/Nav';
-import WeeklyEvents from './WeeklyEvents';
+import DisplayWeeklyEvents from './DisplayWeeklyEvents';
 
 // styles
 import '../Views.css';
@@ -104,7 +102,17 @@ export default function WeeklyView() {
           <div className="container">
             <div className="row">
               <div className="col">
-                <WeeklyEvents weekDates={week} />
+              <div className="weekly-events">
+                <div className="date-sidebar">
+                  {week.map((date, i) => (
+                    <div className="date" key={i}>
+                      <h3 className="day-name">{getShortDayName(date)}</h3>
+                      <h2>{date.getDate()}</h2>
+                    </div>
+                  ))}
+                </div>
+                <DisplayWeeklyEvents weekDates={week}/>
+              </div>
                 {/* <div className="times-and-events">
                   <HoursList />
                   <div className="events">

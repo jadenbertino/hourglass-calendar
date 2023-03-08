@@ -1,7 +1,9 @@
-export default function () {
+export default function DisplayWeeklyEvents({ weekDates }) {
   return (
-    <div>hi
-      
+    <div className="events">
+      {weekDates.map(date => (
+        <div className="weekday"></div>
+      ))}
     </div>
   )
 }
