@@ -46,13 +46,6 @@ export default function MonthlyView() {
   const [numVisibleEvents, setNumVisibleEvents] = useState(0);
   const [navDate, setNavDate] = useState('');
 
-  // set height of body based off of nav height
-  useEffect(() => {
-    const navHeight = navRef.current.offsetHeight;
-    const mainHeight = window.innerHeight - navHeight;
-    setBodyHeight(mainHeight);
-  }, [weekDates]);
-
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events } = useCollection('events', query);
@@ -160,7 +153,7 @@ export default function MonthlyView() {
           <div className="container" >
             <div className="row">
               <div className="col">
-                <div className="monthly-events" style={{ 'height': `${bodyHeight}px` }}>
+                <div className="monthly-events">
                   {events &&
                     monthDates &&
                     monthDates.map((date, i) => (
