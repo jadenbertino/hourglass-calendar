@@ -1,21 +1,174 @@
+/* GENERAL */
+
 .modal-backdrop {
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
   backdrop-filter: blur(5px) brightness(60%);
   z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 8px;
   background-color: #31343f;
   color: #EAF2EF;
   padding: 24px;
+  position: relative;
 }
 
 .modal input {
   background-color: #EAF2EF;
   color: #31343f;
+}
+
+.modal-actions {
+  position: absolute;
+  top: 8px; 
+  right: 16px;
+}
+
+.modal-icon {
+  background-color: transparent;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  color: #EAF2EF;
+  padding: 16px 12px;
+}
+
+/* Settings */
+
+.settings {
+  padding: 80px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings > *:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+/* Auth Modals */
+
+.auth-modal {
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-modal .btn {
+  margin-left: auto;
+  margin-top: 16px;
+}
+
+/* NEW EVENT MODAL */
+
+.new-event-form {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 576px;
+  width: 100%;
+}
+
+.new-event-form .name {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.new-event-form .date {
+  width: 40%;
+  text-align: center;
+}
+
+.new-event-form .times-wrapper {
+  width: 60%;
+  padding-left: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-event-form .time {
+  width: 40%;
+  text-align: center;
+}
+
+.new-event-form .notes {
+  width: 100%;
+  margin: 12px 0;
+  min-height: 80px;
+}
+
+.new-event-form .cancel-btn {
+  margin-left: auto;
+  background-color: #93a8ac;
+}
+
+.new-event-form .save-btn {
+  margin-left: 12px;
+  /* background-color: #62c370; */
+}
+
+.fa-arrow-right {
+  transform: translateY(8px);
+}
+
+/* VIEW EVENT MODAL */
+
+.view-event {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 576px;
+  width: 100%;
+}
+
+.view-event .name {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.view-event .dot,
+.view-event .time {
+  margin-left: 12px;
+}
+
+.view-event .notes {
+  width: 100%;
+  margin-top: 12px;
+  border-top: 1px solid gray;
+  padding-top: 12px;
+}
+
+.view-event .modal-actions {
+  margin-top: 12px;
+}
+.view-event .modal-icon {
+  margin-left: 12px;
+  padding: 8px;
+}
+
+/* CONFIRM DELETE */
+
+.confirm-delete-modal .btns-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.confirm-delete-modal .btn {
+  margin: 0 12px;
+}
+.confirm-delete-modal .cancel-delete {
+  background-color: #93a8ac;
+}
+
+.confirm-delete-modal .confirm-delete {
+  background-color: #bc4749;
 }

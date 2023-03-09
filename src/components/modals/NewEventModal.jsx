@@ -6,9 +6,6 @@ import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
 import Modal from './Modal';
 
-// styles
-import './NewEventModal.css';
-
 export default function NewEventModal({ eventToEdit }) {
   const { user } = useAuthContext();
   const { setModalContext } = useModalContext();

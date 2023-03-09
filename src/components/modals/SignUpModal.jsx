@@ -5,9 +5,6 @@ import { useSignUp } from '../../hooks/useSignUp';
 
 import Modal from './Modal';
 
-// styles
-import './authModals.css';
-
 export default function SignUpModal() {
   const { setModalContext } = useModalContext();
 
@@ -42,43 +39,41 @@ export default function SignUpModal() {
   }, [user, error]);
 
   return (
-    <Modal>
-      <div className="auth-modal">
-        <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="first name"
-            onChange={e => setDisplayName(e.target.value)}
-            value={displayName}
-            required
-            autoFocus
-          />
-          <input
-            type="email"
-            placeholder="email"
-            onChange={e => setEmail(e.target.value)}
-            value={email}
-            className={validEmail ? '' : 'invalid'}
-            required
-          />
-          <input
-            type="password"
-            placeholder="password (6 characters or more)"
-            onChange={e => setPassword(e.target.value)}
-            value={password}
-            className={validPassword ? '' : 'invalid'}
-            required
-          />
-          <button className="btn">Sign Up</button>
-        </form>
-        <button
-          type="button"
-          className="modal-actions modal-icon"
-          onClick={() => setModalContext('')}>
-          <i className="fa-solid fa-x"></i>
-        </button>
-      </div>
+    <Modal className={'auth-modal'}>
+      <h2>Sign Up</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="first name"
+          onChange={e => setDisplayName(e.target.value)}
+          value={displayName}
+          required
+          autoFocus
+        />
+        <input
+          type="email"
+          placeholder="email"
+          onChange={e => setEmail(e.target.value)}
+          value={email}
+          className={validEmail ? '' : 'invalid'}
+          required
+        />
+        <input
+          type="password"
+          placeholder="password (6 characters or more)"
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+          className={validPassword ? '' : 'invalid'}
+          required
+        />
+        <button className="btn">Sign Up</button>
+      </form>
+      <button
+        type="button"
+        className="modal-actions modal-icon"
+        onClick={() => setModalContext('')}>
+        <i className="fa-solid fa-x"></i>
+      </button>
     </Modal>
   );
 }

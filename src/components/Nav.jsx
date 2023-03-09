@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSignOut } from '../hooks/useSignOut';
-import SignInModal from './modals/SignInModal';
-import SignUpModal from './modals/SignUpModal';
+import SignOutModal from './modals/SettingsModal';
 
 // context
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -41,7 +40,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
         <div className="container">
           <div className="row">
             <div className="col">
-              <button className="btn hamburger">
+              <button className="btn hamburger" onClick={() => setModalContext('sign-out')}>
                 <i className="fa-solid fa-bars"></i>
               </button>
               <div className="change-views">
@@ -85,6 +84,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
           </div>
         </div>
       </nav>
+      {modalContext === "sign-out" && <SignOutModal />}
     </div>
   );
 }

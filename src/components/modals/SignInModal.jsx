@@ -4,9 +4,6 @@ import { useModalContext } from '../../hooks/useModalContext';
 import { useSignIn } from '../../hooks/useSignIn';
 import Modal from './Modal';
 
-// styles
-import './authModals.css';
-
 export default function SignInModal() {
   const { setModalContext } = useModalContext();
 
@@ -49,36 +46,34 @@ export default function SignInModal() {
   }, [user, error]);
 
   return (
-    <Modal>
-      <div className="auth-modal">
-        <h2>Sign In</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder={emailPlaceholder}
-            onChange={e => setEmail(e.target.value)}
-            value={email}
-            className={emailisValid ? '' : 'invalid'}
-            required
-            autoFocus
-          />
-          <input
-            type="password"
-            placeholder={passwordPlaceholder}
-            onChange={e => setPassword(e.target.value)}
-            value={password}
-            className={passwordIsValid ? '' : 'invalid'}
-            required
-          />
-          <button className="btn">Sign In</button>
-        </form>
-        <button
-          type="button"
-          className="modal-actions modal-icon"
-          onClick={() => setModalContext('')}>
-          <i className="fa-solid fa-x"></i>
-        </button>
-      </div>
+    <Modal className={'auth-modal'}>
+      <h2>Sign In</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder={emailPlaceholder}
+          onChange={e => setEmail(e.target.value)}
+          value={email}
+          className={emailisValid ? '' : 'invalid'}
+          required
+          autoFocus
+        />
+        <input
+          type="password"
+          placeholder={passwordPlaceholder}
+          onChange={e => setPassword(e.target.value)}
+          value={password}
+          className={passwordIsValid ? '' : 'invalid'}
+          required
+        />
+        <button className="btn">Sign In</button>
+      </form>
+      <button
+        type="button"
+        className="modal-actions modal-icon"
+        onClick={() => setModalContext('')}>
+        <i className="fa-solid fa-x"></i>
+      </button>
     </Modal>
   );
 }

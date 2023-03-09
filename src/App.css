@@ -115,21 +115,6 @@ form .invalid {
   border: 1px solid transparent;
 }
 
-.modal-actions {
-  position: absolute;
-  top: 8px; 
-  right: 16px;
-}
-
-.modal-icon {
-  background-color: transparent;
-  border: none;
-  padding: 12px;
-  font-size: 16px;
-  color: #EAF2EF;
-  padding: 16px 12px;
-}
-
 @media (max-width: 992px) {
   .show-992 {
     display: block !important;
