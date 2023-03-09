@@ -33,26 +33,43 @@ header.weekly .date {
   width: calc(100% / 7);
 }
 
-#weekly .weekly-events {
+
+
+#weekly .weekly-view {
   height: 100%;
+  display: flex;
 }
 
 #weekly .day-name {
   margin-bottom: 4px;
 }
 
-.weekly-events {
-  display: flex;
-}
-
-#weekly .events.mobile {
+#weekly .mobile .events {
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .weekday {
-  width: 100%;
   height: calc(100% / 7);
+  max-width: calc(100vw - 80px);
   border: 1px solid gray;
+  display: grid;
+  grid-auto-columns: 20vw; /* set the default width of each grid cell to 20% */
+  grid-auto-rows: 100%; /* set the default height of each grid cell to 100% */
+  overflow: auto; /* enable scrolling when child elements overflow */
+  grid-auto-flow: column; /* place grid items in columns */
+}
+
+.weekday .mobile-event {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-basis: 20%;
+  flex-shrink: 0;
+  height: 100%;
+  border-right: 2px solid gray;
+  word-wrap: break-word;
 }
 
 .date-sidebar {
@@ -60,10 +77,11 @@ header.weekly .date {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  flex-basis: 80px;
+  flex-shrink: 0;
 }
 
 .date-sidebar .date {
-  padding: 0 16px;
   border: 1px solid gray;
   border-left: 2px solid gray;
   height: calc(100% / 7);
@@ -162,6 +180,10 @@ header.weekly .date {
 }
 
 @media (max-width: 768px) {
+  #weekly .col {
+    padding: 0;
+  }
+
   .monthly .day-name {
     font-size: 16px;
   }
@@ -169,6 +191,7 @@ header.weekly .date {
   .monthly-event .time {
     display: none;
   }
+
   .monthly .day {
     padding: 4px;
   }

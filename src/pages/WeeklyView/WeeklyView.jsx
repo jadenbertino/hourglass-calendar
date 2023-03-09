@@ -36,7 +36,6 @@ export default function WeeklyView() {
     getYear
   } = useDateContext();
   const {width: windowWidth} = useWindowSize()
-  console.log(windowWidth)
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);
   const [viewEventId, setViewEventId] = useState('');
@@ -103,51 +102,62 @@ export default function WeeklyView() {
           decrementDate={() => decrementDateBy(7)}>
           <h3>{navDate}</h3>
         </Nav>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-                <header className="date-wrapper weekly">
-                  {week.map((date, i) => (
-                    <div className="date" key={i}>
-                      <h3 className="day-of-week">{getShortDayName(date)}</h3>
-                      <h2>{date.getDate()}</h2>
-                    </div>
-                  ))}
-                </header>
+        {windowWidth > 768 &&
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                  <header className="date-wrapper weekly">
+                    {week.map((date, i) => (
+                      <div className="date" key={i}>
+                        <h3 className="day-of-week">{getShortDayName(date)}</h3>
+                        <h2>{date.getDate()}</h2>
+                      </div>
+                    ))}
+                  </header>
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
       <main>
         <section id="weekly">
           <div className="container">
             <div className="row">
               <div className="col">
-                <div className="weekly-events">
-                  <HoursList />
-                  <div className="events">
-                    {week &&
-                      allEvents &&
-                      week.map((date, i) => (
-                        <DisplayEvents
-                          events={getEvents(date)}
-                          key={i}
-                          setViewEventId={setViewEventId}
-                        />
+                {windowWidth > 768 &&
+                  <div className="weekly-view">
+                    <HoursList />
+                    <div className="events">
+                      {week &&
+                        allEvents &&
+                        week.map((date, i) => (
+                          <DisplayEvents
+                            events={getEvents(date)}
+                            key={i}
+                            setViewEventId={setViewEventId}
+                          />
+                        ))}
+                    </div>
+                  </div>
+                }
+                {windowWidth <= 768 &&
+                  <div className="weekly-view mobile">
+                    <div className="date-sidebar">
+                      {week.map((date, i) => (
+                        <div className="date" key={i}>
+                          <h3 className="day-name">{getShortDayName(date)}</h3>
+                          <h2>{date.getDate()}</h2>
+                        </div>
                       ))}
+                    </div>
+                    <div className="events">
+                      {week && allEvents && week.map((day, i) => {
+                          return <DisplayWeeklyEvents events={getEvents(day)} setViewEventId={setViewEventId} key={i}/>
+                        })
+                      }
+                    </div>
                   </div>
-                </div>
-                {/* <div className="weekly-events mobile">
-                  <div className="date-sidebar">
-                    {week.map((date, i) => (
-                      <div className="date" key={i}>
-                        <h3 className="day-name">{getShortDayName(date)}</h3>
-                        <h2>{date.getDate()}</h2>
-                      </div>
-                    ))}
-                  </div>
-                  <DisplayWeeklyEvents weekDates={week}/>
-                </div> */}
+                }
               </div>
             </div>
           </div>
