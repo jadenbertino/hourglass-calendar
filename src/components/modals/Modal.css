@@ -72,14 +72,14 @@
 
 .new-event-form {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
   max-width: 576px;
   width: 100%;
 }
 
-.new-event-form .name {
-  width: 100%;
-  margin-bottom: 12px;
+.new-event-form .date-time-wrapper {
+  display: flex;
 }
 
 .new-event-form .date {
@@ -101,19 +101,17 @@
 }
 
 .new-event-form .notes {
-  width: 100%;
   margin: 12px 0;
   min-height: 80px;
 }
 
-.new-event-form .cancel-btn {
+.new-event-form .btns-wrapper {
   margin-left: auto;
-  background-color: #93a8ac;
 }
 
-.new-event-form .save-btn {
-  margin-left: 12px;
-  /* background-color: #62c370; */
+.new-event-form .cancel-btn {
+  background-color: #93a8ac;
+  margin-right: 12px;
 }
 
 .fa-arrow-right {
@@ -134,9 +132,8 @@
   margin-bottom: 8px;
 }
 
-.view-event .dot,
-.view-event .time {
-  margin-left: 12px;
+.view-event .dot {
+  margin: 0 12px;
 }
 
 .view-event .notes {
@@ -171,4 +168,14 @@
 
 .confirm-delete-modal .confirm-delete {
   background-color: #bc4749;
+}
+
+@media screen and (max-width: 480px) {
+  .new-event {
+    padding: 24px 12px;
+  }
+
+  .new-event .times-wrapper {
+    padding-left: 12px;
+  }
 }

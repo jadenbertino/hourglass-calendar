@@ -140,7 +140,7 @@ export default function NewEventModal({ eventToEdit }) {
   }
 
   return (
-    <Modal>
+    <Modal className={'new-event'}>
       <form className="new-event-form" onSubmit={validateFormControls}>
         <input
           className="name"
@@ -151,32 +151,34 @@ export default function NewEventModal({ eventToEdit }) {
           autoFocus
           value={eventName}
         />
-        <input
-          className={`date ${validDate ? '' : 'invalid'}`}
-          type="date"
-          placeholder="Date"
-          onChange={e => setEventDate(e.target.value)}
-          required
-          value={eventDate}
-        />
-        <div className="times-wrapper">
+        <div className="date-time-wrapper">
           <input
-            className={`time ${validStartTime ? '' : 'invalid'}`}
-            type="text"
-            placeholder="Start Time"
-            onChange={e => setEventStartTime(e.target.value)}
+            className={`date ${validDate ? '' : 'invalid'}`}
+            type="date"
+            placeholder="Date"
+            onChange={e => setEventDate(e.target.value)}
             required
-            value={eventStartTime}
+            value={eventDate}
           />
-          <i className="fa-solid fa-arrow-right"></i>
-          <input
-            className={`time ${validEndTime ? '' : 'invalid'}`}
-            type="text"
-            placeholder="End Time"
-            onChange={e => setEventEndTime(e.target.value)}
-            required
-            value={eventEndTime}
-          />
+          <div className="times-wrapper">
+            <input
+              className={`time ${validStartTime ? '' : 'invalid'}`}
+              type="text"
+              placeholder="Start Time"
+              onChange={e => setEventStartTime(e.target.value)}
+              required
+              value={eventStartTime}
+            />
+            <i className="fa-solid fa-arrow-right"></i>
+            <input
+              className={`time ${validEndTime ? '' : 'invalid'}`}
+              type="text"
+              placeholder="End Time"
+              onChange={e => setEventEndTime(e.target.value)}
+              required
+              value={eventEndTime}
+            />
+          </div>
         </div>
         <textarea
           className="notes"
@@ -185,13 +187,15 @@ export default function NewEventModal({ eventToEdit }) {
           required
           value={eventNotes}
         />
-        <button
-          className="btn cancel-btn"
-          type="button"
-          onClick={() => setModalContext('')}>
-          Cancel
-        </button>
-        <button className="btn save-btn">Save</button>
+        <div className="btns-wrapper">
+          <button
+            className="btn cancel-btn"
+            type="button"
+            onClick={() => setModalContext('')}>
+            Cancel
+          </button>
+          <button className="btn save-btn">Save</button>
+        </div>
       </form>
     </Modal>
   );
