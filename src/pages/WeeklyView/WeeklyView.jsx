@@ -95,7 +95,7 @@ export default function WeeklyView() {
 
   return (
     <>
-      <div className="sticky">
+      <div className="sticky-wrapper weekly-view">
         <Nav
           incrementDate={() => incrementDateBy(7)}
           decrementDate={() => decrementDateBy(7)}>
@@ -106,7 +106,7 @@ export default function WeeklyView() {
             <div className="col">
                 <header className="date-wrapper weekly">
                   {week.map((date, i) => (
-                    <div className="date" key={i}>
+                    <div className="col-header" key={i}>
                       <h3 className="day-of-week">{getShortDayName(date)}</h3>
                       <h2>{date.getDate()}</h2>
                     </div>

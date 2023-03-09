@@ -25,7 +25,6 @@ export default function MonthlyView() {
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
   const [bodyHeight, setBodyHeight] = useState(0);
-  const navRef = useRef(null)
   const {
     incrementDateBy,
     decrementDateBy,
@@ -127,7 +126,7 @@ export default function MonthlyView() {
 
   return (
     <>
-      <div className="sticky" ref={navRef}>
+      <div className="sticky-wrapper monthly-view">
         <Nav incrementDate={incrementMonth} decrementDate={decrementMonth}>
           <h3>{navDate}</h3>
         </Nav>
@@ -138,7 +137,7 @@ export default function MonthlyView() {
                 <div className="date-wrapper">
                   {weekDates &&
                     weekDates.map((date, i) => (
-                      <h3 className="date day-name" key={i}>
+                      <h3 className="col-header" key={i}>
                         {getShortDayName(date)}
                       </h3>
                     ))}

@@ -2,14 +2,12 @@ main {
   display: flex;
 }
 
-.date-wrapper {
-  background-color: #404552;
+.date-wrapper.weekly {
   padding-left: 68px;
 }
 
-.date-wrapper .date {
-  padding: 16px 24px;
-  border-left: 1px solid gray;
+.date-wrapper .col-header {
+  padding-bottom: 16px;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -27,19 +25,22 @@ main {
   display: flex;
 }
 
+.sticky-wrapper.daily-view,
+.sticky-wrapper.weekly-view,
+.sticky-wrapper.monthly-view {
+  background-color: #31343f;
+  border-bottom: 1px solid #93A8AC;
+}
+
 /* weekly */
 
-header.weekly .date {
+.weekly .col-header {
   width: calc(100% / 7);
 }
 
 #weekly .weekly-view {
   height: 100%;
   display: flex;
-}
-
-#weekly .day-name {
-  margin-bottom: 4px;
 }
 
 #weekly .mobile .events {
@@ -98,14 +99,8 @@ header.weekly .date {
 
 /* monthly */
 
-.monthly .day-name {
+.monthly .col-header {
   width: calc(100% / 7);
-  border-right: solid 1px gray;
-  padding: 12px 0;
-}
-
-.monthly .date-wrapper {
-  padding-left: 0;
 }
 
 .monthly-events {
@@ -118,6 +113,7 @@ header.weekly .date {
   width: calc(100% / 7);
   height: calc(100% / 5);
   border: 1px solid gray;
+  border-top: none;
   padding: 8px;
   overflow: hidden;
   min-height: 72px;

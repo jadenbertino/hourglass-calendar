@@ -6,10 +6,6 @@
 
 nav {
   background-color: #31343f;
-  /* height: 80px; */
-  border-bottom: 1px solid #93A8AC;
-
-  width: 100%;
   z-index: 2;
 }
 
