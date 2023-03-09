@@ -29,14 +29,15 @@ main {
 
 /* weekly */
 
-#weekly .container,
-#weekly .row,
-#weekly .col,
+header.weekly .date {
+  width: calc(100% / 7);
+}
+
 #weekly .weekly-events {
   height: 100%;
 }
 
-.day-name {
+#weekly .day-name {
   margin-bottom: 4px;
 }
 
@@ -44,8 +45,7 @@ main {
   display: flex;
 }
 
-#weekly .events {
-  display: flex;
+#weekly .events.mobile {
   flex-direction: column;
 }
 
@@ -88,7 +88,7 @@ main {
 .monthly-events {
   display: flex;
   flex-wrap: wrap;
-  height: calc(100vh - 80px);
+  height: 100%;
 }
 
 .monthly-events .day {

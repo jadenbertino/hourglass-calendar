@@ -4,6 +4,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
+import { useWindowSize } from '../../hooks/useWindowSize'
 
 // components
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
@@ -11,6 +12,8 @@ import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import Nav from '../../components/Nav';
 import DisplayWeeklyEvents from './DisplayWeeklyEvents';
+import HoursList from '../../components/HoursList';
+import DisplayEvents from '../../components/DisplayEvents';
 
 // styles
 import '../Views.css';
@@ -32,6 +35,8 @@ export default function WeeklyView() {
     getDayOfMonth,
     getYear
   } = useDateContext();
+  const {width: windowWidth} = useWindowSize()
+  console.log(windowWidth)
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);
   const [viewEventId, setViewEventId] = useState('');
@@ -92,28 +97,33 @@ export default function WeeklyView() {
 
   return (
     <>
-      <Nav
-        incrementDate={() => incrementDateBy(7)}
-        decrementDate={() => decrementDateBy(7)}>
-        <h3>{navDate}</h3>
-      </Nav>
+      <div className="sticky">
+        <Nav
+          incrementDate={() => incrementDateBy(7)}
+          decrementDate={() => decrementDateBy(7)}>
+          <h3>{navDate}</h3>
+        </Nav>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+                <header className="date-wrapper weekly">
+                  {week.map((date, i) => (
+                    <div className="date" key={i}>
+                      <h3 className="day-of-week">{getShortDayName(date)}</h3>
+                      <h2>{date.getDate()}</h2>
+                    </div>
+                  ))}
+                </header>
+            </div>
+          </div>
+        </div>
+      </div>
       <main>
         <section id="weekly">
           <div className="container">
             <div className="row">
               <div className="col">
-              <div className="weekly-events">
-                <div className="date-sidebar">
-                  {week.map((date, i) => (
-                    <div className="date" key={i}>
-                      <h3 className="day-name">{getShortDayName(date)}</h3>
-                      <h2>{date.getDate()}</h2>
-                    </div>
-                  ))}
-                </div>
-                <DisplayWeeklyEvents weekDates={week}/>
-              </div>
-                {/* <div className="times-and-events">
+                <div className="weekly-events">
                   <HoursList />
                   <div className="events">
                     {week &&
@@ -126,6 +136,17 @@ export default function WeeklyView() {
                         />
                       ))}
                   </div>
+                </div>
+                {/* <div className="weekly-events mobile">
+                  <div className="date-sidebar">
+                    {week.map((date, i) => (
+                      <div className="date" key={i}>
+                        <h3 className="day-name">{getShortDayName(date)}</h3>
+                        <h2>{date.getDate()}</h2>
+                      </div>
+                    ))}
+                  </div>
+                  <DisplayWeeklyEvents weekDates={week}/>
                 </div> */}
               </div>
             </div>
