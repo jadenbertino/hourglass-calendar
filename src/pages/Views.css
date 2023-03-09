@@ -33,8 +33,6 @@ header.weekly .date {
   width: calc(100% / 7);
 }
 
-
-
 #weekly .weekly-view {
   height: 100%;
   display: flex;
@@ -89,6 +87,10 @@ header.weekly .date {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#weekly .mobile {
+  display: none;
 }
 
 /* monthly */
@@ -180,6 +182,15 @@ header.weekly .date {
 }
 
 @media (max-width: 768px) {
+  #weekly .mobile {
+    display: flex;
+  }
+
+  .desktop,
+  #weekly .desktop {
+    display: none;
+  }
+
   #weekly .col {
     padding: 0;
   }
