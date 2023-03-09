@@ -71,13 +71,10 @@ export default function DailyView() {
 
   return (
     <>
-      <div className="sticky-wrapper daily-view">
-        <Nav
-          incrementDate={() => incrementDateBy(1)}
-          decrementDate={() => decrementDateBy(1)}>
-          <h3>{navDate}</h3>
-        </Nav>
-      </div>
+      <Nav
+        incrementDate={() => incrementDateBy(1)}
+        decrementDate={() => decrementDateBy(1)}
+        dateToDisplay={navDate}/>
       <main>
         <section id="daily">
           <div className="container">

@@ -12,7 +12,7 @@ import { useModalContext } from '../hooks/useModalContext';
 import { useNavigate } from 'react-router-dom';
 import './Nav.css';
 
-export default function Nav({ children, decrementDate, incrementDate }) {
+export default function Nav({ children, decrementDate, incrementDate, dateToDisplay}) {
   const { modalContext, setModalContext } = useModalContext();
   const { dateContext, resetDateToToday, getWeek, getMonth } = useDateContext();
   const { user } = useAuthContext();
@@ -64,9 +64,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
           </div>
           <div className="row">
             <div className="col">
-              <div className="date" onClick={resetDateToToday}>
-                {children}
-              </div>
+              <h3 className="date" onClick={resetDateToToday}>{dateToDisplay}</h3>
               <div className="nav-date-btns">
                 <button className="btn change-date-btn" onClick={decrementDate}>
                   <i className="fa-solid fa-angle-left"></i>
@@ -82,6 +80,7 @@ export default function Nav({ children, decrementDate, incrementDate }) {
               </div>
             </div>
           </div>
+          {children}
         </div>
       </nav>
       {modalContext === "sign-out" && <SignOutModal />}

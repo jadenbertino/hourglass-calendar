@@ -127,25 +127,18 @@ export default function MonthlyView() {
   return (
     <>
       <div className="sticky-wrapper monthly-view">
-        <Nav incrementDate={incrementMonth} decrementDate={decrementMonth}>
-          <h3>{navDate}</h3>
-        </Nav>
-        <header className="monthly">
-          <div className="container">
+        <Nav incrementDate={incrementMonth} decrementDate={decrementMonth} dateToDisplay={navDate}>
             <div className="row">
-              <div className="col">
-                <div className="date-wrapper">
-                  {weekDates &&
-                    weekDates.map((date, i) => (
-                      <h3 className="col-header" key={i}>
-                        {getShortDayName(date)}
-                      </h3>
-                    ))}
-                </div>
+              <div className="col date-wrapper monthly">
+                {weekDates &&
+                  weekDates.map((date, i) => (
+                    <h3 className="col-header" key={i}>
+                      {getShortDayName(date)}
+                    </h3>
+                  ))}
               </div>
             </div>
-          </div>
-        </header>
+        </Nav>
       </div>
       <main>
         <section className="monthly">

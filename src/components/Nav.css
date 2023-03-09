@@ -7,6 +7,7 @@
 nav {
   background-color: #31343f;
   z-index: 2;
+  border-bottom: 1px solid #93A8AC;
 }
 
 nav .container {

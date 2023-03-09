@@ -95,27 +95,23 @@ export default function WeeklyView() {
 
   return (
     <>
-      <div className="sticky-wrapper weekly-view">
-        <Nav
-          incrementDate={() => incrementDateBy(7)}
-          decrementDate={() => decrementDateBy(7)}>
-          <h3>{navDate}</h3>
-        </Nav>
-        <div className="container desktop">
-          <div className="row">
-            <div className="col">
-                <header className="date-wrapper weekly">
-                  {week.map((date, i) => (
-                    <div className="col-header" key={i}>
-                      <h3 className="day-of-week">{getShortDayName(date)}</h3>
-                      <h2>{date.getDate()}</h2>
-                    </div>
-                  ))}
-                </header>
-            </div>
+      <Nav
+        incrementDate={() => incrementDateBy(7)}
+        decrementDate={() => decrementDateBy(7)}
+        dateToDisplay={navDate}>
+        <div className="row desktop">
+          <div className="col">
+              <header className="date-wrapper weekly">
+                {week.map((date, i) => (
+                  <div className="col-header" key={i}>
+                    <h3 className="day-of-week">{getShortDayName(date)}</h3>
+                    <h2>{date.getDate()}</h2>
+                  </div>
+                ))}
+              </header>
           </div>
         </div>
-      </div>
+      </Nav>
       <main>
         <section id="weekly">
           <div className="container">

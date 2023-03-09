@@ -2,17 +2,21 @@ main {
   display: flex;
 }
 
+.date-wrapper {
+  width: 100%;
+}
+
 .date-wrapper.weekly {
   padding-left: 68px;
 }
 
-.date-wrapper .col-header {
-  padding-bottom: 16px;
+.col-header {
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   height: 100%;
+  width: calc(100% / 7);
 }
 
 #daily,
@@ -25,18 +29,9 @@ main {
   display: flex;
 }
 
-.sticky-wrapper.daily-view,
-.sticky-wrapper.weekly-view,
-.sticky-wrapper.monthly-view {
-  background-color: #31343f;
-  border-bottom: 1px solid #93A8AC;
-}
-
 /* weekly */
 
-.weekly .col-header {
-  width: calc(100% / 7);
-}
+
 
 #weekly .weekly-view {
   height: 100%;
@@ -175,7 +170,8 @@ main {
 }
 
 @media (max-width: 992px) {
-  .monthly .col {
+  .monthly .col,
+  .monthly.date-wrapper {
     padding: 0;
   }
 
@@ -199,7 +195,7 @@ main {
     padding: 0;
   }
 
-  .monthly .day-name {
+  .monthly .col-header {
     font-size: 16px;
   }
 
