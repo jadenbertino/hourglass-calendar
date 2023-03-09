@@ -108,14 +108,3 @@ export default function DailyView() {
     </>
   );
 }
-
-/*
-  <= 30m
-    title only
-    padding
-  <= 60m
-    title only
-    padding
-  <= 120m
-    
-*/

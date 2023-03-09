@@ -140,7 +140,7 @@ export default function WeeklyView() {
                     {week.map((date, i) => (
                       <div className="date" key={i}>
                         <h3 className="day-name">{getShortDayName(date)}</h3>
-                        <h2>{date.getDate()}</h2>
+                        <h2 className="day-number">{date.getDate()}</h2>
                       </div>
                     ))}
                   </div>

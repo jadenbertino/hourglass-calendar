@@ -132,4 +132,8 @@ nav .new-event-text {
   .new-event-text {
     display: none;
   }
+
+  nav .date > * {
+    font-size: 16px;
+  }
 }

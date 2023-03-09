@@ -21,7 +21,7 @@
 .event {
   position: absolute;
   background-color: #ff595e;
-  width: calc(100% - 24px);
+  width: calc(100% - 8px);
   display: flex;
   flex-direction: column;
   border-radius: 8px;
