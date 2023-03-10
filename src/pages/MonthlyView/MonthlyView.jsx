@@ -19,30 +19,31 @@ import '../Views.css';
 import AllEventsModal from './AllEventsModal';
 
 export default function MonthlyView() {
-  // TODO: get weekdayNames ONCE
-  const [weekDates, setWeekDates] = useState(null);
-  const [monthDates, setMonthDates] = useState(null);
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
-  const [bodyHeight, setBodyHeight] = useState(0);
   const {
     convertToHours,
     checkIfIsToday,
     formatDate,
     dateContext,
     getMonth,
+    getEvents,
     getMonthName,
     getWeek,
     getShortDayName,
     getYear,
     incrementMonth,
-    decrementMonth
+    decrementMonth,
+    getStartOfMonth,
+    getStartOfWeek
   } = useDateContext();
   const [viewEventId, setViewEventId] = useState('');
   const [viewEvents, setViewEvents] = useState({});
-  const daySizeRef = useRef(null);
+  const daySizeRef = useRef(null); // to set number of events displayed per day
   const [numVisibleEvents, setNumVisibleEvents] = useState(0);
   const [navDate, setNavDate] = useState('');
+  const [monthDates, setMonthDates] = useState(null);
+  const weekdayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
@@ -72,23 +73,14 @@ export default function MonthlyView() {
     }
   }, [user]);
 
-  function getEvents(date) {
-    const formattedDate = formatDate(date);
-    return events
-      .filter(event => event.date === formattedDate)
-      .sort(
-        (eventA, eventB) =>
-          convertToHours(eventA.startTime) - convertToHours(eventB.startTime)
-      );
-  }
-
   function getEvent(id) {
     return events.find(e => e.id === id);
   }
 
   useEffect(() => {
-    setWeekDates(getWeek(dateContext));
-    setMonthDates(getMonth(dateContext));
+    const startOfMonth = getStartOfMonth(dateContext)
+    const firstDateToDisplay = getStartOfWeek(startOfMonth)
+    setMonthDates(getMonth(firstDateToDisplay));
 
     // change navDate
 
@@ -129,11 +121,8 @@ export default function MonthlyView() {
         <Nav incrementDate={incrementMonth} decrementDate={decrementMonth} dateToDisplay={navDate}>
             <div className="row">
               <div className="col date-wrapper monthly">
-                {weekDates &&
-                  weekDates.map((date, i) => (
-                    <h3 className="col-header" key={i}>
-                      {getShortDayName(date)}
-                    </h3>
+                {weekdayNames && weekdayNames.map((dayname, i) => (
+                    <h3 className="col-header" key={i}>{dayname}</h3>
                   ))}
               </div>
             </div>
@@ -159,7 +148,7 @@ export default function MonthlyView() {
                               : `${getMonthName(date).slice(0,3)} ${date.getDate()}`}
                           </p>
                           <DayOfMonthEvents
-                            events={getEvents(date)}
+                            events={getEvents(date, events)}
                             setViewEventId={setViewEventId}
                             setViewEvents={setViewEvents}
                             numVisibleEvents={numVisibleEvents}

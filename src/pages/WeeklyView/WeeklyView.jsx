@@ -34,7 +34,7 @@ export default function WeeklyView() {
     getYear,
     checkIfIsToday,
     getStartOfWeek,
-    getEvents
+    getEvents,
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);

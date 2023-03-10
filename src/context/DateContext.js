@@ -229,6 +229,14 @@ export function DateContextProvider({ children }) {
     return newDate;
   }
 
+  function getStartOfMonth(date) {
+    const newDate = new Date(date.getTime()); // create a new Date object with the same time value as the original
+    while (newDate.getDate() !== 1) { // while the day of the month is not 1
+      newDate.setDate(newDate.getDate() - 1); // decrement the date by 1 day
+    }
+    return newDate;
+  }
+
   function getEvents(date, events) {
     const formattedDate = formatDate(date);
     return events
@@ -240,7 +248,7 @@ export function DateContextProvider({ children }) {
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, getEvents, getStartOfWeek, checkIfIsToday, getDayOfMonth, getYear, getDayOfWeek, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, shortDayNames, getEvents, getStartOfWeek, getStartOfMonth, checkIfIsToday, getDayOfMonth, getYear, getDayOfWeek, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );
