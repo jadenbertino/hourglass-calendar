@@ -33,7 +33,8 @@ export default function WeeklyView() {
     getDayOfWeek,
     getMonthName,
     getDayOfMonth,
-    getYear
+    getYear,
+    checkIfIsToday
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);
@@ -46,7 +47,7 @@ export default function WeeklyView() {
       nav('/');
     }
   }, [user]);
-
+  
   // change dates
   useEffect(() => {
     setWeek(getWeek(dateContext));
@@ -75,6 +76,7 @@ export default function WeeklyView() {
     setNavDate(fullWeek);
   }, [week]);
 
+
   function getEvents(date) {
     const formattedDate = formatDate(date);
     return allEvents
@@ -100,16 +102,14 @@ export default function WeeklyView() {
         decrementDate={() => decrementDateBy(7)}
         dateToDisplay={navDate}>
         <div className="row desktop">
-          <div className="col">
-              <header className="date-wrapper weekly">
-                {week.map((date, i) => (
-                  <div className="col-header" key={i}>
-                    <h3 className="day-of-week">{getShortDayName(date)}</h3>
-                    <h2>{date.getDate()}</h2>
-                  </div>
-                ))}
-              </header>
-          </div>
+          <header className="col date-wrapper weekly">
+            {week.map((date, i) => (
+              <div className={`col-header ${checkIfIsToday(date) ? 'active' : ''}`} key={i}>
+                <h3 className="day-of-week">{getShortDayName(date)}</h3>
+                <h2>{date.getDate()}</h2>
+              </div>
+            ))}
+          </header>
         </div>
       </Nav>
       <main>

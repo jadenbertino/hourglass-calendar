@@ -7,7 +7,7 @@ main {
 }
 
 .date-wrapper.weekly {
-  padding-left: 68px;
+  padding-left: 92px;
 }
 
 .col-header {
@@ -17,6 +17,11 @@ main {
   text-align: center;
   height: 100%;
   width: calc(100% / 7);
+}
+
+.active {
+  color: #87CEFA;
+  font-weight: bold;
 }
 
 #daily,

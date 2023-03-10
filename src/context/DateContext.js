@@ -40,6 +40,11 @@ export function DateContextProvider({ children }) {
     } catch { }
   }
 
+  function checkIfIsToday(date) {
+    const todaysDate = new Date()
+    return todaysDate.toDateString() === date.toDateString()
+  }
+
   function formatReadableDate(str) {
     // Fri, February 24
     try {
@@ -217,7 +222,7 @@ export function DateContextProvider({ children }) {
   }
 
   return (
-    <DateContext.Provider value={{ dateContext, getDayOfMonth, getYear, getDayOfWeek, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, checkIfIsToday, getDayOfMonth, getYear, getDayOfWeek, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

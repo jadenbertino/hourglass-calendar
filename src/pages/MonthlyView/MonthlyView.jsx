@@ -26,9 +26,8 @@ export default function MonthlyView() {
   const { modalContext } = useModalContext();
   const [bodyHeight, setBodyHeight] = useState(0);
   const {
-    incrementDateBy,
-    decrementDateBy,
     convertToHours,
+    checkIfIsToday,
     formatDate,
     dateContext,
     getMonth,
@@ -150,7 +149,7 @@ export default function MonthlyView() {
                     monthDates &&
                     monthDates.map((date, i) => (
                       <div
-                        className="day"
+                        className={`day ${checkIfIsToday(date) ? 'active' : ''}`}
                         key={i}
                         ref={i === 0 ? daySizeRef : null}>
                         <div className="day-wrapper">
