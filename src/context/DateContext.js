@@ -221,8 +221,26 @@ export function DateContextProvider({ children }) {
     return month
   }
 
+  function getStartOfWeek(date) {
+    const newDate = new Date(date.getTime()); // create a new Date object with the same time value as the original
+    while (newDate.getDay() !== 1) { // while the day is not Monday (1)
+      newDate.setDate(newDate.getDate() - 1); // decrement the date by 1 day
+    }
+    return newDate;
+  }
+
+  function getEvents(date, events) {
+    const formattedDate = formatDate(date);
+    return events
+      .filter(event => event.date === formattedDate)
+      .sort(
+        (eventA, eventB) =>
+          convertToHours(eventA.startTime) - convertToHours(eventB.startTime)
+      );
+  }
+
   return (
-    <DateContext.Provider value={{ dateContext, checkIfIsToday, getDayOfMonth, getYear, getDayOfWeek, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
+    <DateContext.Provider value={{ dateContext, getEvents, getStartOfWeek, checkIfIsToday, getDayOfMonth, getYear, getDayOfWeek, incrementMonth, decrementMonth, getMonth, getMonthName, getShortDayName, getWeek, resetDateToToday, formatReadableDate, convertToMeridian, parseDate ,convertToHours, convertToMilitary, parseTime, isMeridian, isMilitary, setDateContext, formatDate, incrementDateBy, decrementDateBy }}>
       {children}
     </DateContext.Provider>
   );

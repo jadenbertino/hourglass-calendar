@@ -27,14 +27,14 @@ export default function WeeklyView() {
     incrementDateBy,
     decrementDateBy,
     formatDate,
-    resetDateToToday,
     convertToHours,
     getWeek,
-    getDayOfWeek,
     getMonthName,
     getDayOfMonth,
     getYear,
-    checkIfIsToday
+    checkIfIsToday,
+    getStartOfWeek,
+    getEvents
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);
@@ -48,15 +48,16 @@ export default function WeeklyView() {
     }
   }, [user]);
   
-  // change dates
+  // change week upon dateContext change
   useEffect(() => {
-    setWeek(getWeek(dateContext));
+    const monday = getStartOfWeek(dateContext)
+    const weekDates = getWeek(monday)
+    setWeek(weekDates);
   }, [dateContext]);
 
-  // update nav display
+  // update nav display, formatted like so: 13 - 19 June, 2022
   useEffect(() => {
     if (week.length !== 7) return;
-    // 13 - 19 June, 2022
     const dateStart = getDayOfMonth(week[0]);
     const dateEnd = getDayOfMonth(week[6]);
 
@@ -75,17 +76,6 @@ export default function WeeklyView() {
     const fullWeek = `${weekStart} - ${weekEnd}`;
     setNavDate(fullWeek);
   }, [week]);
-
-
-  function getEvents(date) {
-    const formattedDate = formatDate(date);
-    return allEvents
-      .filter(event => event.date === formattedDate)
-      .sort(
-        (eventA, eventB) =>
-          convertToHours(eventA.startTime) - convertToHours(eventB.startTime)
-      );
-  }
 
   function getEvent(id) {
     return allEvents.find(e => e.id === id);
@@ -124,7 +114,7 @@ export default function WeeklyView() {
                       allEvents &&
                       week.map((date, i) => (
                         <DisplayEvents
-                          events={getEvents(date)}
+                          events={getEvents(date, allEvents)}
                           key={i}
                           setViewEventId={setViewEventId}
                         />
@@ -142,7 +132,7 @@ export default function WeeklyView() {
                   </div>
                   <div className="events">
                     {week && allEvents && week.map((day, i) => {
-                        return <DisplayWeeklyEvents events={getEvents(day)} setViewEventId={setViewEventId} key={i}/>
+                        return <DisplayWeeklyEvents events={getEvents(day, allEvents)} setViewEventId={setViewEventId} key={i}/>
                       })
                     }
                   </div>
