@@ -43,27 +43,12 @@ export default function MonthlyView() {
   const [numVisibleEvents, setNumVisibleEvents] = useState(0);
   const [navDate, setNavDate] = useState('');
   const [monthDates, setMonthDates] = useState(null);
+  const [firstDate, setFirstDate] = useState(null)
   const weekdayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   // set date + query events for date
   const query = useRef([`uid == ${user && user.uid}`]).current;
   const { events } = useCollection('events', query);
-  
-  // set number of events to display per day
-  useEffect(() => {
-    const daySize = daySizeRef.current;
-    if (!daySize) return;
-
-    const observer = new ResizeObserver(entries => {
-      const { height } = entries[0].contentRect;
-      const eventsHeight = height - 26 + 4; // 26 is height of date header, 4 accounts for bottom magin of events
-      const numEvents = Math.floor(eventsHeight / 22); // 22 is height of each event
-      setNumVisibleEvents(numEvents);
-    });
-    observer.observe(daySize);
-
-    return () => observer.unobserve(daySize);
-  }); // for some reason the daySizeRef wasn't triggering an update so I run this on every render ig
 
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
@@ -77,15 +62,17 @@ export default function MonthlyView() {
     return events.find(e => e.id === id);
   }
 
+  // edit firstDate and monthDates anytime dateContext changes
   useEffect(() => {
     const startOfMonth = getStartOfMonth(dateContext)
-    const firstDateToDisplay = getStartOfWeek(startOfMonth)
-    setMonthDates(getMonth(firstDateToDisplay));
+    const firstDateToShow = getStartOfWeek(startOfMonth)
+    setFirstDate(firstDateToShow)
+    setMonthDates(getMonth(firstDateToShow));
+  }, [dateContext])
 
-    // change navDate
-
-    // get most frequently displayed month
-    const monthDates = getMonth(dateContext);
+  // change navDate anytime firstDate changes
+  useEffect(() => {
+    if (!monthDates) return
     const monthCounter = {};
     for (let date of monthDates) {
       const monthName = getMonthName(date);
@@ -113,7 +100,23 @@ export default function MonthlyView() {
     }
 
     setNavDate(`${mostFrequentMonth} ${mostFrequentYear}`);
-  }, [dateContext]);
+  }, [firstDate]);
+
+  // set number of events to display per day
+  useEffect(() => {
+    const daySize = daySizeRef.current;
+    if (!daySize) return;
+
+    const observer = new ResizeObserver(entries => {
+      const { height } = entries[0].contentRect;
+      const eventsHeight = height - 26 + 4; // 26 is height of date header, 4 accounts for bottom magin of events
+      const numEvents = Math.floor(eventsHeight / 22); // 22 is height of each event
+      setNumVisibleEvents(numEvents);
+    });
+    observer.observe(daySize);
+
+    return () => observer.unobserve(daySize);
+  }); // for some reason the daySizeRef wasn't triggering an update so I run this on every render ig
 
   return (
     <>

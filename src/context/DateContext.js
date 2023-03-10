@@ -70,39 +70,19 @@ export function DateContextProvider({ children }) {
   }
 
   function incrementMonth() {
-    // Get the date 6 days from the input (top right)
-    const endOfWeek = new Date(dateContext.getTime());
-    endOfWeek.setDate(endOfWeek.getDate() + 6);
-    const currentMonth = endOfWeek.getMonth()
-    
-    const newDate = new Date(endOfWeek.getTime());
-    while (newDate.getMonth() === currentMonth) {
-      newDate.setDate(newDate.getDate() + 7)
-    }
-    
-    newDate.setDate(newDate.getDate() - 6)
-    setDateContext(newDate)
+    // sets dateContext to first of the next month
+    const year = dateContext.getMonth() === 11 ? dateContext.getFullYear() + 1 : dateContext.getFullYear(); // increment year if current month is december
+    const month = (dateContext.getMonth() + 1) % 12; // % 12 handles december
+    const firstDayOfNextMonth = new Date(year, month, 1);
+    setDateContext(firstDayOfNextMonth);
   }
 
   function decrementMonth() {
-    // get current month
-    const endOfWeek = new Date(dateContext.getTime());
-    endOfWeek.setDate(endOfWeek.getDate() + 6);
-    const currentMonth = endOfWeek.getMonth();
-  
-    const newDate = new Date(endOfWeek.getTime());
-    while (true) {
-      // step back in 7 day increments
-      newDate.setDate(newDate.getDate() - 7);
-      const newMonth = newDate.getMonth();
-
-      // once newDate is 2 months behind currentMonth, increment by 1 => puts you at start of previous month
-      if ((newMonth + 2) % 12 === currentMonth) {
-        newDate.setDate(newDate.getDate() + 1);
-        setDateContext(newDate);
-        return;
-      }
-    }
+    // sets dateContext to first of the previous month
+    const year = dateContext.getMonth() === 0 ? dateContext.getFullYear() - 1 : dateContext.getFullYear();
+    const month = dateContext.getMonth() === 0 ? 11 : dateContext.getMonth() - 1;
+    const firstDayOfPrevMonth = new Date(year, month, 1);
+    setDateContext(firstDayOfPrevMonth)
   }
 
   function isMeridian(time) {
