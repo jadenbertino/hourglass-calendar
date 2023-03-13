@@ -34,8 +34,7 @@ export default function DailyView() {
   const { modalContext } = useModalContext();
   const [viewEventId, setViewEventId] = useState('');
   const [todayEvents, setTodayEvents] = useState([]);
-  const query = useRef([`uid == ${user && user.uid}`]).current;
-  const { events: allEvents } = useCollection('events', query);
+  const { events: allEvents } = useCollection('events', user && user.uid);
   const [navDate, setNavDate] = useState('')
 
   // if user isn't signed in redirect to signin / signup page

@@ -82,8 +82,7 @@ export default function WeeklyView() {
   }
 
   // set date + query events for date
-  const query = useRef([`uid == ${user && user.uid}`]).current;
-  const { events: allEvents } = useCollection('events', query);
+  const { events: allEvents } = useCollection('events', user && user.uid);
 
   return (
     <>

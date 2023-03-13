@@ -47,8 +47,7 @@ export default function MonthlyView() {
   const weekdayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   // set date + query events for date
-  const query = useRef([`uid == ${user && user.uid}`]).current;
-  const { events } = useCollection('events', query);
+  const { events } = useCollection('events', user && user.uid);
 
   // if user isn't signed in redirect to signin / signup page
   const nav = useNavigate();
