@@ -12,9 +12,9 @@ export default function NewEventModal({ eventToEdit }) {
   const {
     isMeridian,
     isMilitary,
-    parseTime,
     convertToMilitary,
     formatDate,
+    convertToMinutes,
     dateContext
   } = useDateContext();
   const [event, setEvent] = useState(null);
@@ -96,10 +96,9 @@ export default function NewEventModal({ eventToEdit }) {
 
     // start time must be before end time
     if (validStartTime && validEndTime) {
-      const { hours: startHours, minutes: startMinutes } =
-        parseTime(eventStartTime);
-      const { hours: endHours, minutes: endMinutes } = parseTime(eventEndTime);
-      if (startHours * 60 + startMinutes >= endHours * 60 + endMinutes) {
+      const start = convertToMinutes(convertToMilitary(eventStartTime))
+      const end = convertToMinutes(convertToMilitary(eventStartTime))
+      if (start >= end) {
         validStartTime = false;
         validEndTime = false;
         setValidStartTime(false);
