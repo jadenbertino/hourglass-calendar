@@ -20,7 +20,9 @@ main {
 }
 
 .active {
-  color: #87CEFA;
+  /* color: #87CEFA; */
+  background-color: #3f8efc;
+  border-radius: 4px;
   font-weight: bold;
 }
 
@@ -137,6 +139,12 @@ main {
   justify-content: flex-start;
   margin-bottom: 4px;
   cursor: pointer;
+}
+
+.month-start {
+  background-color: #31343f;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
 .monthly-event .color-dot {

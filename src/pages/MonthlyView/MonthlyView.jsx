@@ -141,11 +141,11 @@ export default function MonthlyView() {
                     monthDates &&
                     monthDates.map((date, i) => (
                       <div
-                        className={`day ${checkIfIsToday(date) ? 'active' : ''}`}
+                        className='day'
                         key={i}
                         ref={i === 0 ? daySizeRef : null}>
                         <div className="day-wrapper">
-                          <p className="day-number">
+                          <p className={`day-number ${checkIfIsToday(date) ? 'active' : ''} ${date.getDate() === 1 ? 'month-start' : ''}`}>
                             {date.getDate() !== 1
                               ? date.getDate()
                               : `${getMonthName(date).slice(0,3)} ${date.getDate()}`}
