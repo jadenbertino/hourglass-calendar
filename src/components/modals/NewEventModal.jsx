@@ -97,7 +97,7 @@ export default function NewEventModal({ eventToEdit }) {
     // start time must be before end time
     if (validStartTime && validEndTime) {
       const start = convertToMinutes(convertToMilitary(eventStartTime))
-      const end = convertToMinutes(convertToMilitary(eventStartTime))
+      const end = convertToMinutes(convertToMilitary(eventEndTime))
       if (start >= end) {
         validStartTime = false;
         validEndTime = false;

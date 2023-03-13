@@ -22,7 +22,6 @@ main {
 .active {
   /* color: #87CEFA; */
   background-color: #3f8efc;
-  border-radius: 4px;
   font-weight: bold;
 }
 
@@ -48,6 +47,10 @@ main {
 #weekly .mobile .events {
   flex-direction: column;
   flex-grow: 1;
+}
+
+.weekly .active {
+  border-radius: 4px;
 }
 
 .weekday {
@@ -116,7 +119,6 @@ main {
   height: calc(100% / 5);
   border: 1px solid gray;
   border-top: none;
-  padding: 8px;
   overflow: hidden;
   min-height: 72px;
 }
@@ -130,7 +132,12 @@ main {
 
 .monthly-events .day-number {
   text-align: center;
-  margin-bottom: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.monthly-events .events-wrapper {
+  padding: 4px 8px;
 }
 
 .monthly-event {
@@ -143,7 +150,6 @@ main {
 
 .month-start {
   background-color: #31343f;
-  border-radius: 4px;
   font-weight: bold;
 }
 
@@ -216,9 +222,6 @@ main {
     display: none;
   }
 
-  .monthly .day {
-    padding: 4px;
-  }
   .monthly .day-number,
   .monthly-event .name,
   .monthly .hidden-events {

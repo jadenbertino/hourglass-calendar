@@ -108,8 +108,8 @@ export default function MonthlyView() {
     if (!daySize) return;
 
     const observer = new ResizeObserver(entries => {
-      const { height } = entries[0].contentRect;
-      const eventsHeight = height - 26 + 4; // 26 is height of date header, 4 accounts for bottom magin of events
+      const { height } = entries[0].contentRect; // height of .day
+      const eventsHeight = height - 34 + 4; // 34 is height of .day-number, but add 4 to cancel out last event margin 
       const numEvents = Math.floor(eventsHeight / 22); // 22 is height of each event
       setNumVisibleEvents(numEvents);
     });
