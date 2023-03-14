@@ -6,7 +6,7 @@
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(5px) brightness(60%);
-  z-index: 999;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,6 +18,7 @@
   color: #EAF2EF;
   padding: 24px;
   position: relative;
+  z-index: 102;
 }
 
 .modal input {
@@ -38,6 +39,13 @@
   font-size: 16px;
   color: #EAF2EF;
   padding: 16px 12px;
+}
+
+.close-modal-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 101;
 }
 
 /* Settings */

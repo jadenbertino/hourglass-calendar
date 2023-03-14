@@ -90,8 +90,8 @@ export default function WeeklyView() {
         incrementDate={() => incrementDateBy(7)}
         decrementDate={() => decrementDateBy(7)}
         dateToDisplay={navDate}>
-        <div className="row desktop">
-          <header className="col date-wrapper weekly">
+        <div className="row weekly desktop">
+          <header className="col date-wrapper">
             {week.map((date, i) => (
               <div className={`col-header ${checkIfIsToday(date) ? 'active' : ''}`} key={i}>
                 <h3 className="day-of-week">{getShortDayName(date)}</h3>

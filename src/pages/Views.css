@@ -6,8 +6,16 @@ main {
   width: 100%;
 }
 
-.date-wrapper.weekly {
+.weekly .date-wrapper {
   padding-left: 92px;
+}
+
+.weekly.row {
+  padding-bottom: 0;
+}
+
+.weekly .col-header {
+  padding: 12px 0;
 }
 
 .col-header {
@@ -20,7 +28,6 @@ main {
 }
 
 .active {
-  /* color: #87CEFA; */
   background-color: #3f8efc;
   font-weight: bold;
 }
@@ -37,8 +44,6 @@ main {
 
 /* weekly */
 
-
-
 #weekly .weekly-view {
   height: 100%;
   display: flex;
@@ -50,7 +55,7 @@ main {
 }
 
 .weekly .active {
-  border-radius: 4px;
+  border-radius: 4px 4px 0 0;
 }
 
 .weekday {
