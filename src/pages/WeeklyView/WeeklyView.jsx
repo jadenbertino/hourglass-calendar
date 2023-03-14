@@ -11,7 +11,7 @@ import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import Nav from '../../components/Nav';
-import DisplayWeeklyEvents from './DisplayWeeklyEvents';
+import DisplayWeeklyEvents from './WeeklyEventsMobile';
 import HoursList from '../../components/HoursList';
 import DisplayEvents from '../../components/DisplayEvents';
 
