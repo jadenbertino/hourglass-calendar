@@ -24,15 +24,12 @@ export default function DailyView() {
     incrementDateBy,
     decrementDateBy,
     formatDate,
-    resetDateToToday,
-    getShortDayName,
     getDayOfMonth,
     convertToHours,
     getMonthName,
     getDayOfWeek
   } = useDateContext();
   const { modalContext } = useModalContext();
-  const [viewEventId, setViewEventId] = useState('');
   const [todayEvents, setTodayEvents] = useState([]);
   const { events: allEvents } = useCollection('events', user && user.uid);
   const [navDate, setNavDate] = useState('')
@@ -82,10 +79,7 @@ export default function DailyView() {
                 <div className="times-and-events">
                   <HoursList />
                   <div className="events">
-                    <DisplayEvents
-                      events={todayEvents}
-                      setViewEventId={setViewEventId}
-                    />
+                    <DisplayEvents events={todayEvents}/>
                   </div>
                 </div>
               </div>
@@ -95,13 +89,13 @@ export default function DailyView() {
       </main>
       {modalContext.view === 'new-event' && <NewEventModal />}
       {modalContext.view === 'view-event' && (
-        <ViewEvent event={getEvent(viewEventId)} />
+        <ViewEvent event={getEvent(modalContext.payload)} />
       )}
       {modalContext.view === 'edit-event' && (
-        <NewEventModal eventToEdit={getEvent(viewEventId)} />
+        <NewEventModal eventToEdit={getEvent(modalContext.payload)} />
       )}
       {modalContext.view === 'confirm-delete' && (
-        <ConfirmDeleteModal id={viewEventId} />
+        <ConfirmDeleteModal id={modalContext.payload} />
       )}
     </>
   );

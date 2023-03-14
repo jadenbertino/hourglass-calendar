@@ -6,8 +6,6 @@ import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
 
 // components
-import DisplayEvents from '../../components/DisplayEvents';
-import HoursList from '../../components/HoursList';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
@@ -22,22 +20,17 @@ export default function MonthlyView() {
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
   const {
-    convertToHours,
     checkIfIsToday,
-    formatDate,
     dateContext,
     getMonth,
     getEvents,
     getMonthName,
-    getWeek,
-    getShortDayName,
     getYear,
     incrementMonth,
     decrementMonth,
     getStartOfMonth,
     getStartOfWeek
   } = useDateContext();
-  const [viewEventId, setViewEventId] = useState('');
   const [viewEvents, setViewEvents] = useState({});
   const daySizeRef = useRef(null); // to set number of events displayed per day
   const [numVisibleEvents, setNumVisibleEvents] = useState(0);
@@ -163,7 +156,6 @@ export default function MonthlyView() {
                           </p>
                           <DayOfMonthEvents
                             events={getEvents(date, events)}
-                            setViewEventId={setViewEventId}
                             setViewEvents={setViewEvents}
                             numVisibleEvents={numVisibleEvents}
                           />
@@ -173,13 +165,13 @@ export default function MonthlyView() {
                 </div>
                 {modalContext.view === 'new-event' && <NewEventModal />}
                 {modalContext.view === 'view-event' && (
-                  <ViewEvent event={getEvent(viewEventId)} />
+                  <ViewEvent event={getEvent(modalContext.payload)} />
                 )}
                 {modalContext.view === 'edit-event' && (
-                  <NewEventModal eventToEdit={getEvent(viewEventId)} />
+                  <NewEventModal eventToEdit={getEvent(modalContext.payload)} />
                 )}
                 {modalContext.view === 'confirm-delete' && (
-                  <ConfirmDeleteModal id={viewEventId} />
+                  <ConfirmDeleteModal id={modalContext.payload} />
                 )}
                 {modalContext.view === 'view-day-of-month' && (
                   <AllEventsModal events={viewEvents} />

@@ -2,16 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
 
-export default function DayOfMonthEvents({ events, setViewEventId, numVisibleEvents, setViewEvents }) {
+export default function DayOfMonthEvents({ events, numVisibleEvents, setViewEvents }) {
   const { convertToMeridian } = useDateContext();
-  const { setModalView } = useModalContext();
+  const { setModalView, setModalContext } = useModalContext();
   const [visibleEvents, setVisibleEvents] = useState([])
   const [hiddenEvents, setHiddenEvents] = useState([])
-
-  function openEvent(id) {
-    setViewEventId(id);
-    setModalView('view-event');
-  }
 
   function viewAllEvents() {
     setModalView('view-day-of-month')
@@ -42,7 +37,7 @@ export default function DayOfMonthEvents({ events, setViewEventId, numVisibleEve
       {visibleEvents && 
         <div className="events-wrapper">
           {visibleEvents.map((e, i) => (
-            <div className="monthly-event" key={i} onClick={() => openEvent(e.id)}>
+            <div className="monthly-event" key={i} onClick={() => setModalContext({view: "view-event", payload: e.id})}>
               <div className="color-dot"></div>
               <span className="time">{convertToMeridian(e.startTime)}</span>
               <span className="name">{e.name}</span>

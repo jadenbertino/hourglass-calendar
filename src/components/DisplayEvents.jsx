@@ -3,18 +3,12 @@ import './DisplayEvents.css';
 import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
 
-export default function DisplayEvents({ events, setViewEventId }) {
+export default function DisplayEvents({ events }) {
   const { convertToHours, convertToMeridian } = useDateContext();
   const hourGridLines = new Array(24).fill(null);
-  const { setModalView } = useModalContext();
+  const { setModalContext } = useModalContext();
 
   // always have up to date copy of events for that day
-
-  // click event => change view id => view event
-  function openEvent(id) {
-    setViewEventId(id);
-    setModalView('view-event');
-  }
 
   return (
     <div className="calendar-column">
@@ -43,7 +37,7 @@ export default function DisplayEvents({ events, setViewEventId }) {
               style={eventStyles}
               className={`event ${size}`}
               id={event.id}
-              onClick={() => openEvent(event.id)}>
+              onClick={() => setModalContext({view: "view-event", payload: event.id})}>
               <h3 className="title">{event.name}</h3>
               {size !== 'small' && (
                 <>

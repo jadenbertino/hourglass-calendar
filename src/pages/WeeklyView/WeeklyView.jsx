@@ -26,8 +26,6 @@ export default function WeeklyView() {
     getShortDayName,
     incrementDateBy,
     decrementDateBy,
-    formatDate,
-    convertToHours,
     getWeek,
     getMonthName,
     getDayOfMonth,
@@ -38,7 +36,6 @@ export default function WeeklyView() {
   } = useDateContext();
   const { modalContext } = useModalContext();
   const [week, setWeek] = useState([]);
-  const [viewEventId, setViewEventId] = useState('');
   const [navDate, setNavDate] = useState('');
 
   // if user isn't signed in redirect to signin / signup page
@@ -115,7 +112,6 @@ export default function WeeklyView() {
                         <DisplayEvents
                           events={getEvents(date, allEvents)}
                           key={i}
-                          setViewEventId={setViewEventId}
                         />
                       ))}
                   </div>
@@ -131,7 +127,7 @@ export default function WeeklyView() {
                   </div>
                   <div className="events">
                     {week && allEvents && week.map((day, i) => {
-                        return <DisplayWeeklyEvents events={getEvents(day, allEvents)} setViewEventId={setViewEventId} key={i}/>
+                        return <DisplayWeeklyEvents events={getEvents(day, allEvents)} key={i}/>
                       })
                     }
                   </div>
@@ -143,13 +139,13 @@ export default function WeeklyView() {
       </main>
       {modalContext.view === 'new-event' && <NewEventModal />}
       {modalContext.view === 'view-event' && (
-        <ViewEvent event={getEvent(viewEventId)} />
+        <ViewEvent event={getEvent(modalContext.payload)} />
       )}
       {modalContext.view === 'edit-event' && (
-        <NewEventModal eventToEdit={getEvent(viewEventId)} />
+        <NewEventModal eventToEdit={getEvent(modalContext.payload)} />
       )}
       {modalContext.view === 'confirm-delete' && (
-        <ConfirmDeleteModal id={viewEventId} />
+        <ConfirmDeleteModal id={modalContext.payload} />
       )}
     </>
   );

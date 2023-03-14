@@ -193,6 +193,10 @@ main {
   right: 8px;
 }
 
+.monthly-events .hidden-events {
+  cursor: pointer;
+}
+
 @media (max-width: 992px) {
   .monthly .col,
   .monthly.date-wrapper {
