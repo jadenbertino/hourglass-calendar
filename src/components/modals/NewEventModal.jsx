@@ -8,7 +8,7 @@ import Modal from './Modal';
 
 export default function NewEventModal({ eventToEdit }) {
   const { user } = useAuthContext();
-  const { setModalContext } = useModalContext();
+  const { closeModal } = useModalContext();
   const {
     isMeridian,
     isMilitary,
@@ -134,8 +134,7 @@ export default function NewEventModal({ eventToEdit }) {
       // create new event
       await addDoc(collection(db, 'events'), event);
     }
-    // close modal upon completion
-    setModalContext('');
+    closeModal();
   }
 
   return (
@@ -190,7 +189,7 @@ export default function NewEventModal({ eventToEdit }) {
           <button
             className="btn cancel-btn"
             type="button"
-            onClick={() => setModalContext('')}>
+            onClick={closeModal}>
             Cancel
           </button>
           <button className="btn save-btn">Save</button>

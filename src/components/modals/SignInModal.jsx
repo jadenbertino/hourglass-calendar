@@ -5,7 +5,7 @@ import { useSignIn } from '../../hooks/useSignIn';
 import Modal from './Modal';
 
 export default function SignInModal() {
-  const { setModalContext } = useModalContext();
+  const { closeModal } = useModalContext();
 
   // form controls & validation
   const [email, setEmail] = useState('');
@@ -25,7 +25,7 @@ export default function SignInModal() {
   }
 
   useEffect(() => {
-    if (user) setModalContext('');
+    if (user) closeModal();
     if (error) {
       // reset
       setEmailIsValid(true);
@@ -71,7 +71,7 @@ export default function SignInModal() {
       <button
         type="button"
         className="modal-actions modal-icon"
-        onClick={() => setModalContext('')}>
+        onClick={closeModal}>
         <i className="fa-solid fa-x"></i>
       </button>
     </Modal>

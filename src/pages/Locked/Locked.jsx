@@ -13,7 +13,7 @@ import './Locked.css';
 export default function Locked() {
   const nav = useNavigate();
   const { user } = useAuthContext();
-  const { modalContext, setModalContext } = useModalContext();
+  const { modalContext, setModalView } = useModalContext();
 
   // if signed in then redirect to daily view
   useEffect(() => {
@@ -34,12 +34,12 @@ export default function Locked() {
                 <div className="btns-wrapper">
                   <button
                     className="btn"
-                    onClick={() => setModalContext('signin')}>
+                    onClick={() => setModalView('signin')}>
                     Sign In
                   </button>
                   <button
                     className="btn"
-                    onClick={() => setModalContext('signup')}>
+                    onClick={() => setModalView('signup')}>
                     Sign Up
                   </button>
                 </div>
@@ -48,8 +48,8 @@ export default function Locked() {
           </div>
         </div>
       </main>
-      {modalContext === 'signin' && <SignInModal />}
-      {modalContext === 'signup' && <SignUpModal />}
+      {modalContext.view === 'signin' && <SignInModal />}
+      {modalContext.view === 'signup' && <SignUpModal />}
     </>
   );
 }

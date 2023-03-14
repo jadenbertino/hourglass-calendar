@@ -1,13 +1,13 @@
+import { useEffect, useState } from 'react';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
-import Modal from '../../components/modals/Modal';
-import { useEffect, useState } from 'react';
+import Modal from './Modal';
 
 export default function AllEventsModal({ events }) {
   const { convertToMeridian, formatReadableDate } = useDateContext();
-  const { setModalContext } = useModalContext();
+  const { closeModal } = useModalContext();
 
-  const date = formatReadableDate(events[0].date)
+  const date = formatReadableDate(events[0].date);
 
   return (
     <Modal>
@@ -22,7 +22,7 @@ export default function AllEventsModal({ events }) {
         ))}
         <button
           className="modal-icon close-modal day-of-month"
-          onClick={() => setModalContext('')}>
+          onClick={closeModal}>
           <i className="fa-solid fa-x"></i>
         </button>
       </div>

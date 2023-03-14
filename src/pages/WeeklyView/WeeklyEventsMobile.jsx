@@ -3,12 +3,12 @@ import { useModalContext } from "../../hooks/useModalContext";
 
 export default function DisplayWeeklyEvents({ events, setViewEventId }) {
   const { convertToMeridian } = useDateContext()
-  const {setModalContext} = useModalContext()
+  const {setModalView} = useModalContext()
 
   // click event => change view id => view event
   function openEvent(id) {
     setViewEventId(id);
-    setModalContext('view-event');
+    setModalView('view-event');
   }
 
   return (

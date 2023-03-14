@@ -4,7 +4,7 @@ import Modal from './Modal';
 
 export default function ViewEvent({ event }) {
   const { convertToMeridian, formatReadableDate } = useDateContext();
-  const { setModalContext } = useModalContext();
+  const { setModalView, closeModal } = useModalContext();
 
   return (
     <>{event && 
@@ -20,17 +20,17 @@ export default function ViewEvent({ event }) {
         <div className="modal-actions">
           <button
             className="modal-icon delete-event"
-            onClick={() => setModalContext('confirm-delete')}>
+            onClick={() => setModalView('confirm-delete')}>
             <i className="fa-solid fa-trash"></i>
           </button>
           <button
             className="modal-icon edit-event"
-            onClick={() => setModalContext('edit-event')}>
+            onClick={() => setModalView('edit-event')}>
             <i className="fa-solid fa-pen-to-square"></i>
           </button>
           <button
             className="modal-icon close-modal"
-            onClick={() => setModalContext('')}>
+            onClick={closeModal}>
             <i className="fa-solid fa-x"></i>
           </button>
         </div>

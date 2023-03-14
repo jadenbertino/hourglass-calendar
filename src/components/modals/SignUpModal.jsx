@@ -6,7 +6,7 @@ import { useSignUp } from '../../hooks/useSignUp';
 import Modal from './Modal';
 
 export default function SignUpModal() {
-  const { setModalContext } = useModalContext();
+  const { closeModal } = useModalContext();
 
   // form controls & alidation
   const [displayName, setDisplayName] = useState('');
@@ -24,7 +24,7 @@ export default function SignUpModal() {
   }
 
   useEffect(() => {
-    if (user) setModalContext(''); // close sign in modal on signup
+    if (user) closeModal(); // close sign in modal on signup
 
     if (error) {
       setValidEmail(true);
@@ -71,7 +71,7 @@ export default function SignUpModal() {
       <button
         type="button"
         className="modal-actions modal-icon"
-        onClick={() => setModalContext('')}>
+        onClick={closeModal}>
         <i className="fa-solid fa-x"></i>
       </button>
     </Modal>

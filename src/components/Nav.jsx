@@ -1,38 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useSignOut } from '../hooks/useSignOut';
+import { Link } from 'react-router-dom';
 import SignOutModal from './modals/SettingsModal';
 
 // context
-import { useAuthContext } from '../hooks/useAuthContext';
 import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
 
 // styles
-import { useNavigate } from 'react-router-dom';
 import './Nav.css';
 
 export default function Nav({ children, decrementDate, incrementDate, dateToDisplay}) {
-  const { modalContext, setModalContext } = useModalContext();
-  const { dateContext, resetDateToToday, getWeek, getMonth } = useDateContext();
-  const { user } = useAuthContext();
-  const { signout } = useSignOut();
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-  const nav = useNavigate();
-  const loc = useLocation().pathname;
+  const { modalContext, setModalView } = useModalContext();
+  const { resetDateToToday } = useDateContext();
 
   return (
     <div className="nav-wrapper">
@@ -40,7 +18,7 @@ export default function Nav({ children, decrementDate, incrementDate, dateToDisp
         <div className="container">
           <div className="row">
             <div className="col">
-              <button className="btn hamburger" onClick={() => setModalContext('sign-out')}>
+              <button className="btn hamburger" onClick={() => setModalView('sign-out')}>
                 <i className="fa-solid fa-bars"></i>
               </button>
               <div className="change-views">
@@ -56,7 +34,7 @@ export default function Nav({ children, decrementDate, incrementDate, dateToDisp
               </div>
               <button
                 className="btn new-event-btn"
-                onClick={() => setModalContext('newEvent')}>
+                onClick={() => setModalView('new-event')}>
                 <i className="fa-solid fa-plus"></i>
                 <span className="new-event-text">New Event</span>
               </button>
@@ -83,7 +61,7 @@ export default function Nav({ children, decrementDate, incrementDate, dateToDisp
           {children}
         </div>
       </nav>
-      {modalContext === "sign-out" && <SignOutModal />}
+      {modalContext.view === "sign-out" && <SignOutModal />}
     </div>
   );
 }

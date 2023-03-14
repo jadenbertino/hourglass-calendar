@@ -141,14 +141,14 @@ export default function WeeklyView() {
           </div>
         </section>
       </main>
-      {modalContext === 'newEvent' && <NewEventModal />}
-      {modalContext === 'view-event' && (
+      {modalContext.view === 'new-event' && <NewEventModal />}
+      {modalContext.view === 'view-event' && (
         <ViewEvent event={getEvent(viewEventId)} />
       )}
-      {modalContext === 'edit-event' && (
+      {modalContext.view === 'edit-event' && (
         <NewEventModal eventToEdit={getEvent(viewEventId)} />
       )}
-      {modalContext === 'confirm-delete' && (
+      {modalContext.view === 'confirm-delete' && (
         <ConfirmDeleteModal id={viewEventId} />
       )}
     </>

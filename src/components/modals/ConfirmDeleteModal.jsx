@@ -5,12 +5,12 @@ import Modal from './Modal';
 import './Modal.css'
 
 export default function ConfirmDeleteModal({ id }) {
-  const { setModalContext } = useModalContext();
+  const { closeModal, setModalView } = useModalContext();
 
   async function handleDelete() {
     const ref = doc(db, 'events', id);
     await deleteDoc(ref);
-    setModalContext('');
+    closeModal();
   }
 
   return (
@@ -19,7 +19,7 @@ export default function ConfirmDeleteModal({ id }) {
       <div className="btns-wrapper">
         <button
           className="btn cancel-delete"
-          onClick={() => setModalContext('view-event')}>
+          onClick={() => setModalView('view-event')}>
           Cancel
         </button>
         <button className="btn confirm-delete" onClick={handleDelete}>

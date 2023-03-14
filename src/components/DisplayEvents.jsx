@@ -1,23 +1,19 @@
 import './DisplayEvents.css';
 
-import { useEffect, useState } from 'react';
 import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
-import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
-import NewEventModal from './modals/NewEventModal';
-import ViewEvent from './modals/ViewEvent';
 
 export default function DisplayEvents({ events, setViewEventId }) {
   const { convertToHours, convertToMeridian } = useDateContext();
   const hourGridLines = new Array(24).fill(null);
-  const { setModalContext } = useModalContext();
+  const { setModalView } = useModalContext();
 
   // always have up to date copy of events for that day
 
   // click event => change view id => view event
   function openEvent(id) {
     setViewEventId(id);
-    setModalContext('view-event');
+    setModalView('view-event');
   }
 
   return (
