@@ -29,7 +29,8 @@ export default function DisplayEvents({ events, setViewEventId }) {
         events.map((event, i) => {
           const start = convertToHours(event.startTime);
           const end = convertToHours(event.endTime);
-          const height = end - start > 0.5 ? end - start : 0.5;
+          let height = end - start;
+          if (height < 0.5) height = 0.5; // min height of 0.5
           const width = (1 / event.overlap.length) * 100;
           const leftMargin = (event.order - 1) * width;
           const eventStyles = {

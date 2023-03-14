@@ -40,7 +40,7 @@ export function useCollection(collectionName, uid) {
         const event2 = newEvents[j];
         if (event1.date !== event2.date) continue // can only overlap if on the same date
         if (event1.overlap.includes(event2.id)) continue // alr marked as overlapping => skip
-
+        
         const startTime1 = convertToMinutes(event1.startTime);
         const endTime1 = startTime1 + 60 // convertToMinutes(event1.endTime);
         const startTime2 = convertToMinutes(event2.startTime);
@@ -53,12 +53,6 @@ export function useCollection(collectionName, uid) {
           // mark that the events are overlapping each other
           event1.overlap.push(event2.id);
           event2.overlap.push(event1.id);
-  
-          // if (startTime1 < startTime2) {
-          //   event1.order = Math.max(event1.order, event2.order + 1);
-          // } else {
-          //   event2.order = Math.max(event2.order, event1.order + 1);
-          // }
         }
       }
     }
@@ -68,14 +62,17 @@ export function useCollection(collectionName, uid) {
       event.overlap.sort((id1, id2) => {
         const event1 = newEvents.find(e => e.id === id1)
         const event2 = newEvents.find(e => e.id === id2)
-        const start1 = convertToMinutes(event1.startTime)
-        const start2 = convertToMinutes(event2.startTime)
-        return start1 - start2
+        const startTime1 = convertToMinutes(event1.startTime)
+        const startTime2 = convertToMinutes(event2.startTime)
+        if (startTime1 !== startTime2) return startTime1 - startTime2
+        
+        // same start time => return whichever appears first in events
+        const event1Ind = events.indexOf(event1)
+        const event2Ind = events.indexOf(event2)
+        return event1Ind - event2Ind
       })
       event.order = event.overlap.indexOf(event.id) + 1
     }
-
-
     return newEvents
   }
 
