@@ -11,7 +11,7 @@ import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import Nav from '../../components/Nav';
 import DayOfMonthEvents from './DayOfMonthEvents';
-import AllEventsModal from '../../components/modals/AllEventsModal';
+import HiddenEventsModal from '../../components/modals/MonthlyHiddenEvents';
 
 // styles
 import '../Views.css';
@@ -174,7 +174,7 @@ export default function MonthlyView() {
                   <ConfirmDeleteModal id={modalContext.payload} />
                 )}
                 {modalContext.view === 'view-day-of-month' && (
-                  <AllEventsModal events={viewEvents} />
+                  <HiddenEventsModal events={viewEvents} />
                 )}
               </div>
             </div>
