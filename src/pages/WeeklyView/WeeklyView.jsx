@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
-import { useWindowSize } from '../../hooks/useWindowSize'
 
 // components
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
@@ -35,7 +34,7 @@ export default function WeeklyView() {
     getEvents,
   } = useDateContext();
   const { modalContext } = useModalContext();
-  const [week, setWeek] = useState([]);
+  const [weekDates, setWeekDates] = useState([]);
   const [navDate, setNavDate] = useState('');
 
   // if user isn't signed in redirect to signin / signup page
@@ -48,21 +47,21 @@ export default function WeeklyView() {
   // change week upon dateContext change
   useEffect(() => {
     const monday = getStartOfWeek(dateContext)
-    const weekDates = getWeek(monday)
-    setWeek(weekDates);
+    const newWeekDates = getWeek(monday)
+    setWeekDates(newWeekDates);
   }, [dateContext]);
 
   // update nav display, formatted like so: 13 - 19 June, 2022
   useEffect(() => {
-    if (week.length !== 7) return;
-    const dateStart = getDayOfMonth(week[0]);
-    const dateEnd = getDayOfMonth(week[6]);
+    if (weekDates.length !== 7) return;
+    const dateStart = getDayOfMonth(weekDates[0]);
+    const dateEnd = getDayOfMonth(weekDates[6]);
 
-    const monthStart = getMonthName(week[0]);
-    const monthEnd = getMonthName(week[6]);
+    const monthStart = getMonthName(weekDates[0]);
+    const monthEnd = getMonthName(weekDates[6]);
 
-    const yearStart = getYear(week[0]);
-    const yearEnd = getYear(week[6]);
+    const yearStart = getYear(weekDates[0]);
+    const yearEnd = getYear(weekDates[6]);
 
     const weekStart = `${monthStart} ${dateStart}${
       yearStart !== yearEnd ? ' ' + yearStart : ''
@@ -72,7 +71,7 @@ export default function WeeklyView() {
     }${dateEnd}, ${yearEnd}`;
     const fullWeek = `${weekStart} - ${weekEnd}`;
     setNavDate(fullWeek);
-  }, [week]);
+  }, [weekDates]);
 
   function getEvent(id) {
     return allEvents.find(e => e.id === id);
@@ -89,7 +88,7 @@ export default function WeeklyView() {
         dateToDisplay={navDate}>
         <div className="row weekly desktop">
           <header className="col date-wrapper">
-            {week.map((date, i) => (
+            {weekDates.map((date, i) => (
               <div className={`col-header ${checkIfIsToday(date) ? 'active' : ''}`} key={i}>
                 <h3 className="day-of-week">{getShortDayName(date)}</h3>
                 <h2>{date.getDate()}</h2>
@@ -106,9 +105,9 @@ export default function WeeklyView() {
                 <div className="weekly-view desktop">
                   <HoursList />
                   <div className="events">
-                    {week &&
+                    {weekDates &&
                       allEvents &&
-                      week.map((date, i) => (
+                      weekDates.map((date, i) => (
                         <DisplayEvents
                           events={getEvents(date, allEvents)}
                           key={i}
@@ -118,7 +117,7 @@ export default function WeeklyView() {
                 </div>
                 <div className="weekly-view mobile">
                   <div className="date-sidebar">
-                    {week.map((date, i) => (
+                    {weekDates.map((date, i) => (
                       <div className="date" key={i}>
                         <h3 className="day-name">{getShortDayName(date)}</h3>
                         <h2 className="day-number">{date.getDate()}</h2>
@@ -126,7 +125,7 @@ export default function WeeklyView() {
                     ))}
                   </div>
                   <div className="events">
-                    {week && allEvents && week.map((day, i) => {
+                    {weekDates && allEvents && weekDates.map((day, i) => {
                         return <DisplayWeeklyEvents events={getEvents(day, allEvents)} key={i}/>
                       })
                     }
