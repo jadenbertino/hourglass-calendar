@@ -33,6 +33,7 @@ export function useCollection(collectionName, uid) {
       e.order = 1
     })
     
+    // set overlapping events
     for (let i = 0; i < newEvents.length; i++) {
       for (let j = i + 1; j < newEvents.length; j++) {
         const event1 = newEvents[i];
@@ -53,14 +54,28 @@ export function useCollection(collectionName, uid) {
           event1.overlap.push(event2.id);
           event2.overlap.push(event1.id);
   
-          if (startTime1 < startTime2) {
-            event1.order = Math.max(event1.order, event2.order + 1);
-          } else {
-            event2.order = Math.max(event2.order, event1.order + 1);
-          }
+          // if (startTime1 < startTime2) {
+          //   event1.order = Math.max(event1.order, event2.order + 1);
+          // } else {
+          //   event2.order = Math.max(event2.order, event1.order + 1);
+          // }
         }
       }
     }
+
+    // set order of overlapping events
+    for (const event of newEvents) {
+      event.overlap.sort((id1, id2) => {
+        const event1 = newEvents.find(e => e.id === id1)
+        const event2 = newEvents.find(e => e.id === id2)
+        const start1 = convertToMinutes(event1.startTime)
+        const start2 = convertToMinutes(event2.startTime)
+        return start1 - start2
+      })
+      event.order = event.overlap.indexOf(event.id) + 1
+    }
+
+
     return newEvents
   }
 

@@ -29,12 +29,12 @@ export default function DisplayEvents({ events, setViewEventId }) {
         events.map((event, i) => {
           const start = convertToHours(event.startTime);
           const end = convertToHours(event.endTime);
+          const height = end - start > 0.5 ? end - start : 0.5;
           const width = (1 / event.overlap.length) * 100;
           const leftMargin = (event.order - 1) * width;
-          // const left = 
           const eventStyles = {
             top: `${start * 50}px`,
-            height: `${(end - start) * 50}px`,
+            height: `${height * 50}px`,
             width: `${width}%`,
             left: `${leftMargin}%`,
           };
