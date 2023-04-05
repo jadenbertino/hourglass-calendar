@@ -2,13 +2,12 @@ import { useModalContext } from '../../hooks/useModalContext';
 import Modal from './Modal';
 import { useSignOut } from '../../hooks/useSignOut';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import './Modal.css'
 
 export default function SettingsModal() {
   const { closeModal } = useModalContext();
   const { signout } = useSignOut()
   const { user } = useAuthContext()
-
+  
   return (
     <Modal className={'settings'}>
       <button className="btn modal-actions modal-icon" onClick={closeModal}>
