@@ -103,6 +103,7 @@ form * {
 */
 
 .btn {
+  font-size: 14px;
   padding: 8px 16px;
   border-radius: 4px;
   border: none;
