@@ -1,5 +1,6 @@
 import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import { auth } from "../firebase/init";
 import { useAuthContext } from "./useAuthContext";
 
@@ -8,6 +9,7 @@ export function useSignOut() {
   const [pending, setPending] = useState(false)
   const [mounted, setMounted] = useState(true)
   const { setAuthContext } = useAuthContext()
+  const nav = useNavigate()
 
   async function signout() {
     setError(null)
@@ -24,6 +26,9 @@ export function useSignOut() {
         setPending(false)
       }
       
+      // navigate to login page upon signout
+      nav('/')
+
     } catch (err) {
       // only do state updates if mounted
       if (mounted) {
