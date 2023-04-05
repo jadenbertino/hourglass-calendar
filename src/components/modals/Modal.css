@@ -58,7 +58,7 @@
   align-items: center;
 }
 
-.settings .signout {
+.settings .btn.signout {
   background-color: #bc4749;
 }
 
