@@ -14,7 +14,7 @@ import DayOfMonthEvents from './DayOfMonthEvents';
 import HiddenEventsModal from '../../components/modals/MonthlyHiddenEvents';
 
 // styles
-import '../Views.css';
+import './Monthly.css'
 
 export default function MonthlyView() {
   const { user } = useAuthContext();

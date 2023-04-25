@@ -14,7 +14,7 @@ import Nav from '../../components/Nav';
 
 // styles
 import ViewEvent from '../../components/modals/ViewEvent';
-import '../Views.css';
+import './Daily.css'
 
 export default function DailyView() {
   const { user } = useAuthContext();

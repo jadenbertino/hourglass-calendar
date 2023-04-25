@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import SignOutModal from './modals/SettingsModal';
+import SettingsModal from './modals/SettingsModal';
 
 // context
 import { useDateContext } from '../hooks/useDateContext';
@@ -61,7 +61,7 @@ export default function Nav({ children, decrementDate, incrementDate, dateToDisp
           {children}
         </div>
       </nav>
-      {modalContext.view === "sign-out" && <SignOutModal />}
+      {modalContext.view === "sign-out" && <SettingsModal />}
     </div>
   );
 }

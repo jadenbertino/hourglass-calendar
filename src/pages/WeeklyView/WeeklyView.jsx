@@ -15,7 +15,7 @@ import HoursList from '../../components/HoursList';
 import DisplayEvents from '../../components/DisplayEvents';
 
 // styles
-import '../Views.css';
+import './Weekly.css'
 
 export default function WeeklyView() {
   const { user } = useAuthContext();
@@ -77,7 +77,6 @@ export default function WeeklyView() {
     return allEvents.find(e => e.id === id);
   }
 
-  // set date + query events for date
   const { events: allEvents } = useCollection('events', user && user.uid);
 
   return (
