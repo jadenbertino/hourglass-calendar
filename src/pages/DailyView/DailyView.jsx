@@ -18,9 +18,9 @@ import HoursList from '../../components/HoursList';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import Nav from '../../components/Nav';
+import ViewEventModal from '../../components/modals/ViewEventModal';
 
 // styles
-import ViewEventModal from '../../components/modals/ViewEventModal';
 import './Daily.css';
 
 export default function DailyView() {

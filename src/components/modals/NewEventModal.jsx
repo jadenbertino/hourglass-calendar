@@ -20,55 +20,44 @@ export default function NewEventModal({ eventToEdit }) {
   const { user } = useAuthContext();
   const { closeModal } = useModalContext();
   const { dateContext } = useDateContext();
-  const [event, setEvent] = useState(null);
 
-  // form controls
+  // Event Details
   const [eventName, setEventName] = useState('');
   const [eventDate, setEventDate] = useState(formatDate(dateContext));
   const [eventStartTime, setEventStartTime] = useState('');
   const [eventEndTime, setEventEndTime] = useState('');
   const [eventNotes, setEventNotes] = useState('');
 
-  // form validation
+  // Event Validation
   const [validDate, setValidDate] = useState(true);
   const [validStartTime, setValidStartTime] = useState(true);
   const [validEndTime, setValidEndTime] = useState(true);
 
-  // edit existing event
+  // If editing existing event then prefill forms
   useEffect(() => {
     if (eventToEdit) {
-      setEvent(eventToEdit);
+      setEventName(eventToEdit.name);
+      setEventDate(eventToEdit.date);
+      setEventStartTime(eventToEdit.startTime);
+      setEventEndTime(eventToEdit.endTime);
+      setEventNotes(eventToEdit.notes);
     }
   }, [eventToEdit]);
 
-  useEffect(() => {
-    if (event) {
-      setEventName(event.name);
-      setEventDate(event.date);
-      setEventStartTime(event.startTime);
-      setEventEndTime(event.endTime);
-      setEventNotes(event.notes);
-    }
-  }, [event]);
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const isValidEvent = validateFormControls()
+    if (!isValidEvent) return
+    await createEvent()
+    closeModal();
+  }
 
-  /*
-
-    form validation
-
-  */
-
-  function resetValidation() {
+  function validateFormControls() {
     setValidStartTime(true);
     setValidEndTime(true);
     setValidDate(true);
-  }
-
-  function validateFormControls(e) {
-    e.preventDefault();
-    resetValidation();
 
     // can't check state within this function because state updates are scheduled
-    // could do a useEffect but this is simpler
     let validDate = true;
     let validStartTime = true;
     let validEndTime = true;
@@ -79,7 +68,7 @@ export default function NewEventModal({ eventToEdit }) {
       validDate = false;
       alert('Please ensure event data is in MM/DD/YYYY format');
     }
-
+    
     // valid start time
     if (!isMilitary(eventStartTime) && !isMeridian(eventStartTime)) {
       setValidStartTime(false);
@@ -112,14 +101,10 @@ export default function NewEventModal({ eventToEdit }) {
       }
     }
 
-    if (validDate && validStartTime && validEndTime) createEvent();
+    if (validDate && validStartTime && validEndTime) return true
+    return false
   }
 
-  /*
-
-    event creation
-
-  */
   async function createEvent() {
     const event = {
       name: eventName,
@@ -137,12 +122,11 @@ export default function NewEventModal({ eventToEdit }) {
       // create new event
       await addDoc(collection(db, 'events'), event);
     }
-    closeModal();
   }
 
   return (
     <Modal className={'new-event'}>
-      <form className='new-event-form' onSubmit={validateFormControls}>
+      <form className='new-event-form' onSubmit={handleSubmit}>
         <input
           className='name'
           type='text'

@@ -7,6 +7,7 @@ import './Modal.css';
 export default function Modal({ children, className }) {
   const root = document.querySelector('#root');
   const { closeModal } = useModalContext();
+  
   return createPortal(
     <div className='modal-backdrop'>
       <div className={`modal ${className ? className : ''}`}>
