@@ -4,33 +4,31 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
+import {
+  getEvents,
+  getMonth,
+  getMonthName,
+  getStartOfMonth,
+  getStartOfWeek,
+  getYear,
+  checkIfIsToday
+} from '../../utils/DateUtils';
 
 // components
+import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
+import HiddenEventsModal from '../../components/modals/MonthlyHiddenEvents';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
-import Nav from '../../components/Nav';
 import DayOfMonthEvents from './DayOfMonthEvents';
-import HiddenEventsModal from '../../components/modals/MonthlyHiddenEvents';
 
 // styles
-import './Monthly.css'
+import './Monthly.css';
 
 export default function MonthlyView() {
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
-  const {
-    checkIfIsToday,
-    dateContext,
-    getMonth,
-    getEvents,
-    getMonthName,
-    getYear,
-    incrementMonth,
-    decrementMonth,
-    getStartOfMonth,
-    getStartOfWeek
-  } = useDateContext();
+  const { dateContext, incrementMonth, decrementMonth } = useDateContext();
   const [viewEvents, setViewEvents] = useState({});
   const daySizeRef = useRef(null); // to set number of events displayed per day
   const [numVisibleEvents, setNumVisibleEvents] = useState(0);
@@ -60,7 +58,14 @@ export default function MonthlyView() {
     const firstDateToShow = getStartOfWeek(startOfMonth);
     setFirstDate(firstDateToShow);
     setMonthDates(getMonth(firstDateToShow));
-  }, [dateContext, getStartOfMonth, getStartOfWeek, setFirstDate, setMonthDates, getMonth]);
+  }, [
+    dateContext,
+    getStartOfMonth,
+    getStartOfWeek,
+    setFirstDate,
+    setMonthDates,
+    getMonth
+  ]);
 
   // change navDate anytime firstDate changes
   useEffect(() => {

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useDateContext } from '../../hooks/useDateContext';
+import { convertToMeridian } from '../../utils/DateUtils'
 import { useModalContext } from '../../hooks/useModalContext';
 
 export default function DayOfMonthEvents({ events, numVisibleEvents, setViewEvents }) {
-  const { convertToMeridian } = useDateContext();
   const { setModalView, setModalContext } = useModalContext();
   const [visibleEvents, setVisibleEvents] = useState([])
   const [hiddenEvents, setHiddenEvents] = useState([])

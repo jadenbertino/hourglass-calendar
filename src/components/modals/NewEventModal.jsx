@@ -4,19 +4,19 @@ import { db } from '../../firebase/init';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
+import {
+  convertToMilitary,
+  convertToMinutes,
+  formatDate,
+  isMeridian,
+  isMilitary
+} from '../../utils/DateUtils';
 import Modal from './Modal';
 
 export default function NewEventModal({ eventToEdit }) {
   const { user } = useAuthContext();
   const { closeModal } = useModalContext();
-  const {
-    isMeridian,
-    isMilitary,
-    convertToMilitary,
-    formatDate,
-    convertToMinutes,
-    dateContext
-  } = useDateContext();
+  const { dateContext } = useDateContext();
   const [event, setEvent] = useState(null);
 
   // form controls
@@ -96,8 +96,8 @@ export default function NewEventModal({ eventToEdit }) {
 
     // start time must be before end time
     if (validStartTime && validEndTime) {
-      const start = convertToMinutes(convertToMilitary(eventStartTime))
-      const end = convertToMinutes(convertToMilitary(eventEndTime))
+      const start = convertToMinutes(convertToMilitary(eventStartTime));
+      const end = convertToMinutes(convertToMilitary(eventEndTime));
       if (start >= end) {
         validStartTime = false;
         validEndTime = false;
@@ -185,10 +185,7 @@ export default function NewEventModal({ eventToEdit }) {
           value={eventNotes}
         />
         <div className="btns-wrapper">
-          <button
-            className="btn cancel-btn"
-            type="button"
-            onClick={closeModal}>
+          <button className="btn cancel-btn" type="button" onClick={closeModal}>
             Cancel
           </button>
           <button className="btn save-btn">Save</button>

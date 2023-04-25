@@ -1,9 +1,8 @@
-import { useDateContext } from '../../hooks/useDateContext';
+import { convertToMeridian, formatReadableDate } from '../../utils/DateUtils'
 import { useModalContext } from '../../hooks/useModalContext';
 import Modal from './Modal';
 
 export default function ViewEvent({event}) {
-  const { convertToMeridian, formatReadableDate } = useDateContext();
   const { setModalView, closeModal } = useModalContext();
 
   return (

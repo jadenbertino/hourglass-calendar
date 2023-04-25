@@ -4,35 +4,33 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
+import {
+  checkIfIsToday,
+  getDayOfMonth,
+  getEvents,
+  getMonthName,
+  getShortDayName,
+  getStartOfWeek,
+  getWeek,
+  getYear
+} from '../../utils/DateUtils';
 
 // components
+import DisplayEvents from '../../components/DisplayEvents';
+import HoursList from '../../components/HoursList';
+import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
-import Nav from '../../components/Nav';
 import DisplayWeeklyEvents from './WeeklyEventsMobile';
-import HoursList from '../../components/HoursList';
-import DisplayEvents from '../../components/DisplayEvents';
 
 // styles
-import './Weekly.css'
+import './Weekly.css';
 
 export default function WeeklyView() {
   const { user } = useAuthContext();
   const nav = useNavigate();
-  const {
-    dateContext,
-    getShortDayName,
-    incrementDateBy,
-    decrementDateBy,
-    getWeek,
-    getMonthName,
-    getDayOfMonth,
-    getYear,
-    checkIfIsToday,
-    getStartOfWeek,
-    getEvents,
-  } = useDateContext();
+  const { dateContext, incrementDateBy, decrementDateBy } = useDateContext();
   const { modalContext } = useModalContext();
   const [weekDates, setWeekDates] = useState([]);
   const [navDate, setNavDate] = useState('');
@@ -43,13 +41,13 @@ export default function WeeklyView() {
       nav('/');
     }
   }, [user, nav]);
-  
+
   // change week upon dateContext change
   useEffect(() => {
-    const monday = getStartOfWeek(dateContext)
-    const newWeekDates = getWeek(monday)
+    const monday = getStartOfWeek(dateContext);
+    const newWeekDates = getWeek(monday);
     setWeekDates(newWeekDates);
-  }, [dateContext, getStartOfWeek, getWeek]);
+  }, [dateContext]);
 
   // update nav display, formatted like so: 13 - 19 June, 2022
   useEffect(() => {
@@ -88,7 +86,9 @@ export default function WeeklyView() {
         <div className="row weekly desktop">
           <header className="col date-wrapper">
             {weekDates.map((date, i) => (
-              <div className={`col-header ${checkIfIsToday(date) ? 'active' : ''}`} key={i}>
+              <div
+                className={`col-header ${checkIfIsToday(date) ? 'active' : ''}`}
+                key={i}>
                 <h3 className="day-of-week">{getShortDayName(date)}</h3>
                 <h2>{date.getDate()}</h2>
               </div>
@@ -124,10 +124,16 @@ export default function WeeklyView() {
                     ))}
                   </div>
                   <div className="events">
-                    {weekDates && allEvents && weekDates.map((day, i) => {
-                        return <DisplayWeeklyEvents events={getEvents(day, allEvents)} key={i}/>
-                      })
-                    }
+                    {weekDates &&
+                      allEvents &&
+                      weekDates.map((day, i) => {
+                        return (
+                          <DisplayWeeklyEvents
+                            events={getEvents(day, allEvents)}
+                            key={i}
+                          />
+                        );
+                      })}
                   </div>
                 </div>
               </div>

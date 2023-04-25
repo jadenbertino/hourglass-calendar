@@ -1,15 +1,13 @@
 import './DisplayEvents.css';
 
-import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
+import { convertToHours, convertToMeridian } from '../utils/DateUtils'
 
 export default function DisplayEvents({ events }) {
-  const { convertToHours, convertToMeridian } = useDateContext();
   const hourGridLines = new Array(24).fill(null);
   const { setModalContext } = useModalContext();
 
   // always have up to date copy of events for that day
-
   return (
     <div className="calendar-column">
       {hourGridLines.map((_, i) => (

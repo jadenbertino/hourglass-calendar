@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { db } from "../firebase/init";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { useDateContext } from "./useDateContext";
+import { convertToMinutes } from '../utils/DateUtils'
 
 export function useCollection(collectionName, uid) {
   const [events, setEvents] = useState(null)
   const [pending, setPending] = useState(true)
-  const { convertToMinutes } = useDateContext()
 
   const getOverlap = useCallback((events) => {
     if (!events) return

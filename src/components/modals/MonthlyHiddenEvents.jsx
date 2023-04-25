@@ -1,9 +1,8 @@
-import { useDateContext } from '../../hooks/useDateContext';
+import { convertToMeridian, formatReadableDate } from '../../utils/DateUtils'
 import { useModalContext } from '../../hooks/useModalContext';
 import Modal from './Modal';
 
 export default function HiddenMonthlyEvents({ events }) {
-  const { convertToMeridian, formatReadableDate } = useDateContext();
   const { closeModal, setModalContext } = useModalContext();
   
   const date = formatReadableDate(events[0].date); // there will always be >= 1 events, logic is handled outside of this

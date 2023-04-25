@@ -4,6 +4,13 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
+import {
+  convertToHours,
+  formatDate,
+  getDayOfMonth,
+  getDayOfWeek,
+  getMonthName
+} from '../../utils/DateUtils';
 
 // components
 import DisplayEvents from '../../components/DisplayEvents';
@@ -14,25 +21,16 @@ import Nav from '../../components/Nav';
 
 // styles
 import ViewEvent from '../../components/modals/ViewEvent';
-import './Daily.css'
+import './Daily.css';
 
 export default function DailyView() {
   const { user } = useAuthContext();
   const nav = useNavigate();
-  const {
-    dateContext,
-    incrementDateBy,
-    decrementDateBy,
-    formatDate,
-    getDayOfMonth,
-    convertToHours,
-    getMonthName,
-    getDayOfWeek
-  } = useDateContext();
+  const { dateContext, incrementDateBy, decrementDateBy } = useDateContext();
   const { modalContext } = useModalContext();
   const [todayEvents, setTodayEvents] = useState([]);
   const { events: allEvents } = useCollection('events', user && user.uid);
-  const [navDate, setNavDate] = useState('')
+  const [navDate, setNavDate] = useState('');
 
   // if user isn't signed in redirect to signin / signup page
   useEffect(() => {
@@ -47,10 +45,10 @@ export default function DailyView() {
 
   useEffect(() => {
     // change date on nav
-    const weekday = getDayOfWeek(dateContext)
-    const dayOfMonth = getDayOfMonth(dateContext)
-    const month = getMonthName(dateContext)
-    setNavDate(`${weekday}, ${month} ${dayOfMonth}`)
+    const weekday = getDayOfWeek(dateContext);
+    const dayOfMonth = getDayOfMonth(dateContext);
+    const month = getMonthName(dateContext);
+    setNavDate(`${weekday}, ${month} ${dayOfMonth}`);
 
     // get today's events
     allEvents &&
@@ -63,14 +61,23 @@ export default function DailyView() {
               convertToHours(eventB.startTime)
           )
       );
-  }, [dateContext, allEvents, convertToHours, formatDate, getDayOfMonth, getDayOfWeek, getMonthName]);
+  }, [
+    dateContext,
+    allEvents,
+    convertToHours,
+    formatDate,
+    getDayOfMonth,
+    getDayOfWeek,
+    getMonthName
+  ]);
 
   return (
     <>
       <Nav
         incrementDate={() => incrementDateBy(1)}
         decrementDate={() => decrementDateBy(1)}
-        dateToDisplay={navDate}/>
+        dateToDisplay={navDate}
+      />
       <main>
         <section id="daily">
           <div className="container">
@@ -79,7 +86,7 @@ export default function DailyView() {
                 <div className="times-and-events">
                   <HoursList />
                   <div className="events">
-                    <DisplayEvents events={todayEvents}/>
+                    <DisplayEvents events={todayEvents} />
                   </div>
                 </div>
               </div>
