@@ -1,0 +1,14 @@
+.settings {
+  padding: 80px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings .signout {
+  background-color: #bc4749;
+}
+
+.settings > *:not(:last-child) {
+  margin-bottom: 24px;
+}

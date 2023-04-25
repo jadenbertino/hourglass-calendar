@@ -18,7 +18,7 @@ import {
 import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
-import ViewEvent from '../../components/modals/ViewEvent';
+import ViewEventModal from '../../components/modals/ViewEventModal';
 import DayOfMonthEvents from './DayOfMonthEvents';
 import HiddenEventsModal from './MonthlyHiddenEvents';
 
@@ -155,7 +155,7 @@ export default function MonthlyView() {
                 </div>
                 {modalContext.view === 'new-event' && <NewEventModal />}
                 {modalContext.view === 'view-event' && (
-                  <ViewEvent event={getEvent(modalContext.payload)} />
+                  <ViewEventModal event={getEvent(modalContext.payload)} />
                 )}
                 {modalContext.view === 'edit-event' && (
                   <NewEventModal eventToEdit={getEvent(modalContext.payload)} />

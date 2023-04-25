@@ -20,7 +20,7 @@ import NewEventModal from '../../components/modals/NewEventModal';
 import Nav from '../../components/Nav';
 
 // styles
-import ViewEvent from '../../components/modals/ViewEvent';
+import ViewEventModal from '../../components/modals/ViewEventModal';
 import './Daily.css';
 
 export default function DailyView() {
@@ -91,7 +91,7 @@ export default function DailyView() {
       </main>
       {modalContext.view === 'new-event' && <NewEventModal />}
       {modalContext.view === 'view-event' && (
-        <ViewEvent event={getEvent(modalContext.payload)} />
+        <ViewEventModal event={getEvent(modalContext.payload)} />
       )}
       {modalContext.view === 'edit-event' && (
         <NewEventModal eventToEdit={getEvent(modalContext.payload)} />

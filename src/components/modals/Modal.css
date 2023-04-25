@@ -1,8 +1,7 @@
-/* GENERAL */
-
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   backdrop-filter: blur(5px) brightness(60%);
@@ -16,20 +15,20 @@
 .modal {
   border-radius: 8px;
   background-color: #31343f;
-  color: #EAF2EF;
+  color: #eaf2ef;
   padding: 24px;
   position: relative;
   z-index: 102;
 }
 
 .modal input {
-  background-color: #EAF2EF;
+  background-color: #eaf2ef;
   color: #31343f;
 }
 
 .modal-actions {
   position: absolute;
-  top: 8px; 
+  top: 8px;
   right: 16px;
 }
 
@@ -38,163 +37,15 @@
   border: none;
   padding: 12px;
   font-size: 16px;
-  color: #EAF2EF;
+  color: #eaf2ef;
   padding: 16px 12px;
 }
 
 .close-modal-overlay {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 101;
-}
-
-/* Settings */
-
-.settings {
-  padding: 80px 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.settings .signout {
-  background-color: #bc4749;
-}
-
-.settings > *:not(:last-child) {
-  margin-bottom: 24px;
-}
-
-/* Auth Modals */
-
-.auth-modal {
-  max-width: 400px;
-  width: 100%;
-}
-
-.auth-modal form {
-  display: flex;
-  flex-direction: column;
-}
-
-.auth-modal .btn {
-  margin-left: auto;
-  margin-top: 16px;
-}
-
-/* NEW EVENT MODAL */
-
-.new-event-form {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  max-width: 576px;
-  width: 100%;
-}
-
-.new-event-form .date-time-wrapper {
-  display: flex;
-}
-
-.new-event-form .date {
-  width: 40%;
-  text-align: center;
-}
-
-.new-event-form .times-wrapper {
-  width: 60%;
-  padding-left: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.new-event-form .time {
-  width: 40%;
-  text-align: center;
-}
-
-.new-event-form .notes {
-  margin: 12px 0;
-  min-height: 80px;
-}
-
-.new-event-form .btns-wrapper {
-  margin-left: auto;
-}
-
-.new-event-form .cancel-btn {
-  background-color: #93a8ac;
-  margin-right: 12px;
-}
-
-.fa-arrow-right {
-  transform: translateY(8px);
-}
-
-/* VIEW EVENT MODAL */
-
-.view-event {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 576px;
-  width: 100%;
-}
-
-.view-event .name {
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-.view-event .dot {
-  margin: 0 12px;
-}
-
-.view-event .notes {
-  width: 100%;
-  margin-top: 12px;
-  border-top: 1px solid gray;
-  padding-top: 12px;
-}
-
-.view-event .modal-actions {
-  margin-top: 12px;
-}
-.view-event .modal-icon {
-  margin-left: 12px;
-  padding: 8px;
-}
-
-/* CONFIRM DELETE */
-
-.confirm-delete-modal h2 {
-  text-align: center;
-}
-
-.confirm-delete-modal .btns-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 16px;
-}
-
-.confirm-delete-modal .btn {
-  margin: 0 12px;
-}
-.confirm-delete-modal .cancel-delete {
-  background-color: #93a8ac;
-}
-
-.confirm-delete-modal .confirm-delete {
-  background-color: #bc4749;
-}
-
-@media screen and (max-width: 480px) {
-  .new-event {
-    padding: 24px 12px;
-  }
-
-  .new-event .times-wrapper {
-    padding-left: 12px;
-  }
 }

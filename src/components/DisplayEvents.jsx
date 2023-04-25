@@ -1,16 +1,16 @@
 import './DisplayEvents.css';
 
 import { useModalContext } from '../hooks/useModalContext';
-import { convertToHours, convertToMeridian } from '../utils/DateUtils'
+import { convertToHours, convertToMeridian } from '../utils/DateUtils';
 
 export default function DisplayEvents({ events }) {
   const hourGridLines = new Array(24).fill(null);
   const { setModalContext } = useModalContext();
 
   return (
-    <div className="calendar-column">
+    <div className='calendar-column'>
       {hourGridLines.map((_, i) => (
-        <div className="divider" key={i}></div>
+        <div className='divider' key={i}></div>
       ))}
       {events &&
         events.map((event, i) => {
@@ -26,23 +26,22 @@ export default function DisplayEvents({ events }) {
             width: `${width}%`,
             left: `${leftMargin}%`,
           };
-          const size =
-            end - start <= 1 ? 'small' : end - start <= 2 ? 'medium' : 'large';
+          const size = end - start <= 1 ? 'small' : end - start <= 2 ? 'medium' : 'large';
           return (
             <div
               key={i}
               style={eventStyles}
               className={`event ${size}`}
               id={event.id}
-              onClick={() => setModalContext({view: "view-event", payload: event.id})}>
-              <h3 className="title">{event.name}</h3>
+              onClick={() => setModalContext({ view: 'view-event', payload: event.id })}
+            >
+              <h3 className='title'>{event.name}</h3>
               {size !== 'small' && (
                 <>
-                  <p className="time">
-                    {convertToMeridian(event.startTime)} -{' '}
-                    {convertToMeridian(event.endTime)}
+                  <p className='time'>
+                    {convertToMeridian(event.startTime)} - {convertToMeridian(event.endTime)}
                   </p>
-                  <p className="notes">{event.notes}</p>
+                  <p className='notes'>{event.notes}</p>
                 </>
               )}
             </div>

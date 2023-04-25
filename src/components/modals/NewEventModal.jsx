@@ -9,9 +9,12 @@ import {
   convertToMinutes,
   formatDate,
   isMeridian,
-  isMilitary
+  isMilitary,
 } from '../../utils/DateUtils';
 import Modal from './Modal';
+
+// styles
+import './NewEventModal.css';
 
 export default function NewEventModal({ eventToEdit }) {
   const { user } = useAuthContext();
@@ -124,7 +127,7 @@ export default function NewEventModal({ eventToEdit }) {
       date: eventDate,
       startTime: convertToMilitary(eventStartTime),
       endTime: convertToMilitary(eventEndTime),
-      uid: user.uid
+      uid: user.uid,
     };
     if (eventToEdit) {
       // edit existing event
@@ -139,56 +142,56 @@ export default function NewEventModal({ eventToEdit }) {
 
   return (
     <Modal className={'new-event'}>
-      <form className="new-event-form" onSubmit={validateFormControls}>
+      <form className='new-event-form' onSubmit={validateFormControls}>
         <input
-          className="name"
-          type="text"
-          placeholder="Event Name"
-          onChange={e => setEventName(e.target.value)}
+          className='name'
+          type='text'
+          placeholder='Event Name'
+          onChange={(e) => setEventName(e.target.value)}
           required
           autoFocus
           value={eventName}
         />
-        <div className="date-time-wrapper">
+        <div className='date-time-wrapper'>
           <input
             className={`date ${validDate ? '' : 'invalid'}`}
-            type="date"
-            placeholder="Date"
-            onChange={e => setEventDate(e.target.value)}
+            type='date'
+            placeholder='Date'
+            onChange={(e) => setEventDate(e.target.value)}
             required
             value={eventDate}
           />
-          <div className="times-wrapper">
+          <div className='times-wrapper'>
             <input
               className={`time ${validStartTime ? '' : 'invalid'}`}
-              type="text"
-              placeholder="Start Time"
-              onChange={e => setEventStartTime(e.target.value)}
+              type='text'
+              placeholder='Start Time'
+              onChange={(e) => setEventStartTime(e.target.value)}
               required
               value={eventStartTime}
             />
-            <i className="fa-solid fa-arrow-right"></i>
+            <i className='fa-solid fa-arrow-right'></i>
             <input
               className={`time ${validEndTime ? '' : 'invalid'}`}
-              type="text"
-              placeholder="End Time"
-              onChange={e => setEventEndTime(e.target.value)}
+              type='text'
+              placeholder='End Time'
+              onChange={(e) => setEventEndTime(e.target.value)}
               required
               value={eventEndTime}
             />
           </div>
         </div>
         <textarea
-          className="notes"
-          placeholder="Event Notes"
-          onChange={e => setEventNotes(e.target.value)}
+          className='notes'
+          placeholder='Event Notes'
+          onChange={(e) => setEventNotes(e.target.value)}
           value={eventNotes}
         />
-        <div className="btns-wrapper">
-          <button className="btn cancel-btn" type="button" onClick={closeModal}>
+        <div className='btns-wrapper'>
+          <button className='btn cancel-btn' type='button' onClick={closeModal}>
             Cancel
           </button>
-          <button className="btn save-btn">Save</button>
+          <button className='btn save-btn'>Save</button>
         </div>
       </form>
     </Modal>

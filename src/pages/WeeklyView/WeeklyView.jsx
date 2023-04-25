@@ -12,7 +12,7 @@ import {
   getShortDayName,
   getStartOfWeek,
   getWeek,
-  getYear
+  getYear,
 } from '../../utils/DateUtils';
 
 // components
@@ -21,7 +21,7 @@ import HoursList from '../../components/HoursList';
 import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
-import ViewEvent from '../../components/modals/ViewEvent';
+import ViewEventModal from '../../components/modals/ViewEventModal';
 import DisplayWeeklyEvents from './WeeklyEventsMobile';
 
 // styles
@@ -61,18 +61,14 @@ export default function WeeklyView() {
     const yearStart = getYear(weekDates[0]);
     const yearEnd = getYear(weekDates[6]);
 
-    const weekStart = `${monthStart} ${dateStart}${
-      yearStart !== yearEnd ? ' ' + yearStart : ''
-    }`;
-    const weekEnd = `${
-      monthStart !== monthEnd ? monthEnd + ' ' : ''
-    }${dateEnd}, ${yearEnd}`;
+    const weekStart = `${monthStart} ${dateStart}${yearStart !== yearEnd ? ' ' + yearStart : ''}`;
+    const weekEnd = `${monthStart !== monthEnd ? monthEnd + ' ' : ''}${dateEnd}, ${yearEnd}`;
     const fullWeek = `${weekStart} - ${weekEnd}`;
     setNavDate(fullWeek);
   }, [weekDates]);
 
   function getEvent(id) {
-    return allEvents.find(e => e.id === id);
+    return allEvents.find((e) => e.id === id);
   }
 
   const { events: allEvents } = useCollection('events', user && user.uid);
@@ -82,14 +78,13 @@ export default function WeeklyView() {
       <Nav
         incrementDate={() => incrementDateBy(7)}
         decrementDate={() => decrementDateBy(7)}
-        dateToDisplay={navDate}>
-        <div className="row weekly desktop">
-          <header className="col date-wrapper">
+        dateToDisplay={navDate}
+      >
+        <div className='row weekly desktop'>
+          <header className='col date-wrapper'>
             {weekDates.map((date, i) => (
-              <div
-                className={`col-header ${checkIfIsToday(date) ? 'active' : ''}`}
-                key={i}>
-                <h3 className="day-of-week">{getShortDayName(date)}</h3>
+              <div className={`col-header ${checkIfIsToday(date) ? 'active' : ''}`} key={i}>
+                <h3 className='day-of-week'>{getShortDayName(date)}</h3>
                 <h2>{date.getDate()}</h2>
               </div>
             ))}
@@ -97,42 +92,34 @@ export default function WeeklyView() {
         </div>
       </Nav>
       <main>
-        <section id="weekly">
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="weekly-view desktop">
+        <section id='weekly'>
+          <div className='container'>
+            <div className='row'>
+              <div className='col'>
+                <div className='weekly-view desktop'>
                   <HoursList />
-                  <div className="events">
+                  <div className='events'>
                     {weekDates &&
                       allEvents &&
                       weekDates.map((date, i) => (
-                        <DisplayEvents
-                          events={getEvents(date, allEvents)}
-                          key={i}
-                        />
+                        <DisplayEvents events={getEvents(date, allEvents)} key={i} />
                       ))}
                   </div>
                 </div>
-                <div className="weekly-view mobile">
-                  <div className="date-sidebar">
+                <div className='weekly-view mobile'>
+                  <div className='date-sidebar'>
                     {weekDates.map((date, i) => (
-                      <div className="date" key={i}>
-                        <h3 className="day-name">{getShortDayName(date)}</h3>
-                        <h2 className="day-number">{date.getDate()}</h2>
+                      <div className='date' key={i}>
+                        <h3 className='day-name'>{getShortDayName(date)}</h3>
+                        <h2 className='day-number'>{date.getDate()}</h2>
                       </div>
                     ))}
                   </div>
-                  <div className="events">
+                  <div className='events'>
                     {weekDates &&
                       allEvents &&
                       weekDates.map((day, i) => {
-                        return (
-                          <DisplayWeeklyEvents
-                            events={getEvents(day, allEvents)}
-                            key={i}
-                          />
-                        );
+                        return <DisplayWeeklyEvents events={getEvents(day, allEvents)} key={i} />;
                       })}
                   </div>
                 </div>
@@ -143,14 +130,12 @@ export default function WeeklyView() {
       </main>
       {modalContext.view === 'new-event' && <NewEventModal />}
       {modalContext.view === 'view-event' && (
-        <ViewEvent event={getEvent(modalContext.payload)} />
+        <ViewEventModal event={getEvent(modalContext.payload)} />
       )}
       {modalContext.view === 'edit-event' && (
         <NewEventModal eventToEdit={getEvent(modalContext.payload)} />
       )}
-      {modalContext.view === 'confirm-delete' && (
-        <ConfirmDeleteModal id={modalContext.payload} />
-      )}
+      {modalContext.view === 'confirm-delete' && <ConfirmDeleteModal id={modalContext.payload} />}
     </>
   );
 }

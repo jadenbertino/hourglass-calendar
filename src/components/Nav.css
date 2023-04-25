@@ -7,11 +7,11 @@
 nav {
   background-color: #31343f;
   z-index: 2;
-  border-bottom: 1px solid #93A8AC;
+  border-bottom: 1px solid #93a8ac;
 }
 
 nav .container {
-  padding-top: 16px; 
+  padding-top: 16px;
 }
 
 nav .row {
@@ -80,7 +80,7 @@ nav .btn {
 }
 
 nav .new-event-btn {
-  background-color: #0CCE6B;
+  background-color: #0cce6b;
 }
 
 nav .new-event-text {

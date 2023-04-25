@@ -7,16 +7,15 @@ import Modal from '../../components/modals/Modal';
 
 export default function SignUpModal() {
   const { closeModal } = useModalContext();
+  const { user } = useAuthContext();
+  const { signup, error } = useSignUp();
 
-  // form controls & alidation
+  // form controls & validation
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [validEmail, setValidEmail] = useState(true);
   const [validPassword, setValidPassword] = useState(true);
-
-  const { user } = useAuthContext();
-  const { signup, error } = useSignUp();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,7 +23,7 @@ export default function SignUpModal() {
   }
 
   useEffect(() => {
-    if (user) closeModal(); // close sign in modal on signup
+    if (user) closeModal();
 
     if (error) {
       setValidEmail(true);
