@@ -14,9 +14,10 @@ import {
   getWeek,
   getYear,
 } from '../../utils/DateUtils';
+import { getEventById } from '../../utils/EventUtils';
 
 // components
-import DisplayEvents from '../../components/DisplayEvents';
+import DisplayDayEvents from '../../components/DisplayDayEvents';
 import HoursList from '../../components/HoursList';
 import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
@@ -27,6 +28,25 @@ import DisplayWeeklyEvents from './WeeklyEventsMobile';
 // styles
 import './Weekly.css';
 
+function getNavDisplay(weekDates) {
+  // formats into a string like so: 13 - 19 June, 2022
+  if (weekDates.length !== 7) return;
+  const dateStart = getDayOfMonth(weekDates[0]);
+  const dateEnd = getDayOfMonth(weekDates[6]);
+
+  const monthStart = getMonthName(weekDates[0]);
+  const monthEnd = getMonthName(weekDates[6]);
+
+  const yearStart = getYear(weekDates[0]);
+  const yearEnd = getYear(weekDates[6]);
+
+  const weekStart = `${monthStart} ${dateStart}${yearStart !== yearEnd ? ' ' + yearStart : ''}`;
+  const weekEnd = `${monthStart !== monthEnd ? monthEnd + ' ' : ''}${dateEnd}, ${yearEnd}`;
+  const fullWeek = `${weekStart} - ${weekEnd}`;
+  
+  return fullWeek
+}
+
 export default function WeeklyView() {
   const { user } = useAuthContext();
   const nav = useNavigate();
@@ -34,6 +54,7 @@ export default function WeeklyView() {
   const { modalContext } = useModalContext();
   const [weekDates, setWeekDates] = useState([]);
   const [navDate, setNavDate] = useState('');
+  const { events: allEvents } = useCollection('events', user && user.uid);
 
   // if user isn't signed in redirect to signin / signup page
   useEffect(() => {
@@ -42,36 +63,13 @@ export default function WeeklyView() {
     }
   }, [user, nav]);
 
-  // change week upon dateContext change
   useEffect(() => {
     const monday = getStartOfWeek(dateContext);
-    const newWeekDates = getWeek(monday);
-    setWeekDates(newWeekDates);
+    const weekDates = getWeek(monday);
+    setWeekDates(weekDates);
+    const navDisplay = getNavDisplay(weekDates)
+    setNavDate(navDisplay);
   }, [dateContext]);
-
-  // update nav display, formatted like so: 13 - 19 June, 2022
-  useEffect(() => {
-    if (weekDates.length !== 7) return;
-    const dateStart = getDayOfMonth(weekDates[0]);
-    const dateEnd = getDayOfMonth(weekDates[6]);
-
-    const monthStart = getMonthName(weekDates[0]);
-    const monthEnd = getMonthName(weekDates[6]);
-
-    const yearStart = getYear(weekDates[0]);
-    const yearEnd = getYear(weekDates[6]);
-
-    const weekStart = `${monthStart} ${dateStart}${yearStart !== yearEnd ? ' ' + yearStart : ''}`;
-    const weekEnd = `${monthStart !== monthEnd ? monthEnd + ' ' : ''}${dateEnd}, ${yearEnd}`;
-    const fullWeek = `${weekStart} - ${weekEnd}`;
-    setNavDate(fullWeek);
-  }, [weekDates]);
-
-  function getEvent(id) {
-    return allEvents.find((e) => e.id === id);
-  }
-
-  const { events: allEvents } = useCollection('events', user && user.uid);
 
   return (
     <>
@@ -102,7 +100,7 @@ export default function WeeklyView() {
                     {weekDates &&
                       allEvents &&
                       weekDates.map((date, i) => (
-                        <DisplayEvents events={getEvents(date, allEvents)} key={i} />
+                        <DisplayDayEvents events={getEvents(date, allEvents)} key={i} />
                       ))}
                   </div>
                 </div>
@@ -130,10 +128,10 @@ export default function WeeklyView() {
       </main>
       {modalContext.view === 'new-event' && <NewEventModal />}
       {modalContext.view === 'view-event' && (
-        <ViewEventModal event={getEvent(modalContext.payload)} />
+        <ViewEventModal event={getEventById(allEvents, modalContext.payload)} />
       )}
       {modalContext.view === 'edit-event' && (
-        <NewEventModal eventToEdit={getEvent(modalContext.payload)} />
+        <NewEventModal eventToEdit={getEventById(allEvents, modalContext.payload)} />
       )}
       {modalContext.view === 'confirm-delete' && <ConfirmDeleteModal id={modalContext.payload} />}
     </>

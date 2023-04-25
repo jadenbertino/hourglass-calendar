@@ -6,18 +6,16 @@ import Modal from '../../components/modals/Modal';
 
 export default function SignInModal() {
   const { closeModal } = useModalContext();
+  const { user } = useAuthContext();
+  const { signin, error } = useSignIn();
 
   // form controls & validation
   const [email, setEmail] = useState('');
   const [emailPlaceholder, setEmailPlaceholder] = useState('email');
   const [emailisValid, setEmailIsValid] = useState(true);
-
   const [password, setPassword] = useState('');
   const [passwordPlaceholder, setPasswordPlaceholder] = useState('password');
   const [passwordIsValid, setPasswordIsValid] = useState(true);
-
-  const { user } = useAuthContext();
-  const { signin, error } = useSignIn();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -26,6 +24,9 @@ export default function SignInModal() {
 
   useEffect(() => {
     if (user) closeModal();
+  }, [user, closeModal]);
+
+  useEffect(() => {
     if (error) {
       // reset
       setEmailIsValid(true);
@@ -43,7 +44,7 @@ export default function SignInModal() {
         setPasswordPlaceholder('wrong password');
       }
     }
-  }, [user, error, closeModal]);
+  }, [error])
 
   return (
     <Modal className={'auth-modal'}>

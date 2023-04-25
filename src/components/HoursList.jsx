@@ -1,11 +1,12 @@
 import './HoursList.css';
 
+const HOURS_PLACEHOLDERS = new Array(24).fill(null);
+
 export default function HoursList() {
-  const hours = new Array(24).fill(null);
 
   return (
     <div className='hours'>
-      {hours.map((_, i) => {
+      {HOURS_PLACEHOLDERS.map((_, i) => {
         const hourName = i % 12 === 0 ? 12 : i % 12;
         const meridian = i < 12 ? 'am' : 'pm';
         return (

@@ -24,7 +24,9 @@ export default function SignUpModal() {
 
   useEffect(() => {
     if (user) closeModal();
+  }, [user, closeModal]);
 
+  useEffect(() => {
     if (error) {
       setValidEmail(true);
       setValidPassword(true);
@@ -35,7 +37,7 @@ export default function SignUpModal() {
       }
       setValidPassword(!error.includes('password'));
     }
-  }, [user, error, closeModal]);
+  }, [error])
 
   return (
     <Modal className={'auth-modal'}>

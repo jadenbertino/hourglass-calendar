@@ -9,15 +9,16 @@ import {
   formatDate,
   getDayOfMonth,
   getDayOfWeek,
-  getMonthName
+  getMonthName,
 } from '../../utils/DateUtils';
+import { getEventById } from '../../utils/EventUtils';
 
 // components
-import DisplayEvents from '../../components/DisplayEvents';
+import DisplayDayEvents from '../../components/DisplayDayEvents';
 import HoursList from '../../components/HoursList';
+import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
-import Nav from '../../components/Nav';
 import ViewEventModal from '../../components/modals/ViewEventModal';
 
 // styles
@@ -39,32 +40,23 @@ export default function DailyView() {
     }
   }, [user, nav]);
 
-  function getEvent(id) {
-    return allEvents.find(e => e.id === id);
-  }
-
   useEffect(() => {
     // change date on nav
     const weekday = getDayOfWeek(dateContext);
     const dayOfMonth = getDayOfMonth(dateContext);
     const month = getMonthName(dateContext);
     setNavDate(`${weekday}, ${month} ${dayOfMonth}`);
+  }, [dateContext]);
 
+  useEffect(() => {
     // get today's events
-    allEvents &&
-      setTodayEvents(
-        allEvents
-          .filter(event => event.date === formatDate(dateContext))
-          .sort(
-            (eventA, eventB) =>
-              convertToHours(eventA.startTime) -
-              convertToHours(eventB.startTime)
-          )
-      );
-  }, [
-    dateContext,
-    allEvents
-  ]);
+    if (!allEvents) return;
+    setTodayEvents(allEvents
+      .filter((event) => event.date === formatDate(dateContext))
+      .sort((eventA, eventB) => convertToHours(eventA.startTime) - convertToHours(eventB.startTime)
+      )
+    );
+  }, [allEvents, dateContext])
 
   return (
     <>
@@ -73,15 +65,16 @@ export default function DailyView() {
         decrementDate={() => decrementDateBy(1)}
         dateToDisplay={navDate}
       />
+      
       <main>
-        <section id="daily">
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="times-and-events">
+        <section id='daily'>
+          <div className='container'>
+            <div className='row'>
+              <div className='col'>
+                <div className='times-and-events'>
                   <HoursList />
-                  <div className="events">
-                    <DisplayEvents events={todayEvents} />
+                  <div className='events'>
+                    <DisplayDayEvents events={todayEvents} />
                   </div>
                 </div>
               </div>
@@ -89,16 +82,15 @@ export default function DailyView() {
           </div>
         </section>
       </main>
+
       {modalContext.view === 'new-event' && <NewEventModal />}
       {modalContext.view === 'view-event' && (
-        <ViewEventModal event={getEvent(modalContext.payload)} />
+        <ViewEventModal event={getEventById(allEvents, modalContext.payload)} />
       )}
       {modalContext.view === 'edit-event' && (
-        <NewEventModal eventToEdit={getEvent(modalContext.payload)} />
+        <NewEventModal eventToEdit={getEventById(allEvents, modalContext.payload)} />
       )}
-      {modalContext.view === 'confirm-delete' && (
-        <ConfirmDeleteModal id={modalContext.payload} />
-      )}
+      {modalContext.view === 'confirm-delete' && <ConfirmDeleteModal id={modalContext.payload} />}
     </>
   );
 }

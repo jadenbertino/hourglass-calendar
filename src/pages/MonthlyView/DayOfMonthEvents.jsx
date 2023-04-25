@@ -2,14 +2,16 @@ import { useEffect, useState } from 'react';
 import { convertToMeridian } from '../../utils/DateUtils'
 import { useModalContext } from '../../hooks/useModalContext';
 
-export default function DayOfMonthEvents({ events, numVisibleEvents, setViewEvents }) {
-  const { setModalView, setModalContext } = useModalContext();
+export default function DayOfMonthEvents({ events, numVisibleEvents }) {
+  const { setModalContext } = useModalContext();
   const [visibleEvents, setVisibleEvents] = useState([])
   const [hiddenEvents, setHiddenEvents] = useState([])
 
   function viewAllEvents() {
-    setModalView('view-day-of-month')
-    setViewEvents(events)
+    setModalContext({
+      view: 'view-day-of-month',
+      payload: events
+    })
   }
 
   useEffect(() => {

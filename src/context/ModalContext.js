@@ -10,11 +10,11 @@ export function ModalContextProvider({ children }) {
   })
 
   function closeModal() {
-    setModalContext(prev => ({view: '', payload: ''}))
+    setModalContext(prev => ({...prev, view: ''}))
   }
 
   function setModalView(view) {
-    setModalContext(prev => ({...prev, view: view}))
+    setModalContext(prev => ({...prev, view}))
   }
 
   return (

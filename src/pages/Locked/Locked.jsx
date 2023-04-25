@@ -48,6 +48,7 @@ export default function Locked() {
           </div>
         </div>
       </main>
+      
       {modalContext.view === 'signin' && <SignInModal />}
       {modalContext.view === 'signup' && <SignUpModal />}
     </>

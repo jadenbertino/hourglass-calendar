@@ -1,4 +1,4 @@
-const FULL_DAY_NAMES = [
+export const FULL_DAY_NAMES = [
   'Sunday',
   'Monday',
   'Tuesday',
@@ -8,9 +8,9 @@ const FULL_DAY_NAMES = [
   'Saturday'
 ];
 
-const SHORT_DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+export const SHORT_DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const MONTH_NAMES = [
+export const MONTH_NAMES = [
   'January',
   'February',
   'March',

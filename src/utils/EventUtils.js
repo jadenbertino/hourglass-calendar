@@ -1,5 +1,9 @@
 import { convertToMinutes } from '../utils/DateUtils';
 
+export function getEventById(events, id) {
+  return events.find((e) => e.id === id);
+}
+
 export function getOverlap(events) {
   if (!events.length) return;
 

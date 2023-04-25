@@ -2,8 +2,9 @@ import Modal from '../../components/modals/Modal';
 import { useModalContext } from '../../hooks/useModalContext';
 import { convertToMeridian, formatReadableDate } from '../../utils/DateUtils';
 
-export default function HiddenMonthlyEvents({ events }) {
-  const { closeModal, setModalContext } = useModalContext();
+export default function HiddenMonthlyEventsModal() {
+  const { closeModal, setModalContext, modalContext } = useModalContext();
+  const { payload: events } = modalContext
   if (!events.length) return
   
   const date = formatReadableDate(events[0].date);
