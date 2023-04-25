@@ -4,8 +4,8 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useModalContext } from '../../hooks/useModalContext';
 
 // components
-import SignInModal from '../../components/modals/SignInModal';
-import SignUpModal from '../../components/modals/SignUpModal';
+import SignInModal from './SignInModal';
+import SignUpModal from './SignUpModal';
 
 // styles
 import './Locked.css';

@@ -5,22 +5,22 @@ import { useCollection } from '../../hooks/useCollection';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
 import {
+  checkIfIsToday,
   getEvents,
   getMonth,
   getMonthName,
   getStartOfMonth,
   getStartOfWeek,
   getYear,
-  checkIfIsToday
 } from '../../utils/DateUtils';
 
 // components
 import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
-import HiddenEventsModal from '../../components/modals/MonthlyHiddenEvents';
 import NewEventModal from '../../components/modals/NewEventModal';
 import ViewEvent from '../../components/modals/ViewEvent';
 import DayOfMonthEvents from './DayOfMonthEvents';
+import HiddenEventsModal from './MonthlyHiddenEvents';
 
 // styles
 import './Monthly.css';
@@ -49,7 +49,7 @@ export default function MonthlyView() {
   }, [user, nav]);
 
   function getEvent(id) {
-    return events.find(e => e.id === id);
+    return events.find((e) => e.id === id);
   }
 
   // edit firstDate and monthDates anytime dateContext changes
@@ -58,11 +58,7 @@ export default function MonthlyView() {
     const firstDateToShow = getStartOfWeek(startOfMonth);
     setFirstDate(firstDateToShow);
     setMonthDates(getMonth(firstDateToShow));
-  }, [
-    dateContext,
-    setFirstDate,
-    setMonthDates,
-  ]);
+  }, [dateContext, setFirstDate, setMonthDates]);
 
   // change navDate anytime firstDate changes
   useEffect(() => {
@@ -101,7 +97,7 @@ export default function MonthlyView() {
     const daySize = daySizeRef.current;
     if (!daySize) return;
 
-    const observer = new ResizeObserver(entries => {
+    const observer = new ResizeObserver((entries) => {
       const { height } = entries[0].contentRect; // height of .day
       const eventsHeight = height - 34 + 4; // 34 is height of .day-number, but add 4 to cancel out last event margin
       const numEvents = Math.floor(eventsHeight / 22); // 22 is height of each event
@@ -114,16 +110,13 @@ export default function MonthlyView() {
 
   return (
     <>
-      <div className="sticky-wrapper monthly-view">
-        <Nav
-          incrementDate={incrementMonth}
-          decrementDate={decrementMonth}
-          dateToDisplay={navDate}>
-          <div className="row">
-            <div className="col date-wrapper monthly">
+      <div className='sticky-wrapper monthly-view'>
+        <Nav incrementDate={incrementMonth} decrementDate={decrementMonth} dateToDisplay={navDate}>
+          <div className='row'>
+            <div className='col date-wrapper monthly'>
               {weekdayNames &&
                 weekdayNames.map((dayname, i) => (
-                  <h3 className="col-header" key={i}>
+                  <h3 className='col-header' key={i}>
                     {dayname}
                   </h3>
                 ))}
@@ -132,29 +125,24 @@ export default function MonthlyView() {
         </Nav>
       </div>
       <main>
-        <section className="monthly">
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="monthly-events">
+        <section className='monthly'>
+          <div className='container'>
+            <div className='row'>
+              <div className='col'>
+                <div className='monthly-events'>
                   {events &&
                     monthDates &&
                     monthDates.map((date, i) => (
-                      <div
-                        className="day"
-                        key={i}
-                        ref={i === 0 ? daySizeRef : null}>
-                        <div className="day-wrapper">
+                      <div className='day' key={i} ref={i === 0 ? daySizeRef : null}>
+                        <div className='day-wrapper'>
                           <p
-                            className={`day-number ${
-                              checkIfIsToday(date) ? 'active' : ''
-                            } ${date.getDate() === 1 ? 'month-start' : ''}`}>
+                            className={`day-number ${checkIfIsToday(date) ? 'active' : ''} ${
+                              date.getDate() === 1 ? 'month-start' : ''
+                            }`}
+                          >
                             {date.getDate() !== 1
                               ? date.getDate()
-                              : `${getMonthName(date).slice(
-                                  0,
-                                  3
-                                )} ${date.getDate()}`}
+                              : `${getMonthName(date).slice(0, 3)} ${date.getDate()}`}
                           </p>
                           <DayOfMonthEvents
                             events={getEvents(date, events)}
