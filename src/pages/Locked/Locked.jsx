@@ -20,7 +20,7 @@ export default function Locked() {
     if (user) {
       nav('/daily');
     }
-  }, [user]);
+  }, [user, nav]);
 
   return (
     <>

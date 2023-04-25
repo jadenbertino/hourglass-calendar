@@ -6,7 +6,7 @@ import { useDateContext } from '../hooks/useDateContext';
 import { useModalContext } from '../hooks/useModalContext';
 
 // styles
-import './Nav.css';
+import './Nav.css'
 
 export default function Nav({ children, decrementDate, incrementDate, dateToDisplay}) {
   const { modalContext, setModalView } = useModalContext();

@@ -182,7 +182,6 @@ export default function NewEventModal({ eventToEdit }) {
           className="notes"
           placeholder="Event Notes"
           onChange={e => setEventNotes(e.target.value)}
-          required
           value={eventNotes}
         />
         <div className="btns-wrapper">

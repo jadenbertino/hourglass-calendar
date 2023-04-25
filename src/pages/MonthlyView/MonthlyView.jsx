@@ -48,7 +48,7 @@ export default function MonthlyView() {
     if (!user) {
       nav('/');
     }
-  }, [user]);
+  }, [user, nav]);
 
   function getEvent(id) {
     return events.find(e => e.id === id);
@@ -60,7 +60,7 @@ export default function MonthlyView() {
     const firstDateToShow = getStartOfWeek(startOfMonth);
     setFirstDate(firstDateToShow);
     setMonthDates(getMonth(firstDateToShow));
-  }, [dateContext]);
+  }, [dateContext, getStartOfMonth, getStartOfWeek, setFirstDate, setMonthDates, getMonth]);
 
   // change navDate anytime firstDate changes
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function MonthlyView() {
     }
 
     setNavDate(`${mostFrequentMonth} ${mostFrequentYear}`);
-  }, [firstDate]);
+  }, [firstDate, getMonthName, getYear, monthDates]);
 
   // set number of events to display per day
   useEffect(() => {

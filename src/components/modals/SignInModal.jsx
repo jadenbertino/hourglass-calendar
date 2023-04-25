@@ -43,7 +43,7 @@ export default function SignInModal() {
         setPasswordPlaceholder('wrong password');
       }
     }
-  }, [user, error]);
+  }, [user, error, closeModal]);
 
   return (
     <Modal className={'auth-modal'}>

@@ -39,7 +39,7 @@ export default function DailyView() {
     if (!user) {
       nav('/');
     }
-  }, [user]);
+  }, [user, nav]);
 
   function getEvent(id) {
     return allEvents.find(e => e.id === id);
@@ -63,7 +63,7 @@ export default function DailyView() {
               convertToHours(eventB.startTime)
           )
       );
-  }, [dateContext, allEvents]);
+  }, [dateContext, allEvents, convertToHours, formatDate, getDayOfMonth, getDayOfWeek, getMonthName]);
 
   return (
     <>

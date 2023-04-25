@@ -36,7 +36,7 @@ export default function SignUpModal() {
       }
       setValidPassword(!error.includes('password'));
     }
-  }, [user, error]);
+  }, [user, error, closeModal]);
 
   return (
     <Modal className={'auth-modal'}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { db } from "../firebase/init";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useDateContext } from "./useDateContext";
@@ -8,23 +8,7 @@ export function useCollection(collectionName, uid) {
   const [pending, setPending] = useState(true)
   const { convertToMinutes } = useDateContext()
 
-  useEffect(() => {
-    setPending(true)
-    let ref = collection(db, collectionName)
-    let q = query(ref, where('uid', '==', uid))
-
-    // listen for changes in collection
-    const unsub = onSnapshot(q, (snapshot) => {
-      const docs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id}))
-      setEvents(getOverlap(docs))
-      setPending(false)
-    })
-
-    return unsub
-
-  }, [collectionName, uid])
-
-  function getOverlap(events) {
+  const getOverlap = useCallback((events) => {
     if (!events) return
     
     const newEvents = events.slice();
@@ -74,7 +58,23 @@ export function useCollection(collectionName, uid) {
       event.order = event.overlap.indexOf(event.id) + 1
     }
     return newEvents
-  }
+  }, [convertToMinutes])
+
+  useEffect(() => {
+    setPending(true)
+    let ref = collection(db, collectionName)
+    let q = query(ref, where('uid', '==', uid))
+
+    // listen for changes in collection
+    const unsub = onSnapshot(q, (snapshot) => {
+      const docs = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id}))
+      setEvents(getOverlap(docs))
+      setPending(false)
+    })
+
+    return unsub
+
+  }, [collectionName, uid, getOverlap])
 
   return { events, pending }
 }

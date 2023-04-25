@@ -4,7 +4,7 @@ import Modal from './Modal';
 
 export default function ViewEvent({event}) {
   const { convertToMeridian, formatReadableDate } = useDateContext();
-  const { modalContext, setModalView, closeModal } = useModalContext();
+  const { setModalView, closeModal } = useModalContext();
 
   return (
     <>{event && 

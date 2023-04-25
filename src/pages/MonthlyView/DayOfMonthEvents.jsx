@@ -30,7 +30,7 @@ export default function DayOfMonthEvents({ events, numVisibleEvents, setViewEven
       setVisibleEvents(events.slice(0, numVisibleEvents - 1))
       setHiddenEvents(events.slice(numVisibleEvents - 1))
     }
-  }, [events])
+  }, [events, numVisibleEvents])
 
   return (
     <>

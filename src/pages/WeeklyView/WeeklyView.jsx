@@ -42,14 +42,14 @@ export default function WeeklyView() {
     if (!user) {
       nav('/');
     }
-  }, [user]);
+  }, [user, nav]);
   
   // change week upon dateContext change
   useEffect(() => {
     const monday = getStartOfWeek(dateContext)
     const newWeekDates = getWeek(monday)
     setWeekDates(newWeekDates);
-  }, [dateContext]);
+  }, [dateContext, getStartOfWeek, getWeek]);
 
   // update nav display, formatted like so: 13 - 19 June, 2022
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function WeeklyView() {
     }${dateEnd}, ${yearEnd}`;
     const fullWeek = `${weekStart} - ${weekEnd}`;
     setNavDate(fullWeek);
-  }, [weekDates]);
+  }, [weekDates, getDayOfMonth, getMonthName, getYear]);
 
   function getEvent(id) {
     return allEvents.find(e => e.id === id);
