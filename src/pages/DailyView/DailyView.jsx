@@ -63,12 +63,7 @@ export default function DailyView() {
       );
   }, [
     dateContext,
-    allEvents,
-    convertToHours,
-    formatDate,
-    getDayOfMonth,
-    getDayOfWeek,
-    getMonthName
+    allEvents
   ]);
 
   return (

@@ -60,11 +60,8 @@ export default function MonthlyView() {
     setMonthDates(getMonth(firstDateToShow));
   }, [
     dateContext,
-    getStartOfMonth,
-    getStartOfWeek,
     setFirstDate,
     setMonthDates,
-    getMonth
   ]);
 
   // change navDate anytime firstDate changes
@@ -97,7 +94,7 @@ export default function MonthlyView() {
     }
 
     setNavDate(`${mostFrequentMonth} ${mostFrequentYear}`);
-  }, [firstDate, getMonthName, getYear, monthDates]);
+  }, [firstDate, monthDates]);
 
   // set number of events to display per day
   useEffect(() => {

@@ -69,7 +69,7 @@ export default function WeeklyView() {
     }${dateEnd}, ${yearEnd}`;
     const fullWeek = `${weekStart} - ${weekEnd}`;
     setNavDate(fullWeek);
-  }, [weekDates, getDayOfMonth, getMonthName, getYear]);
+  }, [weekDates]);
 
   function getEvent(id) {
     return allEvents.find(e => e.id === id);
