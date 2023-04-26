@@ -1,8 +1,7 @@
-import { useDateContext } from "../../hooks/useDateContext"
+import { convertToMeridian } from '../../utils/DateUtils'
 import { useModalContext } from "../../hooks/useModalContext";
 
 export default function DisplayWeeklyEvents({ events }) {
-  const { convertToMeridian } = useDateContext()
   const { setModalContext } = useModalContext()
 
   return (

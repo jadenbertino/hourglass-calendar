@@ -27,6 +27,24 @@
   margin: 0 24px;
 }
 
+/* Sign In & Sign Up Modals */
+
+.auth-modal {
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth-modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-modal .btn {
+  margin-left: auto;
+  margin-top: 16px;
+}
+
+
 /*
 
     MOBILE

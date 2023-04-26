@@ -1,0 +1,20 @@
+.confirm-delete-modal h2 {
+  text-align: center;
+}
+
+.confirm-delete-modal .btns-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.confirm-delete-modal .btn {
+  margin: 0 12px;
+}
+.confirm-delete-modal .cancel-delete {
+  background-color: #93a8ac;
+}
+
+.confirm-delete-modal .confirm-delete {
+  background-color: #bc4749;
+}

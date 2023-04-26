@@ -1,0 +1,11 @@
+main {
+  display: flex;
+}
+
+#daily {
+  width: 100%;
+}
+
+.times-and-events {
+  display: flex;
+}

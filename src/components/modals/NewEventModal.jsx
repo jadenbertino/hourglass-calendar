@@ -4,68 +4,60 @@ import { db } from '../../firebase/init';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
+import {
+  convertToMilitary,
+  convertToMinutes,
+  formatDate,
+  isMeridian,
+  isMilitary,
+} from '../../utils/DateUtils';
 import Modal from './Modal';
+
+// styles
+import './NewEventModal.css';
 
 export default function NewEventModal({ eventToEdit }) {
   const { user } = useAuthContext();
   const { closeModal } = useModalContext();
-  const {
-    isMeridian,
-    isMilitary,
-    convertToMilitary,
-    formatDate,
-    convertToMinutes,
-    dateContext
-  } = useDateContext();
-  const [event, setEvent] = useState(null);
+  const { dateContext } = useDateContext();
 
-  // form controls
+  // Event Details
   const [eventName, setEventName] = useState('');
   const [eventDate, setEventDate] = useState(formatDate(dateContext));
   const [eventStartTime, setEventStartTime] = useState('');
   const [eventEndTime, setEventEndTime] = useState('');
   const [eventNotes, setEventNotes] = useState('');
 
-  // form validation
+  // Event Validation
   const [validDate, setValidDate] = useState(true);
   const [validStartTime, setValidStartTime] = useState(true);
   const [validEndTime, setValidEndTime] = useState(true);
 
-  // edit existing event
+  // If editing existing event then prefill forms
   useEffect(() => {
     if (eventToEdit) {
-      setEvent(eventToEdit);
+      setEventName(eventToEdit.name);
+      setEventDate(eventToEdit.date);
+      setEventStartTime(eventToEdit.startTime);
+      setEventEndTime(eventToEdit.endTime);
+      setEventNotes(eventToEdit.notes);
     }
   }, [eventToEdit]);
 
-  useEffect(() => {
-    if (event) {
-      setEventName(event.name);
-      setEventDate(event.date);
-      setEventStartTime(event.startTime);
-      setEventEndTime(event.endTime);
-      setEventNotes(event.notes);
-    }
-  }, [event]);
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const isValidEvent = validateFormControls()
+    if (!isValidEvent) return
+    await createEvent()
+    closeModal();
+  }
 
-  /*
-
-    form validation
-
-  */
-
-  function resetValidation() {
+  function validateFormControls() {
     setValidStartTime(true);
     setValidEndTime(true);
     setValidDate(true);
-  }
-
-  function validateFormControls(e) {
-    e.preventDefault();
-    resetValidation();
 
     // can't check state within this function because state updates are scheduled
-    // could do a useEffect but this is simpler
     let validDate = true;
     let validStartTime = true;
     let validEndTime = true;
@@ -76,7 +68,7 @@ export default function NewEventModal({ eventToEdit }) {
       validDate = false;
       alert('Please ensure event data is in MM/DD/YYYY format');
     }
-
+    
     // valid start time
     if (!isMilitary(eventStartTime) && !isMeridian(eventStartTime)) {
       setValidStartTime(false);
@@ -96,8 +88,8 @@ export default function NewEventModal({ eventToEdit }) {
 
     // start time must be before end time
     if (validStartTime && validEndTime) {
-      const start = convertToMinutes(convertToMilitary(eventStartTime))
-      const end = convertToMinutes(convertToMilitary(eventEndTime))
+      const start = convertToMinutes(convertToMilitary(eventStartTime));
+      const end = convertToMinutes(convertToMilitary(eventEndTime));
       if (start >= end) {
         validStartTime = false;
         validEndTime = false;
@@ -109,14 +101,10 @@ export default function NewEventModal({ eventToEdit }) {
       }
     }
 
-    if (validDate && validStartTime && validEndTime) createEvent();
+    if (validDate && validStartTime && validEndTime) return true
+    return false
   }
 
-  /*
-
-    event creation
-
-  */
   async function createEvent() {
     const event = {
       name: eventName,
@@ -124,7 +112,7 @@ export default function NewEventModal({ eventToEdit }) {
       date: eventDate,
       startTime: convertToMilitary(eventStartTime),
       endTime: convertToMilitary(eventEndTime),
-      uid: user.uid
+      uid: user.uid,
     };
     if (eventToEdit) {
       // edit existing event
@@ -134,65 +122,60 @@ export default function NewEventModal({ eventToEdit }) {
       // create new event
       await addDoc(collection(db, 'events'), event);
     }
-    closeModal();
   }
 
   return (
     <Modal className={'new-event'}>
-      <form className="new-event-form" onSubmit={validateFormControls}>
+      <form className='new-event-form' onSubmit={handleSubmit}>
         <input
-          className="name"
-          type="text"
-          placeholder="Event Name"
-          onChange={e => setEventName(e.target.value)}
+          className='name'
+          type='text'
+          placeholder='Event Name'
+          onChange={(e) => setEventName(e.target.value)}
           required
           autoFocus
           value={eventName}
         />
-        <div className="date-time-wrapper">
+        <div className='date-time-wrapper'>
           <input
             className={`date ${validDate ? '' : 'invalid'}`}
-            type="date"
-            placeholder="Date"
-            onChange={e => setEventDate(e.target.value)}
+            type='date'
+            placeholder='Date'
+            onChange={(e) => setEventDate(e.target.value)}
             required
             value={eventDate}
           />
-          <div className="times-wrapper">
+          <div className='times-wrapper'>
             <input
               className={`time ${validStartTime ? '' : 'invalid'}`}
-              type="text"
-              placeholder="Start Time"
-              onChange={e => setEventStartTime(e.target.value)}
+              type='text'
+              placeholder='Start Time'
+              onChange={(e) => setEventStartTime(e.target.value)}
               required
               value={eventStartTime}
             />
-            <i className="fa-solid fa-arrow-right"></i>
+            <i className='fa-solid fa-arrow-right'></i>
             <input
               className={`time ${validEndTime ? '' : 'invalid'}`}
-              type="text"
-              placeholder="End Time"
-              onChange={e => setEventEndTime(e.target.value)}
+              type='text'
+              placeholder='End Time'
+              onChange={(e) => setEventEndTime(e.target.value)}
               required
               value={eventEndTime}
             />
           </div>
         </div>
         <textarea
-          className="notes"
-          placeholder="Event Notes"
-          onChange={e => setEventNotes(e.target.value)}
-          required
+          className='notes'
+          placeholder='Event Notes'
+          onChange={(e) => setEventNotes(e.target.value)}
           value={eventNotes}
         />
-        <div className="btns-wrapper">
-          <button
-            className="btn cancel-btn"
-            type="button"
-            onClick={closeModal}>
+        <div className='btns-wrapper'>
+          <button className='btn cancel-btn' type='button' onClick={closeModal}>
             Cancel
           </button>
-          <button className="btn save-btn">Save</button>
+          <button className='btn save-btn'>Save</button>
         </div>
       </form>
     </Modal>

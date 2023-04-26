@@ -1,0 +1,144 @@
+main {
+  display: flex;
+}
+
+.monthly {
+  width: 100%;
+}
+
+.col-header {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  width: calc(100% / 7);
+}
+
+.monthly .col-header {
+  width: calc(100% / 7);
+}
+
+.monthly .active {
+  background-color: #3f8efc;
+  font-weight: bold;
+}
+
+.monthly-events {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.monthly-events .day {
+  width: calc(100% / 7);
+  height: calc(100% / 5);
+  border: 1px solid gray;
+  border-top: none;
+  overflow: hidden;
+  min-height: 72px;
+}
+
+.monthly-events .day-wrapper {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  max-height: 100%;
+}
+
+.monthly-events .day-number {
+  text-align: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.monthly-events .events-wrapper {
+  padding: 4px 8px;
+}
+
+.monthly-event {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.month-start {
+  background-color: #31343f;
+  font-weight: bold;
+}
+
+.monthly-event .color-dot {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  background-color: #ff595e;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.monthly-event .time {
+  margin-right: 6px;
+}
+
+.monthly-event .name {
+  font-weight: bold;
+}
+
+.day-of-month-modal {
+  padding-right: 40px;
+}
+
+.day-of-month-modal h3 {
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #eaf2ef;
+}
+
+.day-of-month-modal .close-modal {
+  position: absolute;
+  top: 0;
+  right: 8px;
+}
+
+.monthly-events .hidden-events {
+  cursor: pointer;
+}
+
+@media (max-width: 992px) {
+  .monthly .col {
+    padding: 0;
+  }
+
+  .monthly-event .color-dot,
+  .monthly-event .time {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .monthly .col-header {
+    font-size: 16px;
+  }
+
+  .monthly-event .time {
+    display: none;
+  }
+
+  .monthly .day-number,
+  .monthly-event .name,
+  .monthly .hidden-events {
+    font-size: 14px;
+  }
+
+  .monthly .day-number {
+    white-space: normal;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .monthly .day-name {
+    font-size: 14px;
+  }
+}

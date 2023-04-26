@@ -4,102 +4,84 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useCollection } from '../../hooks/useCollection';
 import { useDateContext } from '../../hooks/useDateContext';
 import { useModalContext } from '../../hooks/useModalContext';
+import {
+  checkIfIsToday,
+  getEvents,
+  getMonth,
+  getMonthName,
+  getStartOfMonth,
+  getStartOfWeek,
+  getYear,
+} from '../../utils/DateUtils';
+import { getEventById } from '../../utils/EventUtils';
 
 // components
+import Nav from '../../components/Nav';
 import ConfirmDeleteModal from '../../components/modals/ConfirmDeleteModal';
 import NewEventModal from '../../components/modals/NewEventModal';
-import ViewEvent from '../../components/modals/ViewEvent';
-import Nav from '../../components/Nav';
+import ViewEventModal from '../../components/modals/ViewEventModal';
 import DayOfMonthEvents from './DayOfMonthEvents';
-import HiddenEventsModal from '../../components/modals/MonthlyHiddenEvents';
+import HiddenEventsModal from './MonthlyHiddenEventsModal';
 
 // styles
-import '../Views.css';
+import './Monthly.css';
+
+const SHORT_WEEKDAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+function getMostFrequentMonth(dates) {
+  let mostFrequentMonth;
+  let maxCount = -Infinity;
+  const monthCounter = {};
+  for (const date of dates) {
+    const monthName = getMonthName(date);
+    monthCounter[monthName] = (monthCounter[monthName] || 0) + 1;
+  }
+  for (const [monthName, monthCount] of Object.entries(monthCounter)) {
+    if (monthCount > maxCount) {
+      mostFrequentMonth = monthName;
+      maxCount = monthCount;
+    }
+  }
+  return mostFrequentMonth
+}
 
 export default function MonthlyView() {
   const { user } = useAuthContext();
   const { modalContext } = useModalContext();
-  const {
-    checkIfIsToday,
-    dateContext,
-    getMonth,
-    getEvents,
-    getMonthName,
-    getYear,
-    incrementMonth,
-    decrementMonth,
-    getStartOfMonth,
-    getStartOfWeek
-  } = useDateContext();
-  const [viewEvents, setViewEvents] = useState({});
-  const daySizeRef = useRef(null); // to set number of events displayed per day
-  const [numVisibleEvents, setNumVisibleEvents] = useState(0);
-  const [navDate, setNavDate] = useState('');
-  const [monthDates, setMonthDates] = useState(null);
-  const [firstDate, setFirstDate] = useState(null);
-  const weekdayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-  // set date + query events for date
-  const { events } = useCollection('events', user && user.uid);
-
-  // if user isn't signed in redirect to signin / signup page
+  const { dateContext, incrementMonth, decrementMonth } = useDateContext();
   const nav = useNavigate();
+
+  const { events: allEvents } = useCollection('events', user && user.uid);
+  const [monthDates, setMonthDates] = useState(null);
+  const [navDate, setNavDate] = useState('');
+  
+  // to set number of events displayed per day
+  const daySizeRef = useRef(null); 
+  const [numVisibleEvents, setNumVisibleEvents] = useState(0);
+
   useEffect(() => {
     if (!user) {
       nav('/');
     }
-  }, [user]);
+  }, [user, nav]);
 
-  function getEvent(id) {
-    return events.find(e => e.id === id);
-  }
-
-  // edit firstDate and monthDates anytime dateContext changes
   useEffect(() => {
     const startOfMonth = getStartOfMonth(dateContext);
     const firstDateToShow = getStartOfWeek(startOfMonth);
-    setFirstDate(firstDateToShow);
-    setMonthDates(getMonth(firstDateToShow));
-  }, [dateContext]);
+    const monthDates = getMonth(firstDateToShow);
+    setMonthDates(monthDates);
 
-  // change navDate anytime firstDate changes
-  useEffect(() => {
-    if (!monthDates) return;
-    const monthCounter = {};
-    for (let date of monthDates) {
-      const monthName = getMonthName(date);
-      monthCounter[monthName] = (monthCounter[monthName] || 0) + 1;
-    }
-
-    let mostFrequentMonth;
-    let maxCount = -Infinity;
-
-    for (const [monthName, monthCount] of Object.entries(monthCounter)) {
-      if (monthCount > maxCount) {
-        mostFrequentMonth = monthName;
-        maxCount = monthCount;
-      }
-    }
-
-    // year of most frequent month
-    let mostFrequentYear;
-    for (let date of monthDates) {
-      const monthName = getMonthName(date);
-      if (monthName === mostFrequentMonth) {
-        mostFrequentYear = getYear(date);
-        break;
-      }
-    }
-
+    const mostFrequentMonth = getMostFrequentMonth(monthDates)
+    const mostFrequentYear = getYear(monthDates.find(date => getMonthName(date) === mostFrequentMonth))
     setNavDate(`${mostFrequentMonth} ${mostFrequentYear}`);
-  }, [firstDate]);
+  }, [dateContext, setMonthDates]);
 
   // set number of events to display per day
   useEffect(() => {
     const daySize = daySizeRef.current;
     if (!daySize) return;
 
-    const observer = new ResizeObserver(entries => {
+    const observer = new ResizeObserver((entries) => {
       const { height } = entries[0].contentRect; // height of .day
       const eventsHeight = height - 34 + 4; // 34 is height of .day-number, but add 4 to cancel out last event margin
       const numEvents = Math.floor(eventsHeight / 22); // 22 is height of each event
@@ -112,75 +94,60 @@ export default function MonthlyView() {
 
   return (
     <>
-      <div className="sticky-wrapper monthly-view">
-        <Nav
-          incrementDate={incrementMonth}
-          decrementDate={decrementMonth}
-          dateToDisplay={navDate}>
-          <div className="row">
-            <div className="col date-wrapper monthly">
-              {weekdayNames &&
-                weekdayNames.map((dayname, i) => (
-                  <h3 className="col-header" key={i}>
-                    {dayname}
-                  </h3>
-                ))}
+      <div className='sticky-wrapper monthly-view'>
+        <Nav incrementDate={incrementMonth} decrementDate={decrementMonth} dateToDisplay={navDate}>
+          <div className='row'>
+            <div className='col date-wrapper monthly'>
+              {SHORT_WEEKDAY_NAMES.map((dayname, i) => (
+                <h3 className='col-header' key={i}>
+                  {dayname}
+                </h3>
+              ))}
             </div>
           </div>
         </Nav>
       </div>
       <main>
-        <section className="monthly">
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="monthly-events">
-                  {events &&
-                    monthDates &&
-                    monthDates.map((date, i) => (
-                      <div
-                        className="day"
-                        key={i}
-                        ref={i === 0 ? daySizeRef : null}>
-                        <div className="day-wrapper">
+        <section className='monthly'>
+          <div className='container'>
+            <div className='row'>
+              <div className='col'>
+                <div className='monthly-events'>
+                  {allEvents && monthDates && monthDates.map((date, i) => (
+                      <div className='day' key={i} ref={i === 0 ? daySizeRef : null}>
+                        <div className='day-wrapper'>
                           <p
-                            className={`day-number ${
-                              checkIfIsToday(date) ? 'active' : ''
-                            } ${date.getDate() === 1 ? 'month-start' : ''}`}>
+                            className={`day-number ${checkIfIsToday(date) ? 'active' : ''} ${
+                              date.getDate() === 1 ? 'month-start' : ''
+                            }`}
+                          >
                             {date.getDate() !== 1
                               ? date.getDate()
-                              : `${getMonthName(date).slice(
-                                  0,
-                                  3
-                                )} ${date.getDate()}`}
+                              : `${getMonthName(date).slice(0, 3)} ${date.getDate()}`}
                           </p>
                           <DayOfMonthEvents
-                            events={getEvents(date, events)}
-                            setViewEvents={setViewEvents}
+                            events={getEvents(date, allEvents)}
                             numVisibleEvents={numVisibleEvents}
                           />
                         </div>
                       </div>
                     ))}
                 </div>
-                {modalContext.view === 'new-event' && <NewEventModal />}
-                {modalContext.view === 'view-event' && (
-                  <ViewEvent event={getEvent(modalContext.payload)} />
-                )}
-                {modalContext.view === 'edit-event' && (
-                  <NewEventModal eventToEdit={getEvent(modalContext.payload)} />
-                )}
-                {modalContext.view === 'confirm-delete' && (
-                  <ConfirmDeleteModal id={modalContext.payload} />
-                )}
-                {modalContext.view === 'view-day-of-month' && (
-                  <HiddenEventsModal events={viewEvents} />
-                )}
               </div>
             </div>
           </div>
         </section>
       </main>
+
+      {modalContext.view === 'new-event' && <NewEventModal />}
+      {modalContext.view === 'view-event' && (
+        <ViewEventModal event={getEventById(allEvents, modalContext.payload)} />
+      )}
+      {modalContext.view === 'edit-event' && (
+        <NewEventModal eventToEdit={getEventById(allEvents, modalContext.payload)} />
+      )}
+      {modalContext.view === 'confirm-delete' && <ConfirmDeleteModal id={modalContext.payload} />}
+      {modalContext.view === 'view-day-of-month' && <HiddenEventsModal />}
     </>
   );
 }

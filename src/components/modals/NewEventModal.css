@@ -1,0 +1,57 @@
+.new-event-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  max-width: 576px;
+  width: 100%;
+}
+
+.new-event-form .date-time-wrapper {
+  display: flex;
+}
+
+.new-event-form .date {
+  width: 40%;
+  text-align: center;
+}
+
+.new-event-form .times-wrapper {
+  width: 60%;
+  padding-left: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.new-event-form .time {
+  width: 40%;
+  text-align: center;
+}
+
+.new-event-form .notes {
+  margin: 12px 0;
+  min-height: 80px;
+}
+
+.new-event-form .btns-wrapper {
+  margin-left: auto;
+}
+
+.new-event-form .cancel-btn {
+  background-color: #93a8ac;
+  margin-right: 12px;
+}
+
+.fa-arrow-right {
+  transform: translateY(8px);
+}
+
+@media screen and (max-width: 480px) {
+  .new-event {
+    padding: 24px 12px;
+  }
+
+  .new-event .times-wrapper {
+    padding-left: 12px;
+  }
+}

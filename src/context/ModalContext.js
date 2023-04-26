@@ -14,7 +14,7 @@ export function ModalContextProvider({ children }) {
   }
 
   function setModalView(view) {
-    setModalContext(prev => ({...prev, view: view}))
+    setModalContext(prev => ({...prev, view}))
   }
 
   return (
