@@ -98,7 +98,7 @@ main {
     display: flex;
   }
 
-  .desktop {
+  #weekly .desktop {
     display: none;
   }
 
